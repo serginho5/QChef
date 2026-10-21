@@ -9,13 +9,15 @@ import CATALOGO from './catalogo.json' with { type: 'json' }
 // Funciona no Node (Firebase Functions, teste local) e no Cloudflare Workers: lá as chaves chegam por configurar(env).
 // QCHEF_IA escolhe a IA: "gemini" (cota gratuita do Google) ou "claude". Sem ela, usa a que tiver chave.
 // A chave do Gemini é QCHEF_GEMINI_KEY (nome próprio para não confundir com outra GEMINI_API_KEY do computador)
-let CHAVE_GEMINI, CHAVE_CLAUDE
+let CHAVE_GEMINI, CHAVE_CLAUDE, MODELO_GEMINI, MODELO_CLAUDE
 export let IA, MODELO
 export function configurar(env = {}) {
   CHAVE_GEMINI = env.QCHEF_GEMINI_KEY || env.GEMINI_API_KEY
   CHAVE_CLAUDE = env.ANTHROPIC_API_KEY
   IA = env.QCHEF_IA || (CHAVE_GEMINI ? 'gemini' : 'claude')
-  MODELO = env.QCHEF_MODELO || (IA === 'gemini' ? 'gemini-3.8-flash' : 'claude-haiku-5-5')
+  MODELO_GEMINI = (IA === 'gemini' && env.QCHEF_MODELO) || 'gemini-3.8-flash'
+  MODELO_CLAUDE = (IA === 'claude' && env.QCHEF_MODELO) || 'claude-haiku-5-5'
+  MODELO = IA === 'gemini' ? MODELO_GEMINI : MODELO_CLAUDE
   claude = gemini = undefined
 }
 const POR_ID = Object.fromEntries(CATALOGO.map((f) => [f.id, f]))
@@ -98,7 +100,7 @@ configurar(globalThis.process?.env)
 
 async function perguntarClaude(texto) {
   const r = await (claude ??= new Anthropic({ apiKey: CHAVE_CLAUDE })).messages.parse({
-    model: MODELO,
+    model: MODELO_CLAUDE,
     max_tokens: 16000,
     output_config: { effort: 'low', format: zodOutputFormat(Receita) },
     system: [{ type: 'text', text: SISTEMA, cache_control: { type: 'ephemeral' } }],
@@ -121,7 +123,7 @@ async function perguntarGemini(texto) {
   gemini ??= new GoogleGenAI({ apiKey: CHAVE_GEMINI })
   let r, ultimoErro
   const prazo = Date.now() + PRAZO_TOTAL
-  const modelos = [MODELO, ...RESERVAS_GEMINI.filter((m) => m !== MODELO)]
+  const modelos = [MODELO_GEMINI, ...RESERVAS_GEMINI.filter((m) => m !== MODELO_GEMINI)]
   for (const model of modelos) {
     const resta = prazo - Date.now()
     if ((SEM_COTA_ATE[model] || 0) > Date.now() || resta < 3000) continue
@@ -172,7 +174,16 @@ export async function criarReceita(pedido) {
   ]
   if (p.evitar.length) linhas.push(`Já sugeri estas e a pessoa pediu outra opção (faça um prato diferente): ${p.evitar.join('; ')}`)
 
-  const { dados, uso } = await (IA === 'gemini' ? perguntarGemini : perguntarClaude)(linhas.join('\n'))
+  // Com Claude como IA principal, o Gemini (se tiver chave) fica de reserva para quando o Claude falhar
+  let resposta
+  try {
+    resposta = await (IA === 'gemini' ? perguntarGemini : perguntarClaude)(linhas.join('\n'))
+  } catch (e) {
+    if (IA === 'gemini' || !CHAVE_GEMINI) throw e
+    console.warn('claude falhou, usando o gemini:', e.status || e.message)
+    resposta = await perguntarGemini(linhas.join('\n'))
+  }
+  const { dados, uso } = resposta
   if (!dados) {
     const e = new Error('A IA não conseguiu montar essa receita. Tente trocar algum ingrediente.')
     e.codigo = 'recusa'
