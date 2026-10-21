@@ -18,6 +18,8 @@ export const MODO_DEMO = !cfg.apiKey
 export const LINK_COMPRA = import.meta.env.VITE_LINK_COMPRA || 'https://pay.kiwify.com.br/'
 export const LINK_PRO = import.meta.env.VITE_LINK_PRO || LINK_COMPRA
 export const EMAIL_SUPORTE = import.meta.env.VITE_EMAIL_SUPORTE || 'contato@hubbioguia.com.br'
+// Período de teste: VITE_ACESSO_LIVRE=1 libera qualquer conta logada, sem conferir a compra
+const ACESSO_LIVRE = import.meta.env.VITE_ACESSO_LIVRE === '1'
 export const WHATSAPP_SUPORTE = import.meta.env.VITE_WHATSAPP_SUPORTE || ''
 
 let auth, db
@@ -95,10 +97,11 @@ export async function verificarAcesso(usuario) {
   try {
     const snap = await getDoc(doc(db, 'acessos', usuario.email))
     const d = snap.exists() ? snap.data() : {}
-    const ok = d.ativo === true
+    const ok = ACESSO_LIVRE || d.ativo === true
     gravar(CACHE_ACESSO, { email: usuario.email, ok, pro: d.pro === true, em: Date.now() })
     return { estado: ok ? 'liberado' : 'negado', pro: d.pro === true }
   } catch {
+    if (ACESSO_LIVRE) return { estado: 'liberado', pro: false }
     if (cache?.email === usuario.email && cache.ok) return { estado: 'liberado', pro: cache.pro }
     return { estado: navigator.onLine ? 'negado' : 'offline' }
   }

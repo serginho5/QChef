@@ -82,6 +82,8 @@ Com o Claude como principal, o Gemini continua de reserva automaticamente.
 - Liberar alguém à mão: Firestore › `acessos` › novo documento com o e-mail como ID e o campo `ativo` (boolean) = `true`.
 - Contagem do mês: `usos/{uid}` (gravado só pelo servidor).
 
+**Período de teste sem cobrança:** `QCHEF_ACESSO_LIVRE=1` em `servidor/vps/.env` e `VITE_ACESSO_LIVRE=1` em `app/.env` liberam qualquer conta logada (limite de 20 receitas/mês). Para voltar a exigir a compra, ponha `0` nos dois e publique o servidor e o app.
+
 **Ligar a Kiwify** (pendente):
 
 1. Kiwify › Apps › Webhooks › Criar webhook

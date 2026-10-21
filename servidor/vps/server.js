@@ -3,7 +3,8 @@
 //   POST /api/qchef/receita  cria a receita (exige login + acesso ativo; conta no limite do mês)
 //   GET  /api/qchef/uso      quantas receitas a pessoa já criou no mês
 //   POST /api/qchef/kiwify   webhook da Kiwify (Apps › Webhooks): libera ou bloqueia o acesso do e-mail da compra
-// Variáveis (.env, fora do git): QCHEF_GEMINI_KEY, KIWIFY_TOKEN (um ou mais, separados por vírgula), KIWIFY_PRODUTO_PRO (opcional), QCHEF_IA (opcional).
+// Variáveis (.env, fora do git): QCHEF_GEMINI_KEY, KIWIFY_TOKEN (um ou mais, separados por vírgula), KIWIFY_PRODUTO_PRO (opcional), QCHEF_IA (opcional),
+//   QCHEF_ACESSO_LIVRE=1 (opcional, período de teste sem cobrança).
 // Credencial: service-account.json (fora do git).
 import http from 'node:http'
 import crypto from 'node:crypto'
@@ -19,6 +20,8 @@ const BASE = '/api/qchef'
 const KIWIFY_TOKENS = String(process.env.KIWIFY_TOKEN || '').split(',').map(t => t.trim()).filter(Boolean)
 const PRODUTO_PRO = process.env.KIWIFY_PRODUTO_PRO || ''
 const LIMITE = { normal: 20, pro: 150 }
+// Período de teste: QCHEF_ACESSO_LIVRE=1 libera qualquer conta logada, sem conferir a compra
+const ACESSO_LIVRE = process.env.QCHEF_ACESSO_LIVRE === '1'
 
 initializeApp({ credential: cert(JSON.parse(readFileSync(process.env.CREDENCIAL || './service-account.json', 'utf8'))) })
 const db = getFirestore()
@@ -46,7 +49,7 @@ async function usuario(req) {
   try { u = await getAuth().verifyIdToken(token) } catch { throw new Falha(401, 'login', 'Sua sessão expirou. Entre de novo.') }
   const email = (u.email || '').toLowerCase()
   const acesso = email ? (await db.doc(`acessos/${email}`).get()).data() || {} : {}
-  if (acesso.ativo !== true) throw new Falha(403, 'sem-acesso', 'Não encontramos uma compra ativa para este e-mail.')
+  if (!ACESSO_LIVRE && acesso.ativo !== true) throw new Falha(403, 'sem-acesso', 'Não encontramos uma compra ativa para este e-mail.')
   return { uid: u.uid, email, pro: acesso.pro === true }
 }
 
