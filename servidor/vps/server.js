@@ -67,7 +67,7 @@ async function somarUso(u, tokens) {
 
 // ---------- Kiwify (mesma regra do Dieta Fácil) ----------
 const LIBERA = ['paid', 'approved', 'order_approved', 'compra_aprovada', 'subscription_renewed']
-const BLOQUEIA = ['refunded', 'chargedback', 'chargeback', 'order_refunded', 'compra_reembolsada', 'subscription_canceled', 'canceled']
+const BLOQUEIA = ['refunded', 'chargedback', 'chargeback', 'order_refunded', 'compra_reembolsada', 'subscription_canceled', 'canceled', 'subscription_late', 'assinatura_atrasada', 'assinatura_cancelada']
 
 function assinaturaValida(raw, sig) {
   if (!sig || !KIWIFY_TOKEN) return false
@@ -86,11 +86,19 @@ async function kiwify(b) {
   if (BLOQUEIA.includes(status) || BLOQUEIA.includes(evento)) ativo = false
   if (ativo === null) return 'ignorado: ' + (evento || status)
 
-  // O produto Pro só liga/desliga o Pro; o produto normal liga/desliga o acesso
+  // Dois produtos ligados pelo e-mail:
+  //   QChef (pagamento único) → "base": acesso para sempre, 20 receitas/mês
+  //   QChef Pro (assinatura)  → "pro": 150 receitas/mês enquanto pagar
+  // Cancelou ou atrasou o Pro: desliga só o Pro e o acesso volta a depender de ter comprado o QChef.
   const pro = !!PRODUTO_PRO && String(b.Product?.product_id || '') === PRODUTO_PRO
   const ref = db.collection('acessos').doc(email)
+  const atual = (await ref.get()).data() || {}
+  const comprouBase = atual.base === true || (atual.ativo === true && atual.pro !== true && atual.base === undefined)
+  const campos = pro
+    ? { pro: ativo, ativo: ativo || comprouBase, ...(comprouBase ? { base: true } : {}) }
+    : { base: ativo, ativo: ativo || atual.pro === true }
   await ref.set({
-    ...(pro ? { pro: ativo, ...(ativo ? { ativo: true } : {}) } : { ativo }),
+    ...campos,
     nome: b.Customer?.full_name || b.Customer?.first_name || null,
     pedido: b.order_id || null,
     produto: b.Product?.product_name || null,
