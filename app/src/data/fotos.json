@@ -863,5 +863,62 @@
 "queijo",
 "frio"
 ]
+},
+{
+"id": "vinagrete-torradas",
+"nome": "Vinagrete com torradas",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"tomate",
+"pao",
+"economico",
+"frio"
+]
+},
+{
+"id": "salada-folhas",
+"nome": "Salada verde completa",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"legumes",
+"ovo",
+"frio"
+]
+},
+{
+"id": "iogurte-granola-frutas",
+"nome": "Iogurte com granola e frutas",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"iogurte",
+"fruta",
+"cafe-da-manha",
+"frio"
+]
+},
+{
+"id": "salada-frutas",
+"nome": "Salada de frutas",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"fruta",
+"doce",
+"frio"
+]
+},
+{
+"id": "tabule",
+"nome": "Tabule",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"trigo",
+"tomate",
+"frio"
+]
 }
 ]
