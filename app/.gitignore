@@ -1,0 +1,7 @@
+node_modules
+dist
+.env
+servidor/.env
+servidor/service-account.json
+servidor/node_modules
+*.local

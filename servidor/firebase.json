@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs22",
+    "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run catalogo"],
+    "ignore": ["node_modules", "teste-local.js", ".env*"]
+  },
+  "firestore": { "rules": "firestore.rules" }
+}

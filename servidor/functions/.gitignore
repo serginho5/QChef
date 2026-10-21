@@ -1,0 +1,4 @@
+node_modules/
+catalogo.json
+.env*
+.secret.local

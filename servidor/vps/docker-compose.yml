@@ -1,0 +1,17 @@
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - CREDENCIAL=/run/segredos/service-account.json
+    volumes:
+      - ./service-account.json:/run/segredos/service-account.json:ro
+    labels:
+      - traefik.enable=true
+      # Só o caminho da API; o resto de appnovidades.com.br continua no nginx do low_ticket
+      - traefik.http.routers.qchef-api.entrypoints=websecure
+      - traefik.http.routers.qchef-api.rule=Host(`appnovidades.com.br`) && PathPrefix(`/api/qchef/`)
+      - traefik.http.routers.qchef-api.priority=100
+      - traefik.http.routers.qchef-api.tls.certresolver=letsencrypt
+      - traefik.http.services.qchef-api.loadbalancer.server.port=3000

@@ -1,0 +1,31 @@
+# Dependências e builds
+node_modules/
+dist/
+.wrangler/
+.firebase/
+*.log
+
+# Segredos e configurações locais (nunca vão para o git)
+.env
+.env.*
+!.env.example
+*.local
+.dev.vars
+service-account*.json
+*-firebase-adminsdk-*.json
+
+# Gerados a partir de outros arquivos (copiar-catalogo.js / publicar.sh)
+servidor/functions/catalogo.json
+servidor/vps/receita.js
+servidor/vps/catalogo.json
+
+# Claude Code
+.claude/scheduled_tasks.lock
+
+# Material de criação (fica só no computador)
+banco-imagens/
+telas/
+logo/
+referencia_aplicativo/
+modelo_logo.jpg
+.claude/

@@ -1,0 +1,15 @@
+rules_version = '2';
+// acessos/{email}: gravado só pelo webhook da Kiwify; cada pessoa lê apenas o próprio.
+// usos/{uid}: contador do limite mensal, gravado só pelo servidor.
+service cloud.firestore {
+  match /databases/{db}/documents {
+    match /acessos/{email} {
+      allow read: if request.auth != null && request.auth.token.email.lower() == email;
+      allow write: if false;
+    }
+    match /usos/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+  }
+}

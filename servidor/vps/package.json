@@ -1,0 +1,14 @@
+{
+  "name": "qchef-servidor-vps",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": "22" },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.137.0",
+    "@google/genai": "^2.30.0",
+    "firebase-admin": "^14.5.0",
+    "zod": "^4.6.7"
+  }
+}

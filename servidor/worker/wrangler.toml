@@ -1,0 +1,18 @@
+# Servidor do QChef no Cloudflare Workers. Segredos (não ficam aqui): QCHEF_GEMINI_KEY, ANTHROPIC_API_KEY, KIWIFY_TOKEN
+name = "qchef-api"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+FIREBASE_PROJECT_ID = "qchef-app"
+QCHEF_IA = "gemini"
+KIWIFY_PRODUTO_PRO = ""
+
+# Acessos e contagem do mês. O id é preenchido depois de `wrangler kv namespace create QCHEF`
+[[kv_namespaces]]
+binding = "QCHEF"
+id = "f42ccd1ea21145d08ed4bfb966255a6e"
+
+[observability]
+enabled = true

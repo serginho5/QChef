@@ -1,0 +1,16 @@
+{
+  "name": "qchef-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "catalogo": "node ../functions/copiar-catalogo.js",
+    "dev": "npm run catalogo && wrangler dev",
+    "deploy": "npm run catalogo && wrangler deploy"
+  },
+  "dependencies": {
+    "jose": "^6.2.13"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.3"
+  }
+}

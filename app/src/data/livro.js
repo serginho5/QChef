@@ -1,0 +1,451 @@
+// Livro de receitas do QChef: uma receita completa para cada foto do banco (mesmo id da foto).
+// Usado no modo demonstração e como plano B quando a IA não responde. Formato compacto:
+//   ingrediente: 'Nome|quantidade|chaves'  chaves = palavras que casam com o que a pessoa digitou (separadas por /)
+//                '*' = despensa (sal, óleo, alho...)  '?' no fim = opcional
+//   passo: 'texto'  ou  ['texto', segundos, { f: fogo, c: °C, w: potência %, m: aviso na metade }]
+// Rendimento base: 2 porções (exceto onde indicado).
+
+const SAL = 'Sal|a gosto|*', OLEO = 'Óleo ou azeite|1 colher de sopa|*', ALHO = 'Alho|2 dentes|*', PIMENTA = 'Pimenta-do-reino|a gosto|*'
+const CEBOLA = 'Cebola|1 pequena|cebola?', VERDE = 'Cheiro-verde|a gosto|cheiro verde/salsinha/cebolinha?'
+const LEGUMES = 'legume/abobrinha/cenoura/brocolis/vagem/pimentao/chuchu/couve-flor/berinjela/abobora/ervilha/milho'
+
+export const LIVRO = [
+  // ---------- FOGÃO ----------
+  ['arroz-ovo-frito', 'Arroz com ovo frito', 'fogao', 15, 'Fácil', 'O clássico que salva qualquer dia: arroz soltinho aquecido no alho com ovo de gema mole por cima.', [
+    'Arroz cozido|2 xícaras|arroz', 'Ovos|2 unidades|ovo', ALHO, OLEO, SAL, VERDE],
+    ['Pique o alho bem miudinho.',
+      ['Aqueça o óleo na frigideira e doure o alho.', 60, { f: 'medio' }],
+      ['Junte o arroz, acerte o sal e mexa até aquecer bem.', 180, { f: 'medio', m: 'Mexa o arroz' }],
+      ['Passe o arroz para o prato. Na mesma frigideira, frite os ovos.', 180, { f: 'medio' }],
+      'Coloque os ovos sobre o arroz e finalize com cheiro-verde.']],
+  ['omelete-queijo-tomate', 'Omelete de queijo e tomate', 'fogao', 10, 'Fácil', 'Omelete macia, recheada de queijo derretido e tomate fresquinho, pronta em 10 minutos.', [
+    'Ovos|3 unidades|ovo', 'Queijo muçarela|3 fatias|queijo', 'Tomate|1 pequeno|tomate', OLEO, SAL, VERDE],
+    ['Bata os ovos com uma pitada de sal até espumar. Pique o tomate em cubinhos.',
+      ['Aqueça o óleo numa frigideira antiaderente e despeje os ovos.', 120, { f: 'baixo' }],
+      ['Quando as bordas firmarem, coloque o queijo e o tomate de um lado.', 60, { f: 'baixo' }],
+      ['Dobre a omelete ao meio, tampe e deixe o queijo derreter.', 90, { f: 'baixo' }],
+      'Sirva na hora com cheiro-verde.']],
+  ['ovos-mexidos-tomate', 'Ovos mexidos com tomate', 'fogao', 10, 'Fácil', 'Ovos cremosos com tomate refogado, perfeitos com pão no café ou no jantar rápido.', [
+    'Ovos|4 unidades|ovo', 'Tomate|1 médio|tomate', 'Pão|2 fatias|pao?', CEBOLA, OLEO, SAL],
+    ['Pique o tomate e a cebola. Bata levemente os ovos com sal.',
+      ['Refogue a cebola e o tomate no óleo até murchar.', 180, { f: 'medio' }],
+      ['Abaixe o fogo, junte os ovos e mexa devagar até ficarem cremosos.', 120, { f: 'baixo' }],
+      'Desligue ainda úmido (termina de cozinhar no calor) e sirva com o pão.']],
+  ['shakshuka', 'Ovos no molho de tomate', 'fogao', 20, 'Fácil', 'Ovos cozidos direto num molho de tomate temperado: rende um jantar bonito numa panela só.', [
+    'Tomates maduros|3 unidades|tomate', 'Ovos|4 unidades|ovo', 'Queijo|50 g ralado ou em cubos|queijo?', CEBOLA, ALHO, OLEO, SAL, PIMENTA, VERDE],
+    ['Pique a cebola, o alho e os tomates.',
+      ['Refogue a cebola e o alho no óleo.', 120, { f: 'medio' }],
+      ['Junte os tomates, o sal e a pimenta e cozinhe até virar molho.', 480, { f: 'medio', m: 'Mexa e amasse os tomates' }],
+      ['Abra 4 buracos no molho, quebre um ovo em cada um, espalhe o queijo e tampe.', 360, { f: 'baixo' }],
+      'Quando as claras estiverem firmes, finalize com cheiro-verde e sirva com pão.']],
+  ['frango-acebolado', 'Frango acebolado', 'fogao', 25, 'Fácil', 'Filé de frango douradinho coberto de cebola macia: simples, barato e muito saboroso.', [
+    'Filé de frango|400 g|frango', 'Cebolas|2 grandes|cebola', ALHO, OLEO, SAL, PIMENTA, 'Limão|1/2 unidade|limao?'],
+    ['Tempere o frango com sal, alho amassado, pimenta e limão. Corte as cebolas em rodelas.',
+      ['Aqueça o óleo e doure o frango de um lado.', 300, { f: 'alto', m: 'Vire os filés' }],
+      ['Doure o outro lado até cozinhar por dentro.', 300, { f: 'medio' }],
+      ['Retire o frango e refogue as cebolas na mesma frigideira até ficarem macias.', 300, { f: 'medio' }],
+      ['Volte o frango, cubra com a cebola e deixe pegar gosto com a panela tampada.', 120, { f: 'baixo' }]]],
+  ['galinhada', 'Galinhada', 'fogao', 40, 'Médio', 'Arroz e frango cozidos juntos com açafrão: comida de vó, numa panela só.', [
+    'Frango em pedaços|500 g|frango', 'Arroz cru|1 xícara|arroz', 'Açafrão (cúrcuma)|1 colher de chá|acafrao/curcuma?', 'Tomate|1 unidade|tomate?', CEBOLA, ALHO, OLEO, SAL, VERDE, 'Água fervente|2 xícaras|*'],
+    ['Tempere o frango com sal e alho. Pique cebola e tomate.',
+      ['Doure o frango no óleo em panela grande.', 480, { f: 'alto', m: 'Vire os pedaços' }],
+      ['Junte cebola, tomate e açafrão e refogue.', 180, { f: 'medio' }],
+      ['Acrescente o arroz e refogue mais um pouco.', 60, { f: 'medio' }],
+      ['Cubra com a água fervente, acerte o sal, tampe e cozinhe até secar.', 1200, { f: 'baixo' }],
+      'Desligue, deixe descansar 5 minutos tampado e finalize com cheiro-verde.']],
+  ['risoto-frango', 'Risoto de frango', 'fogao', 35, 'Médio', 'Cremoso de verdade, feito com arroz comum e queijo para dar liga.', [
+    'Peito de frango cozido e desfiado|1 xícara|frango', 'Arroz cru|1 xícara|arroz', 'Queijo ralado|1/2 xícara|queijo', 'Manteiga|1 colher de sopa|manteiga?', CEBOLA, ALHO, OLEO, SAL, 'Água ou caldo quente|4 xícaras|*'],
+    ['Pique a cebola e o alho. Deixe a água ou o caldo quente numa panela ao lado.',
+      ['Refogue a cebola e o alho no óleo.', 120, { f: 'medio' }],
+      ['Junte o arroz e mexa por 1 minuto.', 60, { f: 'medio' }],
+      ['Adicione o caldo aos poucos, uma concha por vez, mexendo sempre.', 1080, { f: 'medio', m: 'Coloque mais caldo e mexa' }],
+      ['Junte o frango e acerte o sal.', 120, { f: 'baixo' }],
+      'Desligue, misture o queijo e a manteiga e sirva bem cremoso.']],
+  ['arroz-frito-legumes', 'Arroz frito com legumes', 'fogao', 15, 'Fácil', 'Aproveita sobras de arroz e legumes num salteado colorido com ovo, estilo chinês.', [
+    'Arroz cozido (de preferência de ontem)|2 xícaras|arroz', 'Ovos|2 unidades|ovo', 'Legumes picados|1 xícara|' + LEGUMES, 'Molho shoyu|2 colheres de sopa|shoyu?', ALHO, OLEO, SAL],
+    ['Pique os legumes em cubinhos e o alho.',
+      ['Mexa os ovos na frigideira com um fio de óleo e reserve.', 90, { f: 'medio' }],
+      ['Salteie o alho e os legumes no óleo.', 240, { f: 'alto', m: 'Mexa os legumes' }],
+      ['Junte o arroz, o shoyu e os ovos e salteie até aquecer.', 180, { f: 'alto' }],
+      'Prove o sal e sirva.']],
+  ['macarrao-molho-tomate', 'Macarrão ao molho de tomate', 'fogao', 25, 'Fácil', 'Molho de tomate caseiro, rápido e perfumado, com queijo ralado por cima.', [
+    'Macarrão|250 g|macarrao/massa/espaguete/penne', 'Tomates maduros|4 unidades (ou 1 lata de molho)|tomate/molho', 'Queijo ralado|a gosto|queijo?', CEBOLA, ALHO, OLEO, SAL, 'Manjericão|algumas folhas|manjericao?'],
+    [['Ferva bastante água com sal e cozinhe o macarrão pelo tempo do pacote.', 600, { f: 'alto', m: 'Mexa o macarrão' }],
+      ['Enquanto isso, refogue a cebola e o alho no óleo.', 120, { f: 'medio' }],
+      ['Junte os tomates picados e o sal e cozinhe até desmanchar.', 600, { f: 'medio', m: 'Amasse os tomates' }],
+      'Escorra o macarrão, misture ao molho e sirva com queijo e manjericão.']],
+  ['macarrao-alho-oleo', 'Macarrão alho e óleo', 'fogao', 15, 'Fácil', 'Três ingredientes, quinze minutos e um prato que todo mundo ama.', [
+    'Macarrão (espaguete)|250 g|macarrao/massa/espaguete', 'Alho|5 dentes|*', 'Azeite ou óleo|4 colheres de sopa|*', SAL, VERDE, 'Queijo ralado|a gosto|queijo?'],
+    [['Cozinhe o macarrão em água fervente com sal.', 540, { f: 'alto', m: 'Mexa o macarrão' }],
+      'Enquanto cozinha, fatie o alho bem fino.',
+      ['Doure o alho no azeite em fogo baixo, sem queimar.', 120, { f: 'baixo' }],
+      'Escorra o macarrão, misture ao alho e finalize com cheiro-verde e queijo.']],
+  ['pf-arroz-feijao-bife', 'Bife acebolado com arroz e feijão', 'fogao', 20, 'Fácil', 'O PF brasileiro: bife suculento no ponto, com o arroz e o feijão que você já tem.', [
+    'Bifes de carne|2 unidades|carne/bife', 'Arroz cozido|2 xícaras|arroz?', 'Feijão cozido|2 conchas|feijao?', CEBOLA, ALHO, OLEO, SAL, PIMENTA],
+    ['Tempere os bifes com sal, alho e pimenta. Corte a cebola em rodelas.',
+      ['Aqueça bem a frigideira com o óleo e sele os bifes.', 150, { f: 'alto', m: 'Vire os bifes' }],
+      ['Retire os bifes e refogue a cebola na mesma frigideira.', 180, { f: 'medio' }],
+      ['Aqueça o arroz e o feijão.', 240, { f: 'medio' }],
+      'Monte o prato com arroz, feijão e o bife coberto de cebola.']],
+  ['carne-moida-refogada', 'Carne moída refogada', 'fogao', 25, 'Fácil', 'Carne moída bem temperada com tomate: vai com arroz, no pão ou no macarrão.', [
+    'Carne moída|400 g|carne', 'Tomate|2 unidades|tomate', CEBOLA, ALHO, OLEO, SAL, PIMENTA, VERDE],
+    ['Pique a cebola, o alho e o tomate.',
+      ['Doure a carne moída no óleo, soltando os grãos.', 480, { f: 'alto', m: 'Solte a carne com a colher' }],
+      ['Junte cebola e alho e refogue.', 120, { f: 'medio' }],
+      ['Acrescente o tomate, o sal e um pouco de água e cozinhe tampado.', 600, { f: 'baixo' }],
+      'Finalize com cheiro-verde.']],
+  ['strogonoff-frango', 'Strogonoff de frango', 'fogao', 30, 'Fácil', 'Cremoso e rápido, com creme de leite e batata palha se tiver.', [
+    'Peito de frango em cubos|400 g|frango', 'Creme de leite|1 caixinha|creme', 'Molho de tomate ou ketchup|3 colheres de sopa|tomate/molho/ketchup', 'Arroz cozido|para servir|arroz?', CEBOLA, ALHO, OLEO, SAL],
+    ['Corte o frango em cubos e tempere com sal e alho.',
+      ['Doure o frango no óleo.', 480, { f: 'alto', m: 'Mexa o frango' }],
+      ['Junte a cebola picada e refogue.', 120, { f: 'medio' }],
+      ['Adicione o molho de tomate e cozinhe um pouco.', 180, { f: 'medio' }],
+      ['Desligue o fogo, misture o creme de leite e volte só para aquecer, sem ferver.', 120, { f: 'baixo' }],
+      'Sirva com arroz (e batata palha, se tiver).']],
+  ['frango-xadrez', 'Frango xadrez', 'fogao', 25, 'Médio', 'Frango em cubos com pimentões e cebola no molho shoyu, igual ao de restaurante.', [
+    'Peito de frango em cubos|400 g|frango', 'Pimentão|1 unidade|pimentao/' + LEGUMES, 'Molho shoyu|3 colheres de sopa|shoyu?', 'Amido de milho|1 colher de sopa|amido/maisena?', 'Amendoim|2 colheres de sopa|amendoim?', 'Cebola|1 unidade|cebola', ALHO, OLEO],
+    ['Corte o frango, o pimentão e a cebola em cubos. Dissolva o amido em meio copo de água com o shoyu.',
+      ['Doure o frango no óleo bem quente.', 360, { f: 'alto', m: 'Mexa o frango' }],
+      ['Junte alho, cebola e pimentão e salteie.', 180, { f: 'alto' }],
+      ['Despeje o molho de shoyu e mexa até engrossar.', 120, { f: 'medio' }],
+      'Finalize com amendoim e sirva com arroz.']],
+  ['cuscuz-ovo-queijo', 'Cuscuz com ovo e queijo', 'fogao', 20, 'Fácil', 'Cuscuz nordestino fofinho na cuscuzeira, com ovo e queijo derretendo por cima.', [
+    'Flocão de milho|1 xícara|cuscuz/flocao/milho', 'Ovos|2 unidades|ovo', 'Queijo coalho ou muçarela|2 fatias|queijo', 'Manteiga|1 colher de sopa|manteiga?', SAL, 'Água|1/2 xícara|*'],
+    ['Misture o flocão com o sal e a água e deixe hidratar 10 minutos.',
+      ['Coloque na cuscuzeira com água embaixo e cozinhe no vapor.', 480, { f: 'medio' }],
+      ['Enquanto isso, frite os ovos.', 180, { f: 'medio' }],
+      'Sirva o cuscuz com manteiga, o queijo por cima e os ovos.']],
+  ['tapioca-queijo', 'Tapioca de queijo', 'fogao', 10, 'Fácil', 'Tapioca crocante por fora e queijo derretido por dentro, sem óleo.', [
+    'Goma de tapioca|6 colheres de sopa|tapioca/goma', 'Queijo|3 fatias|queijo', 'Manteiga|a gosto|manteiga?'],
+    ['Peneire a goma para soltar.',
+      ['Espalhe a goma numa frigideira antiaderente sem óleo e deixe firmar.', 90, { f: 'medio' }],
+      ['Vire, coloque o queijo de um lado e dobre.', 60, { f: 'baixo' }],
+      'Passe manteiga por cima, se quiser, e sirva quente.']],
+  ['misto-quente', 'Misto-quente', 'fogao', 8, 'Fácil', 'Pão douradinho na manteiga com presunto e queijo derretendo.', [
+    'Pão de forma|4 fatias|pao', 'Queijo|4 fatias|queijo', 'Presunto|4 fatias|presunto', 'Manteiga|1 colher de sopa|manteiga?'],
+    ['Monte os sanduíches com queijo e presunto e passe manteiga por fora.',
+      ['Doure na frigideira apertando com uma espátula.', 120, { f: 'baixo', m: 'Vire os sanduíches' }],
+      ['Doure o outro lado até o queijo derreter.', 120, { f: 'baixo' }],
+      'Corte na diagonal e sirva.']],
+  ['bolinho-arroz', 'Bolinho de arroz', 'fogao', 30, 'Fácil', 'Sobra de arroz que vira bolinho crocante com queijo: ninguém acredita que era resto.', [
+    'Arroz cozido|2 xícaras|arroz', 'Ovo|1 unidade|ovo', 'Farinha de trigo|4 colheres de sopa|farinha/trigo', 'Queijo ralado|1/2 xícara|queijo', VERDE, SAL, 'Óleo para fritar|o suficiente|*'],
+    ['Amasse o arroz e misture com ovo, farinha, queijo, cheiro-verde e sal até dar liga.',
+      'Faça bolinhos com duas colheres.',
+      ['Frite em óleo quente, poucos por vez, até dourar.', 240, { f: 'medio', m: 'Vire os bolinhos' }],
+      'Escorra em papel-toalha e sirva quentinho.']],
+  ['sopa-legumes', 'Sopa de legumes', 'fogao', 35, 'Fácil', 'Sopa reconfortante que aproveita qualquer legume da geladeira.', [
+    'Legumes variados (batata, cenoura, abobrinha...)|3 xícaras picados|' + LEGUMES + '/batata/mandioquinha', 'Macarrão pequeno|1/2 xícara|macarrao/massa?', CEBOLA, ALHO, OLEO, SAL, VERDE, 'Água|1 litro|*'],
+    ['Descasque e corte os legumes em cubos.',
+      ['Refogue cebola e alho no óleo.', 120, { f: 'medio' }],
+      ['Junte os legumes, a água e o sal e cozinhe tampado.', 1200, { f: 'medio', m: 'Mexa a sopa' }],
+      ['Se usar macarrão, junte e cozinhe até ficar macio.', 480, { f: 'medio' }],
+      'Finalize com cheiro-verde.']],
+  ['legumes-salteados', 'Legumes salteados', 'fogao', 15, 'Fácil', 'Legumes crocantes salteados no alho: acompanhamento leve e colorido.', [
+    'Legumes (brócolis, cenoura, abobrinha...)|3 xícaras|' + LEGUMES, ALHO, OLEO, SAL, 'Molho shoyu|1 colher de sopa|shoyu?'],
+    ['Corte os legumes em pedaços parecidos. Os mais duros (cenoura) em pedaços menores.',
+      ['Salteie o alho e os legumes duros no óleo bem quente.', 240, { f: 'alto', m: 'Mexa os legumes' }],
+      ['Junte os legumes macios e salteie até ficarem al dente.', 180, { f: 'alto' }],
+      'Tempere com sal ou shoyu e sirva.']],
+  ['batata-salteada', 'Batata salteada na manteiga', 'fogao', 25, 'Fácil', 'Batatas douradas por fora e macias por dentro, com alho e salsinha.', [
+    'Batatas|3 médias|batata', 'Manteiga|1 colher de sopa|manteiga?', ALHO, OLEO, SAL, VERDE],
+    ['Corte as batatas em cubos médios.',
+      ['Cozinhe as batatas em água com sal até ficarem quase macias.', 480, { f: 'alto' }],
+      ['Escorra e doure na frigideira com óleo e manteiga.', 480, { f: 'medio', m: 'Vire as batatas' }],
+      ['Junte o alho picado nos últimos minutos.', 60, { f: 'medio' }],
+      'Finalize com sal e cheiro-verde.']],
+  ['peixe-grelhado', 'Peixe grelhado com limão', 'fogao', 15, 'Fácil', 'Filé de peixe dourado na frigideira, temperado só com limão e alho.', [
+    'Filés de peixe|2 unidades|peixe/tilapia/merluza/pescada', 'Limão|1 unidade|limao?', 'Arroz cozido|para servir|arroz?', ALHO, OLEO, SAL, PIMENTA],
+    ['Tempere o peixe com sal, alho, pimenta e limão e deixe 10 minutos.',
+      ['Aqueça bem a frigideira com óleo e coloque os filés.', 180, { f: 'medio', m: 'Vire os filés com cuidado' }],
+      ['Doure o outro lado.', 180, { f: 'medio' }],
+      'Sirva com arroz e rodelas de limão.']],
+  ['panqueca-carne', 'Panqueca de carne', 'fogao', 40, 'Médio', 'Massa fininha recheada de carne moída, coberta de molho e queijo.', [
+    'Farinha de trigo|1 xícara|farinha/trigo', 'Leite|1 xícara|leite', 'Ovo|1 unidade|ovo', 'Carne moída|300 g|carne', 'Molho de tomate|1 xícara|tomate/molho', 'Queijo ralado|1/2 xícara|queijo?', CEBOLA, OLEO, SAL],
+    ['Bata no liquidificador farinha, leite, ovo e sal até ficar liso.',
+      ['Refogue a carne com cebola e sal até cozinhar.', 600, { f: 'alto', m: 'Solte a carne' }],
+      ['Despeje uma concha de massa na frigideira untada e espalhe.', 60, { f: 'medio', m: 'Vire a panqueca' }],
+      'Repita com toda a massa. Recheie cada panqueca com carne e enrole.',
+      ['Cubra com o molho e o queijo e aqueça tampado.', 300, { f: 'baixo' }]]],
+
+  // ---------- FORNO ----------
+  ['frango-assado-batatas', 'Frango assado com batatas', 'forno', 60, 'Fácil', 'Almoço de domingo numa assadeira só: frango dourado e batatas que pegam o tempero.', [
+    'Coxas e sobrecoxas|4 pedaços|frango', 'Batatas|3 médias|batata', 'Limão|1 unidade|limao?', ALHO, OLEO, SAL, PIMENTA, 'Alecrim ou páprica|a gosto|alecrim/paprica?'],
+    [['Ligue o forno a 200 °C.', 600, { c: 200 }],
+      'Tempere o frango com sal, alho, limão, pimenta e páprica. Corte as batatas em gomos.',
+      ['Arrume tudo na assadeira com óleo, cubra com papel-alumínio e asse.', 1800, { c: 200 }],
+      ['Retire o papel e asse até dourar.', 900, { c: 200, m: 'Vire as batatas' }],
+      'Confira se o frango está cozido junto ao osso e sirva.']],
+  ['lasanha', 'Lasanha à bolonhesa', 'forno', 60, 'Médio', 'Camadas de massa, molho de carne e queijo gratinado: prato de festa feito em casa.', [
+    'Massa de lasanha|250 g|macarrao/massa/lasanha', 'Carne moída|400 g|carne', 'Molho de tomate|2 xícaras|tomate/molho', 'Queijo muçarela|300 g|queijo', 'Presunto|200 g|presunto?', CEBOLA, ALHO, OLEO, SAL],
+    [['Refogue a carne com cebola e alho, junte o molho e cozinhe.', 900, { f: 'medio' }],
+      ['Ligue o forno a 200 °C.', 600, { c: 200 }],
+      'Monte camadas no refratário: molho, massa, presunto, queijo. Termine com molho e queijo.',
+      ['Cubra com papel-alumínio e asse.', 1500, { c: 200 }],
+      ['Retire o papel e gratine.', 600, { c: 200 }],
+      ['Deixe descansar antes de cortar.', 300]]],
+  ['escondidinho-carne', 'Escondidinho de carne', 'forno', 50, 'Médio', 'Purê cremoso de batata escondendo carne moída temperada, com queijo gratinado.', [
+    'Batatas|4 médias|batata/mandioca/aipim', 'Carne moída|400 g|carne', 'Leite|1/2 xícara|leite?', 'Queijo ralado ou muçarela|1 xícara|queijo', 'Manteiga|1 colher de sopa|manteiga?', CEBOLA, ALHO, OLEO, SAL],
+    [['Cozinhe as batatas em água com sal até ficarem bem macias.', 1200, { f: 'alto' }],
+      ['Enquanto isso, refogue a carne com cebola e alho.', 600, { f: 'alto' }],
+      'Amasse as batatas com leite, manteiga e sal até virar purê.',
+      'No refratário: carne embaixo, purê por cima e queijo.',
+      ['Asse a 200 °C até gratinar.', 900, { c: 200 }]]],
+  ['torta-frango', 'Torta de frango de liquidificador', 'forno', 55, 'Fácil', 'Massa batida no liquidificador e recheio de frango: fácil e rende bem.', [
+    'Frango cozido e desfiado|2 xícaras|frango', 'Ovos|3 unidades|ovo', 'Leite|1 xícara|leite', 'Farinha de trigo|1 xícara|farinha/trigo', 'Óleo|1/2 xícara|*', 'Fermento em pó|1 colher de sopa|fermento', 'Tomate|1 unidade|tomate?', 'Milho ou ervilha|1/2 xícara|milho/ervilha?', CEBOLA, SAL],
+    [['Ligue o forno a 180 °C.', 600, { c: 180 }],
+      'Misture o frango com tomate, cebola, milho e sal.',
+      'Bata ovos, leite, óleo, farinha e sal no liquidificador. Junte o fermento e misture.',
+      'Na forma untada: metade da massa, o recheio e o resto da massa.',
+      ['Asse até dourar e o palito sair limpo.', 2400, { c: 180 }]]],
+  ['pizza-caseira', 'Pizza caseira de frigideira e forno', 'forno', 50, 'Médio', 'Massa caseira simples coberta de molho, queijo e tomate.', [
+    'Farinha de trigo|2 xícaras|farinha/trigo', 'Fermento biológico ou químico|1 colher de sopa|fermento', 'Molho de tomate|1/2 xícara|tomate/molho', 'Queijo muçarela|200 g|queijo', 'Tomate|1 unidade|tomate?', 'Orégano|a gosto|oregano?', OLEO, SAL, 'Água morna|3/4 xícara|*'],
+    ['Misture farinha, fermento, sal, óleo e água até a massa desgrudar das mãos.',
+      ['Deixe a massa descansar coberta.', 1200],
+      ['Ligue o forno a 220 °C.', 600, { c: 220 }],
+      'Abra a massa na assadeira, espalhe o molho, o queijo, o tomate e o orégano.',
+      ['Asse até a borda dourar e o queijo borbulhar.', 900, { c: 220 }]]],
+  ['arroz-forno', 'Arroz de forno', 'forno', 35, 'Fácil', 'A sobra de arroz vira prato principal com frango, molho e queijo gratinado.', [
+    'Arroz cozido|3 xícaras|arroz', 'Frango desfiado ou presunto|1 xícara|frango/presunto', 'Queijo muçarela|150 g|queijo', 'Molho de tomate|1/2 xícara|tomate/molho', 'Milho ou ervilha|1/2 xícara|milho/ervilha?', 'Creme de leite|1/2 caixinha|creme?', SAL],
+    [['Ligue o forno a 200 °C.', 600, { c: 200 }],
+      'Misture o arroz com frango, molho, milho, creme de leite e sal.',
+      'Coloque num refratário e cubra com o queijo.',
+      ['Asse até o queijo dourar.', 1200, { c: 200 }]]],
+  ['fritada-legumes', 'Fritada de forno com legumes', 'forno', 35, 'Fácil', 'Ovos batidos com legumes e queijo, assados até ficarem fofos.', [
+    'Ovos|5 unidades|ovo', 'Legumes picados|2 xícaras|' + LEGUMES + '/batata/espinafre', 'Queijo ralado|1/2 xícara|queijo', 'Leite|1/4 xícara|leite?', CEBOLA, SAL, PIMENTA, OLEO],
+    [['Ligue o forno a 180 °C.', 600, { c: 180 }],
+      ['Refogue rapidamente os legumes com a cebola.', 240, { f: 'medio' }],
+      'Bata os ovos com leite, sal e pimenta e misture os legumes e o queijo.',
+      ['Despeje numa forma untada e asse até firmar.', 1500, { c: 180 }]]],
+  ['legumes-assados', 'Legumes assados', 'forno', 40, 'Fácil', 'Legumes caramelizados no forno com azeite e ervas: doces e tostadinhos.', [
+    'Legumes (abóbora, cenoura, abobrinha, cebola, batata...)|4 xícaras|' + LEGUMES + '/batata/cebola', ALHO, 'Azeite|3 colheres de sopa|*', SAL, PIMENTA, 'Ervas secas|a gosto|alecrim/oregano/tomilho?'],
+    [['Ligue o forno a 200 °C.', 600, { c: 200 }],
+      'Corte os legumes em pedaços parecidos e tempere com azeite, sal, alho e ervas.',
+      ['Espalhe na assadeira sem amontoar e asse.', 1500, { c: 200, m: 'Vire os legumes' }],
+      'Sirva quente como acompanhamento ou com arroz.']],
+  ['batata-recheada', 'Batata recheada', 'forno', 60, 'Médio', 'Batata assada recheada com frango cremoso e queijo derretido.', [
+    'Batatas grandes|2 unidades|batata', 'Frango desfiado|1 xícara|frango', 'Queijo muçarela|100 g|queijo', 'Requeijão ou creme de leite|2 colheres de sopa|requeijao/creme?', SAL, OLEO],
+    [['Cozinhe as batatas inteiras com casca até ficarem macias.', 1500, { f: 'alto' }],
+      ['Ligue o forno a 200 °C.', 600, { c: 200 }],
+      'Corte uma tampa e retire parte do miolo. Misture o miolo com frango, requeijão e sal.',
+      'Recheie as batatas e cubra com queijo.',
+      ['Asse até gratinar.', 900, { c: 200 }]]],
+  ['bruschetta', 'Bruschetta de tomate', 'forno', 15, 'Fácil', 'Pão tostado com tomate temperado e queijo: entrada rápida ou lanche.', [
+    'Pão (francês ou italiano)|4 fatias|pao', 'Tomates|2 unidades|tomate', 'Queijo|4 fatias|queijo?', 'Manjericão ou orégano|a gosto|manjericao/oregano?', ALHO, 'Azeite|2 colheres de sopa|*', SAL],
+    ['Pique os tomates e tempere com azeite, sal e manjericão.',
+      'Esfregue alho nas fatias de pão e regue com azeite.',
+      ['Toste o pão no forno a 200 °C.', 420, { c: 200 }],
+      'Cubra com o tomate (e o queijo, se usar) e sirva.']],
+  ['peixe-assado', 'Peixe assado com tomate', 'forno', 35, 'Fácil', 'Filés assados sobre rodelas de tomate e cebola: leve e suculento.', [
+    'Filés de peixe|4 unidades|peixe/tilapia/merluza/pescada', 'Tomates|2 unidades|tomate', 'Cebola|1 unidade|cebola?', 'Limão|1 unidade|limao?', 'Batatas|2 unidades|batata?', ALHO, 'Azeite|2 colheres de sopa|*', SAL],
+    [['Ligue o forno a 200 °C.', 600, { c: 200 }],
+      'Tempere o peixe com sal, alho e limão.',
+      'Forre o refratário com rodelas de batata, tomate e cebola. Coloque o peixe por cima e regue com azeite.',
+      ['Cubra com papel-alumínio e asse.', 1200, { c: 200 }],
+      'Confira se o peixe se desfaz em lascas e sirva.']],
+  ['pao-de-queijo', 'Pão de queijo', 'forno', 45, 'Médio', 'Pão de queijo mineiro, crocante por fora e puxa-puxa por dentro.', [
+    'Polvilho (doce ou azedo)|2 xícaras|polvilho', 'Queijo ralado|1 xícara|queijo', 'Leite|1/2 xícara|leite', 'Ovo|1 unidade|ovo', 'Óleo|1/4 xícara|*', SAL],
+    [['Ferva o leite com o óleo e o sal.', 180, { f: 'medio' }],
+      'Escalde o polvilho com essa mistura e misture bem. Espere amornar.',
+      'Junte o ovo e o queijo e sove até ficar homogêneo. Faça bolinhas com as mãos untadas.',
+      ['Ligue o forno a 200 °C.', 600, { c: 200 }],
+      ['Asse até dourar.', 1500, { c: 200 }]]],
+  ['bolo-cenoura', 'Bolo de cenoura', 'forno', 50, 'Fácil', 'Fofinho, alaranjado e feito no liquidificador. Com cobertura de chocolate fica ainda melhor.', [
+    'Cenouras|3 médias|cenoura', 'Farinha de trigo|2 xícaras|farinha/trigo', 'Fermento em pó|1 colher de sopa|fermento', 'Ovos|3 unidades|ovo', 'Açúcar|1 e 1/2 xícara|acucar', 'Óleo|1/2 xícara|*', 'Chocolate em pó (cobertura)|4 colheres de sopa|chocolate/cacau?'],
+    [['Ligue o forno a 180 °C e unte uma forma com óleo e farinha.', 600, { c: 180 }],
+      'Bata no liquidificador as cenouras em pedaços, os ovos e o óleo até ficar liso.',
+      'Numa tigela, misture o creme com o açúcar e a farinha. Por último, junte o fermento delicadamente.',
+      ['Despeje na forma e asse sem abrir o forno nos primeiros 30 minutos.', 2400, { c: 180 }],
+      'Faça o teste do palito: saiu limpo, está pronto. Se quiser, cubra com chocolate derretido com um pouco de leite e açúcar.']],
+  ['pudim', 'Pudim de leite', 'forno', 70, 'Médio', 'Pudim lisinho com calda de caramelo, feito em banho-maria.', [
+    'Leite condensado|1 lata|leite condensado/condensado', 'Leite|a mesma medida da lata|leite', 'Ovos|3 unidades|ovo', 'Açúcar (calda)|1 xícara|acucar'],
+    [['Derreta o açúcar na forma de pudim até virar caramelo e espalhe.', 300, { f: 'medio' }],
+      ['Ligue o forno a 180 °C.', 600, { c: 180 }],
+      'Bata leite condensado, leite e ovos no liquidificador e despeje na forma.',
+      ['Cubra com papel-alumínio e asse em banho-maria.', 3000, { c: 180 }],
+      ['Espere esfriar e leve à geladeira antes de desenformar.', 7200]]],
+
+  // ---------- AIRFRYER ----------
+  ['batata-frita-airfryer', 'Batata frita na airfryer', 'airfryer', 25, 'Fácil', 'Crocante por fora e macia por dentro, com só uma colher de óleo.', [
+    'Batatas|3 médias|batata', OLEO, SAL, 'Páprica|a gosto|paprica?'],
+    ['Corte as batatas em palitos, lave e seque muito bem com pano.',
+      'Misture com o óleo, o sal e a páprica.',
+      ['Preaqueça a airfryer a 200 °C.', 180, { c: 200 }],
+      ['Frite sem encher demais o cesto.', 1200, { c: 200, m: 'Chacoalhe o cesto' }],
+      'Sirva na hora.']],
+  ['frango-empanado-airfryer', 'Frango empanado crocante', 'airfryer', 25, 'Fácil', 'Frango à milanesa sequinho, sem fritura.', [
+    'Filé de frango em tiras|400 g|frango', 'Ovo|1 unidade|ovo', 'Farinha de rosca ou flocos de milho|1 xícara|farinha de rosca/rosca/farinha/flocos', ALHO, SAL, PIMENTA, OLEO],
+    ['Tempere o frango com sal, alho e pimenta.',
+      'Passe cada tira no ovo batido e depois na farinha de rosca, apertando bem.',
+      ['Preaqueça a airfryer a 200 °C.', 180, { c: 200 }],
+      ['Borrife óleo e asse sem sobrepor.', 960, { c: 200, m: 'Vire as tiras' }],
+      'Sirva com limão ou molho.']],
+  ['asinha-frango-airfryer', 'Asinha de frango', 'airfryer', 30, 'Fácil', 'Asinhas douradas e suculentas, temperadas com alho e páprica.', [
+    'Asinhas ou coxinhas da asa|500 g|frango/asa', ALHO, 'Limão|1/2 unidade|limao?', 'Páprica|1 colher de chá|paprica?', SAL, PIMENTA],
+    ['Tempere as asinhas com alho, limão, páprica, sal e pimenta.',
+      ['Preaqueça a airfryer a 200 °C.', 180, { c: 200 }],
+      ['Asse as asinhas sem sobrepor.', 1500, { c: 200, m: 'Vire as asinhas' }],
+      'Confira se estão bem douradas e sirva.']],
+  ['legumes-airfryer', 'Legumes crocantes na airfryer', 'airfryer', 20, 'Fácil', 'Legumes tostadinhos em 15 minutos, ótimos como acompanhamento.', [
+    'Legumes (brócolis, abobrinha, cenoura...)|3 xícaras|' + LEGUMES, OLEO, SAL, ALHO],
+    ['Corte os legumes em pedaços parecidos e tempere com óleo, sal e alho.',
+      ['Preaqueça a airfryer a 200 °C.', 180, { c: 200 }],
+      ['Asse os legumes.', 900, { c: 200, m: 'Chacoalhe o cesto' }],
+      'Sirva quente.']],
+  ['pao-alho-airfryer', 'Pão de alho', 'airfryer', 12, 'Fácil', 'Pão francês recheado de pasta de alho e queijo, gratinado na airfryer.', [
+    'Pães franceses|2 unidades|pao', 'Manteiga ou maionese|3 colheres de sopa|manteiga/maionese', 'Alho|3 dentes|*', 'Queijo ralado|2 colheres de sopa|queijo?', VERDE],
+    ['Misture a manteiga com alho amassado, queijo e cheiro-verde.',
+      'Faça cortes nos pães sem separar e recheie com a pasta.',
+      ['Asse a 180 °C até dourar.', 480, { c: 180 }],
+      'Sirva quente.']],
+  ['linguica-cebola-airfryer', 'Linguiça com cebola', 'airfryer', 25, 'Fácil', 'Linguiça dourada com cebola caramelizada, sem sujar fogão.', [
+    'Linguiça (toscana ou calabresa)|400 g|linguica/calabresa', 'Cebolas|2 unidades|cebola'],
+    ['Corte a linguiça em pedaços e a cebola em gomos.',
+      ['Asse a linguiça a 200 °C.', 720, { c: 200, m: 'Chacoalhe o cesto' }],
+      ['Junte a cebola e asse mais.', 480, { c: 200 }],
+      'Sirva com pão ou arroz.']],
+  ['peixe-empanado-airfryer', 'Peixe empanado na airfryer', 'airfryer', 20, 'Fácil', 'Iscas de peixe crocantes e sequinhas, com limão.', [
+    'Filés de peixe|400 g|peixe/tilapia/merluza/pescada', 'Ovo|1 unidade|ovo', 'Farinha de rosca|1 xícara|farinha de rosca/rosca/farinha', 'Limão|1 unidade|limao?', SAL, OLEO],
+    ['Corte o peixe em iscas e tempere com sal e limão.',
+      'Passe no ovo e na farinha de rosca.',
+      ['Preaqueça a airfryer a 200 °C.', 180, { c: 200 }],
+      ['Borrife óleo e asse.', 720, { c: 200, m: 'Vire as iscas' }],
+      'Sirva com limão.']],
+  ['pastel-airfryer', 'Pastel de queijo na airfryer', 'airfryer', 15, 'Fácil', 'Pastel sequinho e estufado, sem óleo de fritura.', [
+    'Massa de pastel|6 discos|massa de pastel/pastel/massa', 'Queijo muçarela|150 g|queijo', 'Presunto ou carne|opcional|presunto/carne?', 'Orégano|a gosto|oregano?', OLEO],
+    ['Recheie os discos com queijo, feche e aperte as bordas com um garfo.',
+      'Pincele óleo dos dois lados.',
+      ['Preaqueça a airfryer a 200 °C.', 180, { c: 200 }],
+      ['Asse os pastéis sem sobrepor.', 600, { c: 200, m: 'Vire os pastéis' }],
+      'Espere 1 minuto antes de morder: o recheio fica muito quente.']],
+  ['torrada-queijo-airfryer', 'Torrada com queijo gratinado', 'airfryer', 8, 'Fácil', 'Lanche de 8 minutos: pão crocante com queijo borbulhando.', [
+    'Pão (de forma ou francês)|4 fatias|pao', 'Queijo|4 fatias|queijo', 'Tomate|1 unidade|tomate?', 'Orégano|a gosto|oregano?'],
+    ['Cubra o pão com o queijo, o tomate e o orégano.',
+      ['Asse a 180 °C até o queijo derreter e dourar.', 360, { c: 180 }],
+      'Sirva na hora.']],
+  ['batata-doce-airfryer', 'Batata-doce crocante', 'airfryer', 25, 'Fácil', 'Palitos de batata-doce douradinhos, ótimos para acompanhar ou beliscar.', [
+    'Batatas-doces|2 médias|batata doce/batata-doce/batata', OLEO, SAL, 'Páprica ou alecrim|a gosto|paprica/alecrim?'],
+    ['Corte a batata-doce em palitos e tempere com óleo, sal e páprica.',
+      ['Preaqueça a airfryer a 200 °C.', 180, { c: 200 }],
+      ['Asse sem encher demais o cesto.', 1200, { c: 200, m: 'Chacoalhe o cesto' }],
+      'Sirva quente.']],
+
+  // ---------- MICRO-ONDAS ----------
+  ['bolo-caneca', 'Bolo de caneca de chocolate', 'microondas', 5, 'Fácil', 'Bolo fofinho em 3 minutos, direto na caneca.', [
+    'Ovo|1 unidade|ovo', 'Farinha de trigo|4 colheres de sopa|farinha/trigo', 'Açúcar|3 colheres de sopa|acucar', 'Chocolate em pó|2 colheres de sopa|chocolate/cacau', 'Leite|3 colheres de sopa|leite', 'Óleo|2 colheres de sopa|*', 'Fermento em pó|1 colher de café|fermento'],
+    ['Na caneca, misture bem o ovo, o óleo e o leite.',
+      'Junte açúcar, chocolate e farinha e mexa até ficar liso. Por último, o fermento.',
+      ['Leve ao micro-ondas em potência alta.', 150, { w: 100 }],
+      ['Espere 1 minuto antes de comer.', 60]]],
+  ['ovo-mexido-caneca', 'Ovo mexido na caneca', 'microondas', 3, 'Fácil', 'Café da manhã em 2 minutos, sem panela para lavar.', [
+    'Ovos|2 unidades|ovo', 'Queijo|1 fatia picada|queijo?', 'Leite|1 colher de sopa|leite?', SAL],
+    ['Na caneca untada, bata os ovos com leite e sal.',
+      ['Leve ao micro-ondas.', 45, { w: 100, m: 'Abra e mexa' }],
+      ['Junte o queijo, mexa e volte mais um pouco.', 30, { w: 100 }],
+      'Mexa e sirva.']],
+  ['batata-microondas', 'Batata com queijo no micro-ondas', 'microondas', 12, 'Fácil', 'Batata macia aberta com queijo derretido, pronta em 10 minutos.', [
+    'Batata|1 grande|batata', 'Queijo|2 fatias|queijo', 'Manteiga|1 colher de chá|manteiga?', SAL, VERDE],
+    ['Lave a batata e fure com um garfo em vários pontos.',
+      ['Cozinhe no micro-ondas num prato.', 300, { w: 100, m: 'Vire a batata' }],
+      'Abra a batata, tempere com sal e manteiga e coloque o queijo.',
+      ['Volte para derreter o queijo.', 45, { w: 100 }],
+      'Finalize com cheiro-verde.']],
+  ['macarrao-caneca', 'Macarrão com queijo na caneca', 'microondas', 8, 'Fácil', 'Mac and cheese de caneca: cremoso, rápido e sem panela.', [
+    'Macarrão pequeno|1/2 xícara|macarrao/massa', 'Leite|1/4 xícara|leite', 'Queijo ralado|1/4 xícara|queijo', SAL, 'Água|1/2 xícara|*'],
+    ['Na caneca grande, coloque o macarrão, a água e o sal.',
+      ['Cozinhe no micro-ondas.', 120, { w: 100, m: 'Abra e mexa' }],
+      ['Mexa e cozinhe mais, até o macarrão ficar macio.', 120, { w: 100 }],
+      ['Junte o leite e o queijo, mexa e aqueça.', 40, { w: 100 }],
+      'Mexa bem e espere 1 minuto.']],
+  ['brigadeiro-microondas', 'Brigadeiro de colher', 'microondas', 8, 'Fácil', 'Brigadeiro cremoso sem ficar mexendo na panela.', [
+    'Leite condensado|1 lata|leite condensado/condensado', 'Chocolate em pó|2 colheres de sopa|chocolate/cacau', 'Manteiga|1 colher de sopa|manteiga?'],
+    ['Misture tudo numa tigela de vidro grande.',
+      ['Leve ao micro-ondas.', 120, { w: 100, m: 'Abra e mexa' }],
+      ['Mexa e volte até engrossar.', 120, { w: 100 }],
+      'Deixe amornar e coma de colher.']],
+  ['legumes-vapor-microondas', 'Legumes no vapor', 'microondas', 8, 'Fácil', 'Legumes no ponto, coloridos e sem perder o sabor.', [
+    'Legumes (brócolis, cenoura, vagem...)|3 xícaras|' + LEGUMES, 'Azeite|1 colher de sopa|*', SAL, 'Água|3 colheres de sopa|*'],
+    ['Corte os legumes, coloque numa tigela de vidro com a água e tampe com prato.',
+      ['Cozinhe no micro-ondas.', 240, { w: 100, m: 'Mexa os legumes' }],
+      'Escorra e tempere com azeite e sal.']],
+  ['cuscuz-microondas', 'Cuscuz rápido no micro-ondas', 'microondas', 6, 'Fácil', 'Cuscuz fofinho sem cuscuzeira, com ovo para acompanhar.', [
+    'Flocão de milho|1/2 xícara|cuscuz/flocao/milho', 'Ovo|1 unidade|ovo?', 'Manteiga|1 colher de chá|manteiga?', SAL, 'Água|1/4 xícara|*'],
+    ['Misture o flocão com a água e o sal e deixe hidratar 5 minutos.',
+      ['Cubra e leve ao micro-ondas.', 90, { w: 100 }],
+      ['Numa caneca untada, bata o ovo com sal e cozinhe.', 50, { w: 100 }],
+      'Solte o cuscuz com um garfo, passe manteiga e sirva com o ovo.']],
+  ['arroz-sobras-microondas', 'Arroz temperado de sobras', 'microondas', 6, 'Fácil', 'Junta o arroz e o frango de ontem num prato novo e saboroso.', [
+    'Arroz cozido|1 e 1/2 xícara|arroz', 'Frango desfiado|1/2 xícara|frango/carne', 'Milho ou ervilha|1/4 xícara|milho/ervilha?', 'Requeijão|1 colher de sopa|requeijao/creme?', SAL, VERDE],
+    ['Misture tudo numa tigela que possa ir ao micro-ondas.',
+      ['Aqueça coberto.', 120, { w: 100, m: 'Abra e mexa' }],
+      'Finalize com cheiro-verde.']],
+
+  // ---------- PRATO FRIO ----------
+  ['salpicao', 'Salpicão de frango', 'frio', 25, 'Fácil', 'Frango desfiado com legumes e maionese, cremoso e crocante com batata palha.', [
+    'Frango cozido e desfiado|2 xícaras|frango', 'Cenoura ralada|1 unidade|cenoura', 'Milho|1/2 xícara|milho', 'Maionese|1/2 xícara|maionese', 'Uva-passa|2 colheres de sopa|passa?', 'Batata palha|1 xícara|batata palha/batata?', SAL, VERDE],
+    ['Misture o frango, a cenoura, o milho e a uva-passa.',
+      'Junte a maionese e o sal e mexa bem.',
+      ['Leve à geladeira para ficar bem gelado.', 1200],
+      'Na hora de servir, cubra com batata palha e cheiro-verde.']],
+  ['salada-caprese', 'Salada caprese', 'frio', 10, 'Fácil', 'Tomate, muçarela e manjericão com azeite: fresca e elegante.', [
+    'Tomates|2 unidades|tomate', 'Muçarela (de búfala ou comum)|150 g|queijo/mucarela', 'Manjericão|algumas folhas|manjericao?', 'Azeite|2 colheres de sopa|*', SAL, PIMENTA],
+    ['Fatie os tomates e o queijo em rodelas.',
+      'Intercale tomate e queijo num prato.',
+      'Tempere com sal, pimenta, azeite e folhas de manjericão.']],
+  ['sanduiche-natural', 'Sanduíche natural de frango', 'frio', 15, 'Fácil', 'Leve e prático: frango, cenoura e alface no pão de forma.', [
+    'Pão de forma|4 fatias|pao', 'Frango desfiado|1 xícara|frango', 'Cenoura ralada|1/2 xícara|cenoura?', 'Maionese ou requeijão|3 colheres de sopa|maionese/requeijao', 'Alface|algumas folhas|alface?', SAL],
+    ['Misture o frango, a cenoura, a maionese e o sal.',
+      'Recheie o pão com a pasta e a alface.',
+      'Corte ao meio e sirva, ou embrulhe para levar.']],
+  ['salada-arroz', 'Salada de arroz', 'frio', 15, 'Fácil', 'Arroz frio colorido com tomate, pepino e milho: ótima para dias quentes.', [
+    'Arroz cozido e frio|2 xícaras|arroz', 'Tomate|1 unidade|tomate', 'Pepino|1/2 unidade|pepino?', 'Milho|1/2 xícara|milho?', 'Azeite|2 colheres de sopa|*', 'Limão|1/2 unidade|limao?', SAL, VERDE],
+    ['Pique o tomate e o pepino em cubinhos.',
+      'Misture com o arroz e o milho.',
+      'Tempere com azeite, limão, sal e cheiro-verde.',
+      ['Leve à geladeira antes de servir.', 900]]],
+  ['salada-ovo', 'Salada de ovo', 'frio', 20, 'Fácil', 'Ovos cozidos com maionese e cebolinha, ótima sobre torradas.', [
+    'Ovos|4 unidades|ovo', 'Maionese|3 colheres de sopa|maionese', 'Pão ou torradas|para servir|pao?', VERDE, SAL, PIMENTA],
+    [['Cozinhe os ovos em água fervente.', 600, { f: 'alto' }],
+      'Esfrie em água gelada, descasque e pique.',
+      'Misture com maionese, sal, pimenta e cebolinha.',
+      'Sirva sobre torradas ou pão.']],
+  ['wrap-frango', 'Wrap de frango', 'frio', 15, 'Fácil', 'Rap10 recheado de frango e salada: lanche completo em minutos.', [
+    'Pão folha (rap10 ou tortilha)|2 unidades|wrap/rap10/tortilha/pao', 'Frango desfiado|1 xícara|frango', 'Tomate|1 unidade|tomate', 'Alface|algumas folhas|alface?', 'Requeijão ou maionese|2 colheres de sopa|requeijao/maionese?', SAL],
+    ['Tempere o frango com sal e misture o requeijão.',
+      'Espalhe no pão folha com alface e tomate fatiado.',
+      'Enrole bem apertado e corte ao meio.']],
+  ['salada-macarrao', 'Salada de macarrão', 'frio', 25, 'Fácil', 'Macarrão frio com tomate, queijo e azeitonas: rende bem e vai na marmita.', [
+    'Macarrão parafuso ou penne|200 g|macarrao/massa', 'Tomate-cereja ou tomate|1 xícara|tomate', 'Queijo em cubos|100 g|queijo', 'Azeitonas|1/4 xícara|azeitona?', 'Azeite|3 colheres de sopa|*', SAL, 'Manjericão|a gosto|manjericao?'],
+    [['Cozinhe o macarrão em água com sal.', 600, { f: 'alto' }],
+      'Escorra e passe em água fria.',
+      'Misture com tomate, queijo, azeitonas, azeite, sal e manjericão.',
+      ['Leve à geladeira.', 900]]],
+  ['vinagrete-torradas', 'Vinagrete com torradas', 'frio', 15, 'Fácil', 'Vinagrete fresquinho para beliscar com torradas ou acompanhar churrasco.', [
+    'Tomates|2 unidades|tomate', 'Cebola|1 unidade|cebola', 'Pimentão|1/2 unidade|pimentao?', 'Pão ou torradas|para servir|pao?', 'Vinagre|2 colheres de sopa|vinagre?', 'Azeite|2 colheres de sopa|*', SAL, VERDE],
+    ['Pique tomate, cebola e pimentão em cubinhos.',
+      'Tempere com vinagre, azeite, sal e cheiro-verde.',
+      ['Deixe descansar na geladeira para pegar gosto.', 600],
+      'Sirva com torradas.']],
+  ['salada-folhas', 'Salada verde completa', 'frio', 15, 'Fácil', 'Folhas, legumes e ovo cozido: salada que sustenta.', [
+    'Alface|1 pé|alface/folhas/rucula', 'Tomate|1 unidade|tomate', 'Pepino|1/2 unidade|pepino?', 'Cenoura ralada|1/2 xícara|cenoura?', 'Ovos|2 unidades|ovo?', 'Azeite|2 colheres de sopa|*', 'Limão|1/2 unidade|limao?', SAL],
+    [['Cozinhe os ovos em água fervente.', 600, { f: 'alto' }],
+      'Lave e seque as folhas. Fatie tomate e pepino.',
+      'Monte a salada e cubra com os ovos em quartos.',
+      'Tempere com azeite, limão e sal na hora de servir.']],
+  ['iogurte-granola-frutas', 'Iogurte com granola e frutas', 'frio', 5, 'Fácil', 'Café da manhã nutritivo montado em 5 minutos.', [
+    'Iogurte natural|1 pote|iogurte', 'Granola ou aveia|4 colheres de sopa|granola/aveia', 'Banana|1 unidade|banana/fruta', 'Morangos ou outra fruta|1/2 xícara|morango/fruta?', 'Mel|1 colher de sopa|mel?'],
+    ['Corte as frutas.',
+      'Monte em camadas: iogurte, frutas e granola.',
+      'Finalize com mel.']],
+  ['salada-frutas', 'Salada de frutas', 'frio', 15, 'Fácil', 'Frutas da estação picadas com suco de laranja: sobremesa leve.', [
+    'Frutas variadas (manga, banana, maçã, mamão, uva...)|4 xícaras|fruta/banana/manga/maca/mamao/uva/laranja/abacaxi/morango', 'Suco de laranja|1/2 xícara|laranja?', 'Mel ou leite condensado|a gosto|mel/condensado?'],
+    ['Lave e pique as frutas em cubos.',
+      'Misture com o suco de laranja para não escurecer.',
+      ['Leve à geladeira.', 900],
+      'Sirva com mel ou leite condensado.']],
+  ['tabule', 'Tabule', 'frio', 30, 'Fácil', 'Salada árabe refrescante de trigo, tomate, pepino e hortelã.', [
+    'Trigo para quibe|1/2 xícara|trigo/quibe', 'Tomate|2 unidades|tomate', 'Pepino|1 unidade|pepino', 'Salsinha e hortelã|1 maço pequeno|salsinha/hortela', 'Limão|1 unidade|limao', 'Azeite|3 colheres de sopa|*', SAL],
+    [['Hidrate o trigo em água quente.', 1200],
+      'Escorra apertando bem. Pique tomate, pepino, salsinha e hortelã.',
+      'Misture tudo com limão, azeite e sal.',
+      'Sirva gelado.']],
+]

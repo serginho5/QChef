@@ -1,0 +1,867 @@
+[
+{
+"id": "amb-frio-1",
+"nome": "Ambiente: Prato frio",
+"ambiente": "frio",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"frio"
+]
+},
+{
+"id": "amb-frio-2",
+"nome": "Ambiente: Prato frio",
+"ambiente": "frio",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"frio"
+]
+},
+{
+"id": "amb-frio-3",
+"nome": "Ambiente: Prato frio",
+"ambiente": "frio",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"frio"
+]
+},
+{
+"id": "amb-fogao-1",
+"nome": "Ambiente: Fogão",
+"ambiente": "fogao",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"fogao"
+]
+},
+{
+"id": "amb-fogao-2",
+"nome": "Ambiente: Fogão",
+"ambiente": "fogao",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"fogao"
+]
+},
+{
+"id": "amb-fogao-3",
+"nome": "Ambiente: Fogão",
+"ambiente": "fogao",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"fogao"
+]
+},
+{
+"id": "amb-forno-1",
+"nome": "Ambiente: Forno",
+"ambiente": "forno",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"forno"
+]
+},
+{
+"id": "amb-forno-2",
+"nome": "Ambiente: Forno",
+"ambiente": "forno",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"forno"
+]
+},
+{
+"id": "amb-forno-3",
+"nome": "Ambiente: Forno",
+"ambiente": "forno",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"forno"
+]
+},
+{
+"id": "amb-airfryer-1",
+"nome": "Ambiente: Airfryer",
+"ambiente": "airfryer",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"airfryer"
+]
+},
+{
+"id": "amb-airfryer-2",
+"nome": "Ambiente: Airfryer",
+"ambiente": "airfryer",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"airfryer"
+]
+},
+{
+"id": "amb-airfryer-3",
+"nome": "Ambiente: Airfryer",
+"ambiente": "airfryer",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"airfryer"
+]
+},
+{
+"id": "amb-microondas-1",
+"nome": "Ambiente: Micro-ondas",
+"ambiente": "microondas",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"microondas"
+]
+},
+{
+"id": "amb-microondas-2",
+"nome": "Ambiente: Micro-ondas",
+"ambiente": "microondas",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"microondas"
+]
+},
+{
+"id": "amb-microondas-3",
+"nome": "Ambiente: Micro-ondas",
+"ambiente": "microondas",
+"tipo": "ambiente",
+"etiquetas": [
+"ambiente",
+"microondas"
+]
+},
+{
+"id": "arroz-ovo-frito",
+"nome": "Arroz com ovo frito",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"ovo",
+"rapido",
+"fogao"
+]
+},
+{
+"id": "omelete-queijo-tomate",
+"nome": "Omelete de queijo e tomate",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"ovo",
+"queijo",
+"tomate",
+"rapido",
+"fogao"
+]
+},
+{
+"id": "ovos-mexidos-tomate",
+"nome": "Ovos mexidos com tomate",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"ovo",
+"tomate",
+"pao",
+"rapido",
+"fogao"
+]
+},
+{
+"id": "shakshuka",
+"nome": "Ovos no molho de tomate",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"ovo",
+"tomate",
+"queijo",
+"fogao"
+]
+},
+{
+"id": "frango-acebolado",
+"nome": "Frango acebolado",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"cebola",
+"fogao"
+]
+},
+{
+"id": "galinhada",
+"nome": "Galinhada",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"frango",
+"fogao"
+]
+},
+{
+"id": "risoto-frango",
+"nome": "Risoto de frango",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"frango",
+"queijo",
+"fogao"
+]
+},
+{
+"id": "arroz-frito-legumes",
+"nome": "Arroz frito com legumes",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"ovo",
+"legumes",
+"sobras",
+"fogao"
+]
+},
+{
+"id": "macarrao-molho-tomate",
+"nome": "Macarrão ao molho de tomate",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"massa",
+"tomate",
+"queijo",
+"fogao"
+]
+},
+{
+"id": "macarrao-alho-oleo",
+"nome": "Macarrão alho e óleo",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"massa",
+"economico",
+"rapido",
+"fogao"
+]
+},
+{
+"id": "pf-arroz-feijao-bife",
+"nome": "Arroz, feijão e bife",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"feijao",
+"carne",
+"fogao"
+]
+},
+{
+"id": "carne-moida-refogada",
+"nome": "Carne moída refogada",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"carne",
+"tomate",
+"fogao"
+]
+},
+{
+"id": "strogonoff-frango",
+"nome": "Strogonoff de frango",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"arroz",
+"creme",
+"fogao"
+]
+},
+{
+"id": "frango-xadrez",
+"nome": "Frango xadrez",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"legumes",
+"fogao"
+]
+},
+{
+"id": "cuscuz-ovo-queijo",
+"nome": "Cuscuz com ovo e queijo",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"cuscuz",
+"ovo",
+"queijo",
+"fogao"
+]
+},
+{
+"id": "tapioca-queijo",
+"nome": "Tapioca de queijo",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"tapioca",
+"queijo",
+"rapido",
+"fogao"
+]
+},
+{
+"id": "misto-quente",
+"nome": "Misto-quente",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"pao",
+"queijo",
+"presunto",
+"rapido",
+"fogao"
+]
+},
+{
+"id": "bolinho-arroz",
+"nome": "Bolinho de arroz",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"queijo",
+"sobras",
+"fogao"
+]
+},
+{
+"id": "sopa-legumes",
+"nome": "Sopa de legumes",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"legumes",
+"economico",
+"fogao"
+]
+},
+{
+"id": "legumes-salteados",
+"nome": "Legumes salteados",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"legumes",
+"rapido",
+"fogao"
+]
+},
+{
+"id": "batata-salteada",
+"nome": "Batata salteada",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"batata",
+"fogao"
+]
+},
+{
+"id": "peixe-grelhado",
+"nome": "Peixe grelhado",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"peixe",
+"arroz",
+"fogao"
+]
+},
+{
+"id": "panqueca-carne",
+"nome": "Panqueca de carne",
+"ambiente": "fogao",
+"tipo": "prato",
+"etiquetas": [
+"carne",
+"tomate",
+"queijo",
+"fogao"
+]
+},
+{
+"id": "frango-assado-batatas",
+"nome": "Frango assado com batatas",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"batata",
+"forno"
+]
+},
+{
+"id": "lasanha",
+"nome": "Lasanha",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"massa",
+"carne",
+"queijo",
+"forno"
+]
+},
+{
+"id": "escondidinho-carne",
+"nome": "Escondidinho de carne",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"carne",
+"batata",
+"queijo",
+"forno"
+]
+},
+{
+"id": "torta-frango",
+"nome": "Torta de frango",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"ovo",
+"forno"
+]
+},
+{
+"id": "pizza-caseira",
+"nome": "Pizza caseira",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"queijo",
+"tomate",
+"forno"
+]
+},
+{
+"id": "arroz-forno",
+"nome": "Arroz de forno",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"frango",
+"queijo",
+"sobras",
+"forno"
+]
+},
+{
+"id": "fritada-legumes",
+"nome": "Fritada de forno",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"ovo",
+"legumes",
+"queijo",
+"forno"
+]
+},
+{
+"id": "legumes-assados",
+"nome": "Legumes assados",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"legumes",
+"forno"
+]
+},
+{
+"id": "batata-recheada",
+"nome": "Batata recheada",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"batata",
+"frango",
+"queijo",
+"forno"
+]
+},
+{
+"id": "bruschetta",
+"nome": "Bruschetta",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"pao",
+"tomate",
+"queijo",
+"forno"
+]
+},
+{
+"id": "peixe-assado",
+"nome": "Peixe assado",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"peixe",
+"tomate",
+"forno"
+]
+},
+{
+"id": "pao-de-queijo",
+"nome": "Pão de queijo",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"queijo",
+"lanche",
+"forno"
+]
+},
+{
+"id": "bolo-cenoura",
+"nome": "Bolo de cenoura",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"doce",
+"cenoura",
+"forno"
+]
+},
+{
+"id": "pudim",
+"nome": "Pudim de leite",
+"ambiente": "forno",
+"tipo": "prato",
+"etiquetas": [
+"doce",
+"ovo",
+"leite",
+"forno"
+]
+},
+{
+"id": "batata-frita-airfryer",
+"nome": "Batata frita",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"batata",
+"rapido",
+"airfryer"
+]
+},
+{
+"id": "frango-empanado-airfryer",
+"nome": "Frango empanado crocante",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"ovo",
+"airfryer"
+]
+},
+{
+"id": "asinha-frango-airfryer",
+"nome": "Asinha de frango",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"airfryer"
+]
+},
+{
+"id": "legumes-airfryer",
+"nome": "Legumes crocantes",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"legumes",
+"rapido",
+"airfryer"
+]
+},
+{
+"id": "pao-alho-airfryer",
+"nome": "Pão de alho",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"pao",
+"lanche",
+"airfryer"
+]
+},
+{
+"id": "linguica-cebola-airfryer",
+"nome": "Linguiça com cebola",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"linguica",
+"cebola",
+"airfryer"
+]
+},
+{
+"id": "peixe-empanado-airfryer",
+"nome": "Peixe empanado",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"peixe",
+"airfryer"
+]
+},
+{
+"id": "pastel-airfryer",
+"nome": "Pastel",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"queijo",
+"lanche",
+"airfryer"
+]
+},
+{
+"id": "torrada-queijo-airfryer",
+"nome": "Torrada com queijo gratinado",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"pao",
+"queijo",
+"rapido",
+"airfryer"
+]
+},
+{
+"id": "batata-doce-airfryer",
+"nome": "Batata-doce crocante",
+"ambiente": "airfryer",
+"tipo": "prato",
+"etiquetas": [
+"batata-doce",
+"economico",
+"airfryer"
+]
+},
+{
+"id": "bolo-caneca",
+"nome": "Bolo de caneca",
+"ambiente": "microondas",
+"tipo": "prato",
+"etiquetas": [
+"doce",
+"rapido",
+"microondas"
+]
+},
+{
+"id": "ovo-mexido-caneca",
+"nome": "Ovo mexido na caneca",
+"ambiente": "microondas",
+"tipo": "prato",
+"etiquetas": [
+"ovo",
+"queijo",
+"rapido",
+"microondas"
+]
+},
+{
+"id": "batata-microondas",
+"nome": "Batata com queijo",
+"ambiente": "microondas",
+"tipo": "prato",
+"etiquetas": [
+"batata",
+"queijo",
+"microondas"
+]
+},
+{
+"id": "macarrao-caneca",
+"nome": "Macarrão com queijo na caneca",
+"ambiente": "microondas",
+"tipo": "prato",
+"etiquetas": [
+"massa",
+"queijo",
+"rapido",
+"microondas"
+]
+},
+{
+"id": "brigadeiro-microondas",
+"nome": "Brigadeiro de colher",
+"ambiente": "microondas",
+"tipo": "prato",
+"etiquetas": [
+"doce",
+"rapido",
+"microondas"
+]
+},
+{
+"id": "legumes-vapor-microondas",
+"nome": "Legumes no vapor",
+"ambiente": "microondas",
+"tipo": "prato",
+"etiquetas": [
+"legumes",
+"economico",
+"microondas"
+]
+},
+{
+"id": "cuscuz-microondas",
+"nome": "Cuscuz rápido",
+"ambiente": "microondas",
+"tipo": "prato",
+"etiquetas": [
+"cuscuz",
+"ovo",
+"rapido",
+"microondas"
+]
+},
+{
+"id": "arroz-sobras-microondas",
+"nome": "Arroz temperado de sobras",
+"ambiente": "microondas",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"frango",
+"sobras",
+"microondas"
+]
+},
+{
+"id": "salpicao",
+"nome": "Salpicão de frango",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"legumes",
+"frio"
+]
+},
+{
+"id": "salada-caprese",
+"nome": "Salada caprese",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"tomate",
+"queijo",
+"rapido",
+"frio"
+]
+},
+{
+"id": "sanduiche-natural",
+"nome": "Sanduíche natural de frango",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"pao",
+"frango",
+"rapido",
+"frio"
+]
+},
+{
+"id": "salada-arroz",
+"nome": "Salada de arroz",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"arroz",
+"tomate",
+"sobras",
+"frio"
+]
+},
+{
+"id": "salada-ovo",
+"nome": "Salada de ovo",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"ovo",
+"pao",
+"frio"
+]
+},
+{
+"id": "wrap-frango",
+"nome": "Wrap de frango",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"frango",
+"tomate",
+"rapido",
+"frio"
+]
+},
+{
+"id": "salada-macarrao",
+"nome": "Salada de macarrão",
+"ambiente": "frio",
+"tipo": "prato",
+"etiquetas": [
+"massa",
+"tomate",
+"queijo",
+"frio"
+]
+}
+]
