@@ -3,7 +3,7 @@ import { Icone, toast } from '../components/ui.jsx'
 import { BannerInstalar } from '../components/Instalar.jsx'
 import { useEstado, contarAtalhos, getEstado } from '../lib/store.js'
 import { navegar } from '../lib/rota.js'
-import { salvarPedido, lerPedido } from '../lib/pedido.js'
+import { salvarPedido } from '../lib/pedido.js'
 import { consultarUso } from '../lib/api.js'
 import { ATALHOS, AMBIENTES, FILTROS } from '../data/opcoes.js'
 
@@ -12,11 +12,11 @@ const capitalizar = (s) => s.trim().replace(/\s+/g, ' ').replace(/^./, (c) => c.
 export default function Inicio({ usuario }) {
   const perfil = useEstado((s) => s.perfil)
   const atalhosUso = useEstado((s) => s.atalhosUso)
-  const anterior = lerPedido()
-  const [ingredientes, setIngredientes] = useState(anterior?.ingredientes || [])
+  // Cada visita ao Início começa limpa (o pedido anterior continua salvo só para o "Outra receita")
+  const [ingredientes, setIngredientes] = useState([])
   const [texto, setTexto] = useState('')
-  const [ambiente, setAmbiente] = useState(anterior?.ambiente || null)
-  const [filtros, setFiltros] = useState(anterior?.filtros || [])
+  const [ambiente, setAmbiente] = useState(null)
+  const [filtros, setFiltros] = useState([])
   const [uso, setUso] = useState(null)
   const [ouvindo, setOuvindo] = useState(false)
 

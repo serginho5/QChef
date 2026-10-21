@@ -446,3 +446,8 @@ img { display: block; max-width: 100%; }
 .banner-inst .acoes-b .x { font-size: 11.5px; color: rgba(255,255,255,.6); padding: 4px; }
 
 @media (min-width: 560px) { .toast { position: absolute; } }
+
+/* Telas escuras de tela cheia: no celular o pai só tem min-height, então 100% não vale e a tela
+   terminava no meio (ex.: último passo sem cronômetro, com faixa clara embaixo). Usa a altura da tela. */
+.gerando, .cozinha, .bv { min-height: 100vh; min-height: 100dvh; }
+@media (min-width: 560px) { .gerando, .cozinha, .bv { min-height: 100%; } }
