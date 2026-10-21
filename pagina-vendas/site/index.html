@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QChef — sua geladeira vira receita</title>
+<meta name="description" content="Diga o que tem em casa e o QChef cria a receita na hora, para airfryer, micro-ondas, fogão, forno ou prato frio. Passo a passo com cronômetro. R$ 37, pagamento único, 7 dias de garantia.">
+<meta property="og:title" content="QChef — sua geladeira vira receita">
+<meta property="og:description" content="O app que transforma o que você tem em casa em receita, com passo a passo e cronômetro. R$ 37, uma vez só.">
+<meta property="og:image" content="https://appnovidades.com.br/qchef-oferta/img/frango-empanado-airfryer-g.webp">
+<meta name="theme-color" content="#1F2328">
+<link rel="icon" href="img/favicon-48.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" href="fontes/Montserrat-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="img/frango-empanado-airfryer-g.webp" as="image">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* fontes da marca QChef (as mesmas do app) — taste-skill-ignore */
+@font-face { font-family: Montserrat; src: url(fontes/Montserrat-SemiBold.woff2) format('woff2'); font-weight: 500 600; font-display: swap; }
+@font-face { font-family: Montserrat; src: url(fontes/Montserrat-Bold.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: Montserrat; src: url(fontes/Montserrat-ExtraBold.woff2) format('woff2'); font-weight: 800 900; font-display: swap; }
+@font-face { font-family: Nunito; src: url(fontes/NunitoSans.woff2) format('woff2'); font-weight: 200 1000; font-display: swap; }
+
+:root {
+  /* Paleta do app QChef */
+  --laranja: #F47A1F;
+  --laranja-claro: #FF9A2E;
+  --laranja-fundo: #FFF0E2;
+  --laranja-texto: #C2440A;
+  --grafite: #1F2328;
+  --grafite-2: #2C3137;
+  --creme: #FFF8F1;
+  --verde: #2F5A12;
+  --verde-claro: #E9F3DC;
+  --vermelho: #C62E22;
+
+  --bg: var(--creme);
+  --ink: var(--grafite);
+  --accent: var(--laranja);
+
+  --titulo: Montserrat, system-ui, sans-serif;
+  --texto: Nunito, system-ui, sans-serif;
+
+  /* cinco tamanhos */
+  --s-mega: clamp(56px, 8.6vw, 132px);
+  --s-h2: clamp(40px, 6.4vw, 100px);
+  --s-h3: clamp(24px, 2.4vw, 34px);
+  --s-body: clamp(17px, 1.3vw, 20px);
+  --s-small: 15px;
+
+  --margem: clamp(18px, 3vw, 40px);
+  --raio: 12px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-reveal: 800ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--texto); font-size: var(--s-body); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, p, ul, ol, figure, blockquote { margin: 0; }
+h1, h2, h3 { font-family: var(--titulo); font-weight: 800; letter-spacing: -0.035em; line-height: 0.98; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--laranja-claro); outline-offset: 3px; }
+::selection { background: var(--laranja); color: var(--grafite); }
+header, main, footer, section { overflow-x: clip; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 60px; padding: 0 30px; border: 0; border-radius: 999px;
+  background: var(--laranja); color: var(--grafite);
+  font: 800 18px/1 var(--titulo); letter-spacing: -0.01em; text-decoration: none; cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease, color var(--t-hover) ease;
+}
+.btn:hover { background: var(--laranja-claro); }
+.btn:active { transform: scale(0.97); }
+.btn.escuro { background: var(--grafite); color: var(--creme); }
+.btn.escuro:hover { background: var(--grafite-2); }
+.btn.claro { background: var(--creme); color: var(--grafite); }
+.btn.claro:hover { background: #fff; }
+.btn svg { width: 20px; height: 20px; transition: transform var(--t-hover) var(--ease-out); }
+.btn:hover svg { transform: translate(3px, -3px); }
+
+.campo { padding-inline: var(--margem); }
+.grade { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: clamp(12px, 2vw, 28px); }
+
+/* ---------- HERO ---------- */
+.hero { padding: 10px; background: var(--creme); display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; min-height: 100svh; }
+.hero-foto { grid-column: 1 / 11; position: relative; border-radius: var(--raio); overflow: hidden; min-height: calc(100svh - 20px); color: #fff; display: flex; flex-direction: column; }
+.hero-foto > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; transform-origin: 50% 80%; }
+.hero-foto::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 50%; background: rgba(20, 22, 25, 0.55); }
+.hero-foto::after { content: ""; position: absolute; inset: auto 0 0 0; height: 30%; background: rgba(20, 22, 25, 0.42); }
+.hero-topo { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; padding: 28px; }
+.hero-topo img { height: 46px; width: auto; }
+.hero-topo .preco-topo { font: 700 var(--s-small)/1.2 var(--titulo); text-align: right; }
+.hero-topo .preco-topo b { display: block; font-size: 22px; }
+.hero h1 { position: relative; z-index: 1; font-size: var(--s-mega); text-align: center; margin: 0 auto; padding-inline: 24px; max-width: 12ch; }
+.hero-baixo { position: relative; z-index: 1; margin-top: auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 24px; padding: 0 28px 36px; }
+.hero-baixo p { font-size: 18px; line-height: 1.45; max-width: 36ch; }
+.hero-baixo .garantia-mini { justify-self: end; text-align: right; font: 700 var(--s-small)/1.35 var(--titulo); max-width: 22ch; }
+.hero-baixo .btn { min-height: 66px; padding: 0 36px; font-size: 19px; }
+
+.amostras { grid-column: 11 / 13; display: grid; grid-template-rows: repeat(5, 1fr); border-radius: var(--raio); overflow: hidden; }
+.amostras a { display: block; padding: 20px; font: 700 16px/1.25 var(--titulo); text-decoration: none; transition: padding-left var(--t-hover) var(--ease-out); }
+.amostras a:hover { padding-left: 28px; }
+.amostras a span { display: block; font: 500 var(--s-small)/1.35 var(--texto); margin-top: 4px; }
+
+/* ---------- INTRO: escada ---------- */
+.intro { background: var(--grafite); color: var(--creme); min-height: 100svh; display: grid; align-items: center; position: relative; padding-block: 120px; }
+.intro .grade { align-items: start; }
+.escada { grid-column: 1 / 9; font: 800 clamp(24px, 2.5vw, 36px)/1.12 var(--titulo); letter-spacing: -0.02em; }
+.escada span { display: block; }
+.escada span:nth-child(2) { padding-left: 6vw; }
+.escada span:nth-child(3) { padding-left: 12vw; color: var(--laranja-claro); }
+.escada span:nth-child(4) { padding-left: 18vw; }
+.escada span:nth-child(5) { padding-left: 24vw; color: var(--laranja-claro); }
+.intro-fotos { grid-column: 9 / 13; display: grid; gap: 16px; }
+.intro-fotos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--raio); }
+.intro-nota { grid-column: 1 / 7; margin-top: 72px; font-size: var(--s-body); max-width: 46ch; }
+.intro-nota b { color: var(--laranja-claro); }
+
+/* ---------- SHOWCASE: teste ao vivo ---------- */
+.teste { display: grid; grid-template-columns: 1fr 1fr; min-height: 92svh; }
+.teste-esq { background: var(--laranja); color: var(--grafite); padding: clamp(40px, 6vw, 88px) var(--margem); display: flex; flex-direction: column; }
+.teste-esq h2 { font-size: clamp(36px, 4.4vw, 68px); max-width: 11ch; }
+.teste-esq > p { margin-top: 18px; max-width: 40ch; font-weight: 600; }
+.passo-t { font: 800 20px/1.2 var(--titulo); margin: 36px 0 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  min-height: 48px; padding: 0 20px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--laranja-fundo); color: var(--grafite); font: 700 17px/1 var(--titulo);
+  transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease, color var(--t-hover) ease;
+}
+.chip:hover { background: #fff; }
+.chip:active { transform: scale(0.95); }
+.chip[aria-pressed="true"] { background: var(--grafite); color: var(--creme); }
+.teste-dir { background: var(--creme); color: var(--grafite); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+.resultado-foto { position: absolute; inset: 0 0 42% 0; }
+.resultado-foto img { width: 100%; height: 100%; object-fit: cover; transition: opacity 260ms ease, transform 900ms var(--ease-soft); }
+.resultado-foto img.trocando { opacity: 0; transform: scale(1.04); }
+.resultado { position: relative; background: var(--creme); padding: 32px var(--margem) clamp(32px, 4vw, 56px); min-height: 42%; }
+.resultado .meta { font: 700 17px/1.2 var(--titulo); color: var(--laranja-texto); margin-top: 8px; }
+.resultado h3 { font-size: var(--s-h3); letter-spacing: -0.025em; line-height: 1.08; }
+.resultado .desc { margin-top: 10px; max-width: 52ch; }
+.resultado .tem { margin-top: 14px; font-size: var(--s-small); line-height: 1.5; }
+.resultado .tem b { font-family: var(--titulo); }
+.resultado .acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; align-items: center; }
+.resultado .btn.texto { background: transparent; color: var(--grafite); padding: 0 8px; text-decoration: underline; text-underline-offset: 4px; }
+.resultado .btn.texto:hover { color: var(--laranja-texto); }
+.resultado .aviso { margin-top: 16px; font-size: var(--s-small); max-width: 56ch; }
+
+/* ---------- COMO FUNCIONA: blocos que crescem ---------- */
+.como { background: var(--laranja-fundo); color: var(--grafite); padding-block: clamp(96px, 12vw, 180px); }
+.como .grade { align-items: end; row-gap: 22px; }
+.como h2 { grid-column: 1 / 8; grid-row: 1; align-self: start; font-size: var(--s-h2); }
+.bloco { border-radius: var(--raio); overflow: hidden; display: flex; align-items: flex-end; justify-content: center; }
+.bloco img { height: 86%; width: auto; max-width: none; margin-bottom: -12%; }
+.b1 { grid-column: 1 / 4; grid-row: 2; height: 36vh; background: var(--laranja); }
+.b2 { grid-column: 4 / 8; grid-row: 2; height: 50vh; background: var(--verde); }
+.b3 { grid-column: 8 / 13; grid-row: 1 / 3; height: 66vh; background: var(--grafite); }
+.legenda { grid-row: 3; }
+.legenda h3 { font-size: 22px; letter-spacing: -0.02em; line-height: 1.15; }
+.legenda p { margin-top: 6px; max-width: 34ch; }
+.l1 { grid-column: 1 / 4; } .l2 { grid-column: 4 / 8; } .l3 { grid-column: 8 / 13; }
+
+/* ---------- TUDO QUE VEM: título preso ---------- */
+.vem { background: var(--verde); color: var(--creme); padding-block: clamp(96px, 12vw, 180px); }
+.vem .grade { align-items: start; }
+.vem h2 { grid-column: 1 / 7; position: sticky; top: 32px; font-size: clamp(40px, 5.6vw, 88px); }
+.vem h2 + p { display: none; }
+.vem-lista { grid-column: 7 / 13; display: grid; gap: 88px; }
+.item h3 { font-size: var(--s-h3); letter-spacing: -0.025em; line-height: 1.1; }
+.item-linha { display: flex; gap: 28px; margin-top: 22px; align-items: flex-start; }
+.item:nth-child(even) .item-linha { flex-direction: row-reverse; justify-content: flex-end; }
+.item-linha img { width: clamp(160px, 15vw, 220px); aspect-ratio: 3 / 4; object-fit: cover; flex: none; }
+.item-linha ul { list-style: none; padding: 0; display: grid; gap: 14px; }
+.item-linha li { padding-left: 26px; position: relative; }
+.item-linha li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 12px; height: 12px; border-radius: 50%; background: var(--laranja-claro); }
+
+/* ---------- 67 RECEITAS: fotos sobre o título ---------- */
+.receitas { background: var(--vermelho); color: var(--creme); min-height: 100svh; position: relative; overflow: hidden; display: grid; place-items: center; padding-block: 80px; }
+.receitas h2 { position: relative; z-index: 2; font-size: clamp(96px, 14vw, 210px); line-height: 0.85; text-align: center; letter-spacing: -0.05em; }
+.foto-impressa { position: absolute; width: 20vw; max-width: 320px; aspect-ratio: 3 / 4; padding: 8px; background: var(--creme); transition: transform 200ms var(--ease-out); z-index: 1; }
+.foto-impressa img { width: 100%; height: 100%; object-fit: cover; }
+.foto-impressa:hover { transform: rotate(0) scale(1.03) !important; z-index: 3; }
+.p1 { left: 4%; top: 12%; transform: rotate(-8deg); }
+.p2 { right: 4%; top: 8%; transform: rotate(6deg); }
+.p3 { right: 8%; bottom: -8%; width: 15vw; transform: rotate(-3deg); }
+.p4 { left: 10%; bottom: -12%; width: 14vw; transform: rotate(4deg); }
+.receitas-nota { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; bottom: 28px; max-width: 40ch; font-size: var(--s-small); font-weight: 600; z-index: 2; }
+
+/* ---------- PREÇO: o ingresso ---------- */
+.preco { background: var(--creme); padding-block: clamp(96px, 12vw, 170px); }
+.preco > h2 { font-size: var(--s-h2); padding-inline: var(--margem); max-width: 14ch; }
+.preco > .ancora { padding-inline: var(--margem); margin-top: 18px; max-width: 52ch; }
+.ingresso { position: relative; width: min(64vw, 1000px); margin: 64px auto 0; display: grid; grid-template-columns: 7fr 3fr; background: var(--grafite); color: var(--creme); border-radius: var(--raio); min-height: 420px; }
+.ingresso::before, .ingresso::after { content: ""; position: absolute; left: 70%; width: 28px; height: 28px; border-radius: 50%; background: var(--creme); transform: translateX(-50%); }
+.ingresso::before { top: -14px; } .ingresso::after { bottom: -14px; }
+.picote { position: absolute; left: 70%; top: 28px; bottom: 28px; width: 0; transform: translateX(-50%); border-left: 6px dotted var(--creme); }
+.ing-principal { padding: 40px; display: flex; flex-direction: column; }
+.ing-principal h3 { font-size: clamp(30px, 3.6vw, 56px); max-width: 12ch; }
+.ing-lista { list-style: none; padding: 0; margin-top: auto; padding-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px; font-size: 17px; }
+.ing-lista li { padding-left: 24px; position: relative; }
+.ing-lista li::before { content: ""; position: absolute; left: 0; top: 0.45em; width: 12px; height: 12px; border-radius: 50%; background: var(--laranja); }
+.ing-canhoto { padding: 40px 28px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.ing-canhoto .de { font-size: var(--s-small); }
+.ing-canhoto .de s { opacity: 0.8; }
+.ing-canhoto .valor { font: 800 clamp(48px, 6vw, 92px)/0.95 var(--titulo); letter-spacing: -0.04em; margin-top: 6px; }
+.ing-canhoto .valor small { font-size: 0.4em; vertical-align: 0.9em; margin-right: 4px; }
+.ing-canhoto .vez { font: 700 var(--s-small)/1.3 var(--titulo); margin: 8px 0 24px; color: var(--laranja-claro); }
+.ing-canhoto .btn { width: 100%; padding: 0 16px; }
+.ing-canhoto .seguro { font-size: var(--s-small); margin-top: 12px; }
+.pro { width: min(64vw, 1000px); margin: 28px auto 0; background: var(--laranja-fundo); border-radius: var(--raio); padding: 28px 32px; display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.pro p { max-width: 58ch; }
+.pro b { font-family: var(--titulo); }
+.pro a { font: 800 17px/1.2 var(--titulo); color: var(--laranja-texto); text-underline-offset: 4px; }
+
+/* ---------- GARANTIA (selo) ---------- */
+.garantia { background: var(--verde-claro); color: var(--verde); padding-block: clamp(80px, 10vw, 140px); }
+.garantia .grade { align-items: center; }
+.selo { grid-column: 1 / 5; width: 100%; max-width: 360px; color: var(--verde); }
+.garantia-txt { grid-column: 6 / 13; }
+.garantia-txt h2 { font-size: clamp(40px, 5.2vw, 84px); max-width: 12ch; }
+.garantia-txt p { margin-top: 22px; max-width: 50ch; color: var(--grafite); }
+
+/* ---------- CTA: a palavra é o botão ---------- */
+.cta { display: block; position: relative; background: var(--laranja); color: var(--grafite); min-height: 60svh; text-decoration: none; overflow: hidden; transition: background-color 0ms, color 0ms; }
+.cta:hover, .cta:focus-visible { background: var(--grafite); color: var(--laranja); }
+.cta .frase { position: absolute; left: var(--margem); top: 28px; font: 700 20px/1.35 var(--titulo); max-width: 30ch; }
+.cta .seta { position: absolute; right: var(--margem); top: 28px; width: 48px; height: 48px; transition: transform var(--t-hover) var(--ease-out); }
+.cta:hover .seta { transform: translate(6px, -6px); }
+.cta .palavra { position: absolute; left: calc(var(--margem) - 0.04em); bottom: 18px; font: 900 clamp(80px, 20vw, 330px)/0.8 var(--titulo); letter-spacing: -0.06em; white-space: nowrap; }
+
+/* ---------- FAQ ---------- */
+.faq { background: var(--laranja-fundo); padding-block: clamp(96px, 12vw, 170px); }
+.faq .grade { align-items: start; }
+.faq h2 { grid-column: 1 / 5; position: sticky; top: 96px; font-size: clamp(40px, 4.4vw, 68px); max-width: 8ch; }
+.perguntas { grid-column: 5 / 13; display: grid; gap: 8px; }
+details { background: var(--creme); border-radius: var(--raio); transition: background-color var(--t-hover) ease; }
+details[open] { background: var(--laranja); }
+summary { list-style: none; cursor: pointer; min-height: 72px; padding: 22px 64px 22px 24px; position: relative; font: 700 20px/1.3 var(--titulo); letter-spacing: -0.01em; }
+summary::-webkit-details-marker { display: none; }
+summary::before, summary::after { content: ""; position: absolute; right: 26px; top: 50%; width: 16px; height: 3px; background: currentColor; transition: transform var(--t-hover) var(--ease-out); }
+summary::after { transform: rotate(90deg); }
+details[open] summary::after { transform: rotate(0); }
+details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
+
+/* ---------- RODAPÉ ---------- */
+.rodape { background: var(--creme); padding: 10px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px; }
+.t { border-radius: var(--raio); padding: 24px; min-height: 220px; display: flex; flex-direction: column; }
+.t-frase { grid-column: 1 / 5; background: var(--laranja-fundo); }
+.t-frase p { font: 700 24px/1.25 var(--titulo); letter-spacing: -0.01em; }
+.t-frase small { margin-top: auto; font-size: 13px; }
+.t-nav { grid-column: 5 / 8; background: var(--verde-claro); }
+.t-nav ul { list-style: none; padding: 0; display: grid; gap: 8px; }
+.t-nav a { text-decoration: none; } .t-nav a:hover { text-decoration: underline; }
+.t-gar { grid-column: 8 / 10; background: var(--verde); color: var(--creme); font: 700 20px/1.25 var(--titulo); }
+.t-gar span { margin-top: auto; font: 500 var(--s-small)/1.4 var(--texto); }
+.t-mail { grid-column: 10 / 13; background: var(--laranja-fundo); }
+.t-mail a { margin-top: auto; font: 700 20px/1.3 var(--titulo); word-break: break-word; }
+.t-marca { grid-column: 1 / 9; background: var(--grafite); min-height: 320px; align-items: center; justify-content: center; }
+.t-marca img { width: auto; height: 190px; max-width: 90%; }
+.t-convite { grid-column: 9 / 13; background: var(--laranja); color: var(--grafite); min-height: 320px; text-decoration: none; transition: background-color var(--t-hover) ease; }
+.t-convite:hover { background: var(--laranja-claro); }
+.t-convite b { font: 800 28px/1.15 var(--titulo); letter-spacing: -0.02em; max-width: 12ch; }
+.t-convite svg { margin-top: auto; align-self: flex-end; width: 56px; height: 56px; transition: transform var(--t-hover) var(--ease-out); }
+.t-convite:hover svg { transform: translate(6px, -6px); }
+
+/* barra de compra no celular */
+.barra { display: none; }
+
+/* ---------- celular ---------- */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding: 8px; gap: 0; min-height: 0; }
+  .hero-foto { grid-column: 1; min-height: 76svh; border-radius: var(--raio) var(--raio) 0 0; }
+  .hero-topo { padding: 18px; }
+  .hero-topo img { height: 36px; }
+  .hero h1 { font-size: 10.4vw; margin-top: 3vh; max-width: none; padding-inline: 14px; }
+  .hero-baixo { grid-template-columns: 1fr; justify-items: center; padding: 0 18px 24px; gap: 14px; text-align: center; }
+  .hero-baixo p { font-size: 16px; order: 2; }
+  .hero-baixo .garantia-mini { display: none; }
+  .hero-baixo .btn { width: 100%; white-space: nowrap; font-size: 17px; padding: 0 18px; }
+  .amostras { grid-column: 1; grid-template-rows: none; border-radius: 0 0 var(--raio) var(--raio); }
+  .amostras a { padding: 15px 18px; font-size: 15px; min-height: 52px; }
+  .amostras a span { display: none; }
+
+  .intro { min-height: 0; padding-block: 88px; }
+  .escada { grid-column: 1 / -1; font-size: clamp(22px, 4.1vw, 32px); }
+  .escada span:nth-child(2) { padding-left: 5vw; } .escada span:nth-child(3) { padding-left: 10vw; }
+  .escada span:nth-child(4) { padding-left: 15vw; } .escada span:nth-child(5) { padding-left: 20vw; }
+  .intro-fotos { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; margin-top: 40px; }
+  .intro-nota { grid-column: 1 / -1; margin-top: 32px; }
+
+  .teste { grid-template-columns: 1fr; }
+  .teste-esq { padding-block: 64px 40px; }
+  .teste-esq h2 { font-size: 10vw; }
+  .teste-dir { min-height: 0; }
+  .resultado-foto { position: relative; inset: auto; aspect-ratio: 4 / 3; }
+  .resultado { padding-top: 24px; }
+  .resultado .acoes .btn { width: 100%; }
+
+  .como h2 { grid-column: 1 / -1; font-size: 12vw; margin-bottom: 18px; }
+  .b1, .b2, .b3 { grid-column: 1 / -1; grid-row: auto; }
+  .b1 { height: 62vw; } .b2 { height: 78vw; } .b3 { height: 96vw; }
+  .legenda { grid-column: 1 / -1 !important; grid-row: auto; margin-bottom: 28px; }
+  .l1 { order: 2 } .b2 { order: 3 } .l2 { order: 4 } .b3 { order: 5 } .l3 { order: 6 }
+  .como .grade { display: flex; flex-direction: column; align-items: stretch; }
+
+  .vem h2 { grid-column: 1 / -1; position: sticky; top: 0; z-index: 2; background: var(--verde); font-size: 9vw; padding: 12px 0; max-width: none; }
+  .vem-lista { grid-column: 1 / -1; gap: 72px; margin-top: 24px; }
+  .item-linha, .item:nth-child(even) .item-linha { flex-direction: column; }
+  .item-linha img { width: 100%; aspect-ratio: 4 / 3; }
+
+  .receitas { min-height: 86svh; }
+  .receitas { place-items: start center; padding-top: 96px; }
+  .receitas h2 { font-size: 17vw; }
+  .foto-impressa { width: 40vw; }
+  .p1 { left: 6%; top: auto; bottom: 120px; transform: rotate(-6deg); } .p2 { left: auto; right: 6%; top: auto; bottom: 90px; transform: rotate(5deg); }
+  .receitas-nota { bottom: 20px; width: calc(100% - 36px); }
+  .p3, .p4 { display: none; }
+
+  .ingresso { width: calc(100% - 20px); grid-template-columns: 1fr; margin-top: 44px; }
+  .ingresso::before, .ingresso::after { left: auto; top: auto; bottom: auto; transform: none; }
+  .ingresso::before { left: -14px; top: calc(100% - 394px); } .ingresso::after { right: -14px; top: calc(100% - 394px); }
+  .picote { left: 28px; right: 28px; top: calc(100% - 383px); bottom: auto; width: auto; height: 0; transform: none; border-left: 0; border-top: 6px dotted var(--creme); }
+  .ing-principal { padding: 28px 24px 40px; }
+  .ing-principal h3 { font-size: 9vw; }
+  .ing-lista { grid-template-columns: 1fr; }
+  .ing-canhoto { padding: 104px 24px 32px; min-height: 380px; }
+  .ing-canhoto .valor { font-size: 18vw; }
+  .pro { width: calc(100% - 20px); padding: 24px; }
+
+  .selo { grid-column: 1 / -1; max-width: 220px; margin-bottom: 28px; }
+  .garantia-txt { grid-column: 1 / -1; }
+
+  .cta { min-height: 46svh; }
+  .cta .frase { font-size: 17px; max-width: 24ch; }
+  .cta .seta { width: 32px; height: 32px; }
+  .cta .palavra { font-size: 22vw; }
+
+  .faq h2 { grid-column: 1 / -1; position: static; font-size: 11vw; margin-bottom: 28px; max-width: none; }
+  .perguntas { grid-column: 1 / -1; gap: 6px; }
+  summary { font-size: 18px; min-height: 64px; padding: 20px 56px 20px 20px; }
+  details p { padding: 0 20px 20px; font-size: 16px; }
+
+  .rodape { grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px 8px 96px; }
+  .t { min-height: 0; padding: 20px; }
+  .t-marca { grid-column: 1 / -1; order: -2; min-height: 160px; }
+  .t-marca img { height: 110px; }
+  .t-convite { grid-column: 1 / -1; order: -1; min-height: 160px; }
+  .t-nav { grid-column: 1; } .t-mail { grid-column: 2; }
+  .t-gar { grid-column: 1; } .t-frase { grid-column: 2; }
+  .t-frase p { font-size: 18px; }
+  .t-mail a { font-size: 15px; }
+
+  .barra {
+    display: flex; position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); z-index: 20;
+    align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 18px;
+    background: var(--grafite); color: var(--creme); border-radius: 999px; text-decoration: none;
+    transform: translateY(140%); transition: transform 360ms var(--ease-out);
+  }
+  .barra.ver { transform: none; }
+  .barra span { font: 700 15px/1.2 var(--titulo); }
+  .barra span b { display: block; font-size: 18px; }
+  .barra .btn { min-height: 48px; padding: 0 22px; font-size: 16px; }
+}
+
+/* ---------- movimento ---------- */
+@keyframes aproximar { from { transform: scale(1.12); } to { transform: scale(1); } }
+@keyframes respirar { from { transform: scale(1); } to { transform: scale(1.06); } }
+.hero-foto > img { animation: aproximar 1600ms var(--ease-soft) both, respirar 14s 1600ms ease-in-out infinite alternate; }
+.js .sobe { opacity: 0; transform: translateY(26px); transition: opacity var(--t-reveal) var(--ease-out), transform var(--t-reveal) var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
+.js .sobe.dentro { opacity: 1; transform: none; }
+.js .foto-impressa.sobe { transform: translateY(60px) rotate(0); }
+.js .foto-impressa.sobe.dentro.p1 { transform: rotate(-8deg); } .js .foto-impressa.sobe.dentro.p2 { transform: rotate(6deg); }
+.js .foto-impressa.sobe.dentro.p3 { transform: rotate(-3deg); } .js .foto-impressa.sobe.dentro.p4 { transform: rotate(4deg); }
+@media (max-width: 860px) {
+  .js .foto-impressa.sobe.dentro.p1 { transform: rotate(-6deg); } .js .foto-impressa.sobe.dentro.p2 { transform: rotate(5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-foto > img { animation: none; }
+  .js .sobe { transform: none; transition: opacity 300ms ease; }
+  .js .foto-impressa.sobe { transform: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="topo">
+  <div class="hero-foto">
+    <img src="img/frango-empanado-airfryer-g.webp" width="1200" height="900" alt="Tiras de frango empanado douradas com molho e limão, feitas na airfryer">
+    <div class="hero-topo">
+      <img src="img/qchef-logo-horizontal-branca.svg" width="200" height="99" alt="QChef">
+      <div class="preco-topo">Pagamento único<b>R$ 37</b></div>
+    </div>
+    <h1>Sua geladeira vira receita.</h1>
+    <div class="hero-baixo">
+      <p>Diga o que tem em casa e o QChef cria a receita na hora, para airfryer, micro-ondas, fogão ou forno, com passo a passo e cronômetro.</p>
+      <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Quero o QChef por R$ 37
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <div class="garantia-mini">7 dias de garantia. Não gostou, devolvemos tudo.</div>
+    </div>
+  </div>
+  <nav class="amostras" aria-label="Seções">
+    <a href="#como" style="background:var(--laranja-fundo);color:var(--grafite)">Como funciona<span>Três toques e pronto</span></a>
+    <a href="#teste" style="background:var(--laranja);color:var(--grafite)">Teste agora<span>Com o que você tem aí</span></a>
+    <a href="#receitas" style="background:var(--vermelho);color:var(--creme)">67 receitas<span>Livro incluso</span></a>
+    <a href="#vem" style="background:var(--verde);color:var(--creme)">Tudo que vem<span>5 jeitos de cozinhar</span></a>
+    <a href="#preco" style="background:var(--grafite);color:var(--creme)">Preço<span>R$ 37, uma vez só</span></a>
+  </nav>
+</header>
+
+<main>
+<!-- ============ INTRO ============ -->
+<section class="intro campo" aria-label="O problema">
+  <div class="grade">
+    <p class="escada sobe">
+      <span>Você abre a geladeira,</span>
+      <span>vê ovo, arroz e tomate,</span>
+      <span>fecha a porta</span>
+      <span>e pede delivery</span>
+      <span>mais uma vez.</span>
+    </p>
+    <div class="intro-fotos">
+      <img class="sobe" style="--i:2" src="img/arroz-ovo-frito-g.webp" width="1200" height="900" loading="lazy" alt="Arroz com ovo frito de gema mole">
+      <img class="sobe" style="--i:3" src="img/ovos-mexidos-tomate-g.webp" width="1200" height="900" loading="lazy" alt="Ovos mexidos com tomate">
+    </div>
+    <p class="intro-nota sobe" style="--i:4">Esses mesmos três ingredientes viram <b>arroz com ovo frito em 15 minutos</b> ou <b>ovos mexidos com tomate em 10</b>. O problema nunca foi a geladeira. Era não saber o que fazer com ela.</p>
+  </div>
+</section>
+
+<!-- ============ TESTE AO VIVO ============ -->
+<section class="teste" id="teste" aria-labelledby="teste-t">
+  <div class="teste-esq">
+    <h2 id="teste-t" class="sobe">Teste com a sua geladeira</h2>
+    <p class="sobe" style="--i:1">Marque o que você tem agora. A página procura no livro do QChef o prato que dá para fazer.</p>
+    <p class="passo-t sobe" style="--i:2">O que tem aí?</p>
+    <div class="chips sobe" style="--i:3" id="ingredientes" role="group" aria-label="Ingredientes que você tem">
+      <button class="chip" type="button" data-k="frango" aria-pressed="true">Frango</button>
+      <button class="chip" type="button" data-k="ovo" aria-pressed="false">Ovo</button>
+      <button class="chip" type="button" data-k="arroz" aria-pressed="false">Arroz</button>
+      <button class="chip" type="button" data-k="batata" aria-pressed="false">Batata</button>
+      <button class="chip" type="button" data-k="queijo" aria-pressed="false">Queijo</button>
+      <button class="chip" type="button" data-k="tomate" aria-pressed="false">Tomate</button>
+      <button class="chip" type="button" data-k="carne" aria-pressed="false">Carne moída</button>
+      <button class="chip" type="button" data-k="macarrao massa" aria-pressed="false">Macarrão</button>
+      <button class="chip" type="button" data-k="pao" aria-pressed="false">Pão</button>
+      <button class="chip" type="button" data-k="cenoura abobrinha brocolis legume vagem chuchu pimentao" aria-pressed="false">Legumes</button>
+      <button class="chip" type="button" data-k="peixe tilapia" aria-pressed="false">Peixe</button>
+      <button class="chip" type="button" data-k="leite" aria-pressed="false">Leite</button>
+    </div>
+    <p class="passo-t sobe" style="--i:4">Onde vai preparar?</p>
+    <div class="chips sobe" style="--i:5" id="lugares" role="radiogroup" aria-label="Onde vai preparar">
+      <button class="chip" type="button" data-a="" aria-pressed="true">Tanto faz</button>
+      <button class="chip" type="button" data-a="airfryer" aria-pressed="false">Airfryer</button>
+      <button class="chip" type="button" data-a="microondas" aria-pressed="false">Micro-ondas</button>
+      <button class="chip" type="button" data-a="fogao" aria-pressed="false">Fogão</button>
+      <button class="chip" type="button" data-a="forno" aria-pressed="false">Forno</button>
+      <button class="chip" type="button" data-a="frio" aria-pressed="false">Prato frio</button>
+    </div>
+  </div>
+  <div class="teste-dir" aria-live="polite">
+    <div class="resultado-foto"><img id="r-foto" src="img/frango-empanado-airfryer-g.webp" width="1200" height="900" loading="lazy" alt="Frango empanado crocante"></div>
+    <div class="resultado">
+      <h3 id="r-nome">Frango empanado crocante</h3>
+      <p class="meta" id="r-meta">25 min · Airfryer</p>
+      <p class="desc" id="r-desc">Frango à milanesa sequinho, sem fritura.</p>
+      <p class="tem" id="r-tem"><b>Você tem:</b> filé de frango em tiras<br><b>Vai precisar:</b> ovo · farinha de rosca ou flocos de milho</p>
+      <div class="acoes">
+        <a class="btn escuro" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Quero receitas assim todo dia</a>
+        <button class="btn texto" type="button" id="r-outra">Ver outra receita</button>
+      </div>
+      <p class="aviso">Esta é uma das 67 receitas prontas do livro. No app, a IA também cria uma receita nova só para o que você tem, com passo a passo e cronômetro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section class="como campo" id="como" aria-labelledby="como-t">
+  <div class="grade">
+    <h2 id="como-t" class="sobe">Três toques</h2>
+    <div class="bloco b1 sobe" style="--i:1"><img src="img/tela-1.webp" width="614" height="1296" loading="lazy" alt="Tela inicial do QChef com os ingredientes frango, ovo, limão e farinha de rosca"></div>
+    <div class="bloco b2 sobe" style="--i:2"><img src="img/tela-2.webp" width="615" height="1296" loading="lazy" alt="Tela do QChef montando a receita com inteligência artificial"></div>
+    <div class="bloco b3 sobe" style="--i:3"><img src="img/tela-3.webp" width="615" height="1296" loading="lazy" alt="Receita pronta no QChef: frango crocante com limão na airfryer, 15 minutos, 2 porções"></div>
+    <div class="legenda l1 sobe" style="--i:2"><h3>Você conta o que tem</h3><p>Digite ou fale os ingredientes. Arroz, sal e óleo da despensa já entram sozinhos.</p></div>
+    <div class="legenda l2 sobe" style="--i:3"><h3>A IA monta a receita</h3><p>Escolhe tempo, temperatura e quantidades para o que você tem, no aparelho que você escolheu.</p></div>
+    <div class="legenda l3 sobe" style="--i:4"><h3>Você cozinha olhando o celular</h3><p>Ingredientes para marcar, passo a passo grande e cronômetro em cada etapa. Sem adivinhar o ponto.</p></div>
+  </div>
+</section>
+
+<!-- ============ TUDO QUE VEM ============ -->
+<section class="vem campo" id="vem" aria-labelledby="vem-t">
+  <div class="grade">
+    <h2 id="vem-t">Tudo que vem</h2>
+    <div class="vem-lista">
+      <article class="item">
+        <h3 class="sobe">Cinco jeitos de cozinhar</h3>
+        <div class="item-linha">
+          <img class="sobe" style="--i:1" src="img/amb-airfryer.webp" width="800" height="600" loading="lazy" alt="Airfryer aberta na bancada da cozinha">
+          <ul class="sobe" style="--i:2"><li>Airfryer</li><li>Micro-ondas</li><li>Fogão</li><li>Forno</li><li>Prato frio, sem fogo nenhum</li><li>Ou "tanto faz", e o app escolhe</li></ul>
+        </div>
+      </article>
+      <article class="item">
+        <h3 class="sobe">Do seu jeito, todo dia</h3>
+        <div class="item-linha">
+          <img class="sobe" style="--i:1" src="img/strogonoff-frango-g.webp" width="1200" height="900" loading="lazy" alt="Strogonoff de frango com arroz">
+          <ul class="sobe" style="--i:2"><li>Estou com pressa: receitas rápidas</li><li>Econômico: usa só o que tem</li><li>Criativo: algo diferente do de sempre</li><li>Porções para você ou para a família</li></ul>
+        </div>
+      </article>
+      <article class="item">
+        <h3 class="sobe">Modo cozinhando</h3>
+        <div class="item-linha">
+          <img class="sobe" style="--i:1" src="img/tela-4.webp" width="615" height="1296" loading="lazy" alt="Modo cozinhando do QChef com cronômetro de 5 minutos e 40 segundos" style="object-fit:contain;background:var(--grafite)">
+          <ul class="sobe" style="--i:2"><li>Um passo por vez, em letra grande</li><li>Cronômetro em cada etapa</li><li>Avisa a hora de virar ou mexer</li><li>Mostra fogo, temperatura e potência</li></ul>
+        </div>
+      </article>
+      <article class="item">
+        <h3 class="sobe">Seu caderno de receitas</h3>
+        <div class="item-linha">
+          <img class="sobe" style="--i:1" src="img/bolo-caneca-g.webp" width="1200" height="900" loading="lazy" alt="Bolo de caneca feito no micro-ondas">
+          <ul class="sobe" style="--i:2"><li>Favorite as que deram certo</li><li>Histórico do que você já fez</li><li>Livro com 67 receitas com foto</li><li>Funciona no Android e no iPhone</li></ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 67 RECEITAS ============ -->
+<section class="receitas campo" id="receitas" aria-labelledby="receitas-t">
+  <h2 id="receitas-t">67<br>receitas</h2>
+  <figure class="foto-impressa p4 sobe" style="--i:0"><img src="img/pudim-g.webp" width="1200" height="900" loading="lazy" alt="Pudim de leite"></figure>
+  <figure class="foto-impressa p1 sobe" style="--i:1"><img src="img/lasanha-g.webp" width="1200" height="900" loading="lazy" alt="Lasanha gratinada"></figure>
+  <figure class="foto-impressa p2 sobe" style="--i:2"><img src="img/shakshuka-g.webp" width="1200" height="900" loading="lazy" alt="Shakshuka de ovos no molho de tomate"></figure>
+  <figure class="foto-impressa p3 sobe" style="--i:3"><img src="img/pizza-caseira-g.webp" width="1200" height="900" loading="lazy" alt="Pizza caseira"></figure>
+  <p class="receitas-nota">Prontas no app, do PF de arroz, feijão e bife ao pudim. Cada receita com foto, ingredientes e passo a passo, para usar desde o primeiro dia.</p>
+</section>
+
+<!-- ============ PREÇO ============ -->
+<section class="preco" id="preco" aria-labelledby="preco-t">
+  <h2 id="preco-t" class="sobe">Menos que um delivery</h2>
+  <p class="ancora sobe" style="--i:1">Um pedido de delivery para dois passa fácil de R$ 37 e acaba no mesmo dia. O QChef custa isso uma vez e cozinha com você todo mês.</p>
+  <div class="ingresso sobe" style="--i:2">
+    <div class="picote" aria-hidden="true"></div>
+    <div class="ing-principal">
+      <h3>QChef, acesso para sempre</h3>
+      <ul class="ing-lista">
+        <li>20 receitas novas por mês com IA</li>
+        <li>Livro com 67 receitas com foto</li>
+        <li>Airfryer, micro-ondas, fogão, forno e frio</li>
+        <li>Modo cozinhando com cronômetro</li>
+        <li>Android e iPhone</li>
+        <li>Acesso liberado no seu e-mail</li>
+      </ul>
+    </div>
+    <div class="ing-canhoto">
+      <p class="valor"><small>R$</small>37</p>
+      <p class="vez">pagamento único, sem mensalidade</p>
+      <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Comprar agora</a>
+      <p class="seguro">Pix ou cartão · 7 dias de garantia</p>
+    </div>
+  </div>
+  <div class="pro sobe" style="--i:3">
+    <p><b>Cozinha todo dia para a família?</b> O QChef Pro amplia para até 150 receitas por mês por R$ 19,90/mês. Cancele quando quiser.</p>
+    <a href="https://pay.kiwify.com.br/LkcRnMK" data-checkout>Conhecer o QChef Pro</a>
+  </div>
+</section>
+
+<!-- ============ GARANTIA ============ -->
+<section class="garantia campo" aria-labelledby="gar-t">
+  <div class="grade">
+    <svg class="selo sobe" viewBox="0 0 200 200" role="img" aria-label="Selo de garantia de 7 dias">
+      <defs><path id="arco" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0"/></defs>
+      <circle cx="100" cy="100" r="96" fill="currentColor"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#E9F3DC" stroke-width="2"/>
+      <text font-family="Montserrat" font-size="13" font-weight="700" fill="#E9F3DC"><textPath href="#arco" textLength="458" lengthAdjust="spacing">GARANTIA INCONDICIONAL · SEU DINHEIRO DE VOLTA ·</textPath></text>
+      <text x="100" y="104" text-anchor="middle" font-family="Montserrat" font-size="62" font-weight="800" fill="#FFF8F1" letter-spacing="-2">7</text>
+      <text x="100" y="128" text-anchor="middle" font-family="Montserrat" font-size="16" font-weight="700" fill="#FFF8F1" letter-spacing="3">DIAS</text>
+    </svg>
+    <div class="garantia-txt">
+      <h2 id="gar-t" class="sobe" style="--i:1">O risco é todo nosso</h2>
+      <p class="sobe" style="--i:2">Use o QChef por 7 dias. Faça as receitas, teste o modo cozinhando, mostre para a família. Se não gostar, peça o reembolso pela Kiwify e devolvemos 100% do valor, sem pergunta e sem burocracia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<a class="cta" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>
+  <span class="frase">Toque para ir ao pagamento seguro da Kiwify. O acesso chega no seu e-mail em minutos.</span>
+  <svg class="seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg>
+  <span class="palavra" aria-hidden="true">Comprar</span>
+  <span class="sr">Comprar o QChef por R$ 37</span>
+</a>
+
+<!-- ============ FAQ ============ -->
+<section class="faq campo" id="faq" aria-labelledby="faq-t">
+  <div class="grade">
+    <h2 id="faq-t">Ainda com dúvida?</h2>
+    <div class="perguntas">
+      <details name="faq" open><summary>É assinatura? Vou pagar todo mês?</summary><p>Não. O QChef custa R$ 37 uma vez só e o acesso é seu para sempre, com 20 receitas novas por mês. Só o QChef Pro, que é opcional, é mensal.</p></details>
+      <details name="faq"><summary>Preciso saber cozinhar?</summary><p>Não. O app mostra um passo por vez, com cronômetro, fogo e temperatura. Ele avisa quando é hora de virar, mexer ou chacoalhar o cesto da airfryer.</p></details>
+      <details name="faq"><summary>Funciona no meu celular?</summary><p>Sim, no Android e no iPhone. Você abre pelo navegador e instala na tela inicial como um aplicativo, sem ocupar espaço de loja.</p></details>
+      <details name="faq"><summary>Como recebo o acesso?</summary><p>Logo depois do pagamento, a Kiwify confirma a compra e o acesso é liberado para o e-mail que você usou. É só entrar no app com esse mesmo e-mail, pelo Google ou por um link que chega na sua caixa de entrada.</p></details>
+      <details name="faq"><summary>E se eu não tiver airfryer?</summary><p>Tudo bem. O QChef cria receitas para micro-ondas, fogão, forno e até pratos frios, sem fogo. Você escolhe o que tem em casa.</p></details>
+      <details name="faq"><summary>O que acontece quando acabam as 20 receitas do mês?</summary><p>Elas renovam no mês seguinte. Até lá, suas favoritas, seu histórico e as 67 receitas do livro continuam liberados. Se quiser mais, o QChef Pro vai até 150 por mês.</p></details>
+      <details name="faq"><summary>Tem garantia?</summary><p>Tem: 7 dias de garantia incondicional. Se não gostar, peça o reembolso pela Kiwify e você recebe 100% do valor de volta.</p></details>
+      <details name="faq"><summary>Quais formas de pagamento?</summary><p>Pix e cartão de crédito, no checkout seguro da Kiwify.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ RODAPÉ ============ -->
+<footer class="rodape">
+  <div class="t t-frase"><p>Cozinhar com o que tem em casa, sem desperdício e sem delivery.</p><small>© 2026 QChef · Hub BioGuia. Pagamento processado pela Kiwify.</small></div>
+  <nav class="t t-nav" aria-label="Rodapé"><ul><li><a href="#teste">Teste agora</a></li><li><a href="#como">Como funciona</a></li><li><a href="#vem">Tudo que vem</a></li><li><a href="#preco">Preço</a></li><li><a href="#faq">Dúvidas</a></li></ul></nav>
+  <div class="t t-gar">7 dias de garantia<span>Não gostou, devolvemos 100% do valor.</span></div>
+  <div class="t t-mail">Dúvidas e suporte<a href="mailto:contato@hubbioguia.com.br?subject=D%C3%BAvida%20sobre%20o%20QChef">contato@hubbioguia.com.br</a></div>
+  <div class="t t-marca"><img src="img/qchef-logo-horizontal-branca.svg" width="760" height="376" loading="lazy" alt="QChef"></div>
+  <a class="t t-convite" href="https://pay.kiwify.com.br/CHp2orm" data-checkout><b>Garanta o seu por R$ 37</b>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg></a>
+</footer>
+
+<a class="barra" href="https://pay.kiwify.com.br/CHp2orm" data-checkout aria-label="Comprar o QChef por R$ 37">
+  <span>QChef para sempre<b>R$ 37</b></span><span class="btn">Comprar</span>
+</a>
+
+<script>
+// Passa os parâmetros da campanha (utm_*, src) para o checkout da Kiwify
+(function () {
+  var q = new URLSearchParams(location.search), extra = new URLSearchParams()
+  q.forEach(function (v, k) { if (/^(utm_|src|sck|fbclid|gclid)/.test(k)) extra.set(k, v) })
+  if (![...extra].length) return
+  document.querySelectorAll('[data-checkout]').forEach(function (a) {
+    var u = new URL(a.href); extra.forEach(function (v, k) { u.searchParams.set(k, v) }); a.href = u
+  })
+})()
+
+// Entradas por seção
+;(function () {
+  var els = document.querySelectorAll('.sobe')
+  if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('dentro') }); return }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('dentro'); io.unobserve(e.target) } })
+  }, { rootMargin: '0px 0px -8% 0px' })
+  els.forEach(function (e) { io.observe(e) })
+})()
+
+// Barra de compra no celular: aparece depois do topo
+;(function () {
+  var barra = document.querySelector('.barra'), topo = document.getElementById('topo'), preco = document.getElementById('preco')
+  var visivel = { topo: true, preco: false }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { visivel[e.target === topo ? 'topo' : 'preco'] = e.isIntersecting })
+    barra.classList.toggle('ver', !visivel.topo && !visivel.preco)
+  })
+  io.observe(topo); io.observe(preco)
+})()
+
+// Teste ao vivo: casa os ingredientes marcados com o livro de receitas do QChef
+;(function () {
+  var NOMES = { airfryer: 'Airfryer', microondas: 'Micro-ondas', fogao: 'Fogão', forno: 'Forno', frio: 'Prato frio' }
+  var receitas = [], ranking = [], pos = 0
+  var $ = function (id) { return document.getElementById(id) }
+  var norm = function (s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase() }
+
+  function escolhidos() {
+    return [].slice.call(document.querySelectorAll('#ingredientes .chip[aria-pressed="true"]')).map(function (b) {
+      return { nome: b.textContent.trim(), chaves: b.dataset.k.split(' ') }
+    })
+  }
+  function lugar() { return document.querySelector('#lugares .chip[aria-pressed="true"]').dataset.a }
+
+  function calcular() {
+    var sel = escolhidos(), amb = lugar()
+    ranking = receitas.filter(function (r) { return !amb || r.amb === amb }).map(function (r) {
+      var tem = [], falta = []
+      r.ing.forEach(function (i) {
+        var k = norm(i[1]), achou = sel.some(function (s) { return s.chaves.some(function (c) { return k.indexOf(c) >= 0 }) })
+        ;(achou ? tem : falta).push(i[0])
+      })
+      return { r: r, tem: tem, falta: falta, nota: tem.length * 10 - falta.length + Math.random() }
+    }).sort(function (a, b) { return b.nota - a.nota })
+    pos = 0
+    mostrar()
+  }
+
+  function mostrar() {
+    var m = ranking[pos % ranking.length]
+    if (!m) return
+    var foto = $('r-foto')
+    foto.classList.add('trocando')
+    var nova = new Image()
+    nova.onload = function () {
+      foto.src = nova.src; foto.alt = m.r.nome
+      requestAnimationFrame(function () { foto.classList.remove('trocando') })
+    }
+    nova.src = 'img/pratos/' + m.r.id + '.webp'
+    $('r-meta').textContent = m.r.min + ' min · ' + NOMES[m.r.amb]
+    $('r-nome').textContent = m.r.nome
+    $('r-desc').textContent = m.r.desc
+    var t = ''
+    if (m.tem.length) t += '<b>Você tem:</b> ' + m.tem.join(' · ').toLowerCase()
+    if (m.falta.length) t += (t ? '<br>' : '') + '<b>Vai precisar:</b> ' + m.falta.join(' · ').toLowerCase()
+    $('r-tem').innerHTML = t
+  }
+
+  function alternar(grupo, unico) {
+    document.getElementById(grupo).addEventListener('click', function (e) {
+      var b = e.target.closest('.chip'); if (!b) return
+      if (unico) document.querySelectorAll('#' + grupo + ' .chip').forEach(function (x) { x.setAttribute('aria-pressed', 'false') })
+      b.setAttribute('aria-pressed', unico ? 'true' : String(b.getAttribute('aria-pressed') !== 'true'))
+      if (receitas.length) calcular()
+    })
+  }
+  alternar('ingredientes', false)
+  alternar('lugares', true)
+  $('r-outra').addEventListener('click', function () { pos++; mostrar() })
+
+  fetch('receitas.json').then(function (r) { return r.json() }).then(function (d) { receitas = d }).catch(function () {})
+})()
+</script>
+</body>
+</html>

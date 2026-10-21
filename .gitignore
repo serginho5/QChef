@@ -29,3 +29,11 @@ logo/
 referencia_aplicativo/
 modelo_logo.jpg
 .claude/
+
+# Saídas da skill de design
+.taste-skill/
+
+# Imagens e fontes da página de vendas e do checkout (ficam só no computador)
+pagina-vendas/site/img/
+pagina-vendas/site/fontes/
+pagina-vendas/checkout/
