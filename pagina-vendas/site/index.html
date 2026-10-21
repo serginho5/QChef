@@ -90,25 +90,23 @@ header, main, footer, section { overflow-x: clip; }
 .grade { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: clamp(12px, 2vw, 28px); }
 
 /* ---------- HERO ---------- */
-.hero { padding: 10px; background: var(--creme); display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; min-height: 100svh; }
-.hero-foto { grid-column: 1 / 11; position: relative; border-radius: var(--raio); overflow: hidden; min-height: calc(100svh - 20px); color: #fff; display: flex; flex-direction: column; }
-.hero-foto > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; transform-origin: 50% 80%; }
-.hero-foto::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 50%; background: rgba(20, 22, 25, 0.55); }
-.hero-foto::after { content: ""; position: absolute; inset: auto 0 0 0; height: 30%; background: rgba(20, 22, 25, 0.42); }
-.hero-topo { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; padding: 28px; }
-.hero-topo img { height: 46px; width: auto; }
-.hero-topo .preco-topo { font: 700 var(--s-small)/1.2 var(--titulo); text-align: right; }
-.hero-topo .preco-topo b { display: block; font-size: 22px; }
-.hero h1 { position: relative; z-index: 1; font-size: var(--s-mega); text-align: center; margin: 0 auto; padding-inline: 24px; max-width: 12ch; }
-.hero-baixo { position: relative; z-index: 1; margin-top: auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 24px; padding: 0 28px 36px; }
-.hero-baixo p { font-size: 18px; line-height: 1.45; max-width: 36ch; }
-.hero-baixo .garantia-mini { justify-self: end; text-align: right; font: 700 var(--s-small)/1.35 var(--titulo); max-width: 22ch; }
-.hero-baixo .btn { min-height: 66px; padding: 0 36px; font-size: 19px; }
-
-.amostras { grid-column: 11 / 13; display: grid; grid-template-rows: repeat(5, 1fr); border-radius: var(--raio); overflow: hidden; }
-.amostras a { display: block; padding: 20px; font: 700 16px/1.25 var(--titulo); text-decoration: none; transition: padding-left var(--t-hover) var(--ease-out); }
-.amostras a:hover { padding-left: 28px; }
-.amostras a span { display: block; font: 500 var(--s-small)/1.35 var(--texto); margin-top: 4px; }
+.hero { padding: 10px; background: var(--creme); }
+.hero-foto { position: relative; border-radius: var(--raio); overflow: hidden; min-height: calc(100svh - 20px); color: #fff; display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto 1fr; column-gap: clamp(12px, 2vw, 28px); }
+.hero-foto > img:first-child { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; transform-origin: 50% 60%; }
+.hero-foto::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(18, 20, 23, 0.52); }
+.hero-nav { grid-column: 1 / -1; position: relative; z-index: 2; display: flex; align-items: center; gap: 32px; padding: 22px 28px; }
+.hero-nav > img { height: 44px; width: auto; margin-right: auto; }
+.hero-nav a.link { font: 700 16px/1 var(--titulo); text-decoration: none; transition: color var(--t-hover) ease; }
+.hero-nav a.link:hover { color: var(--laranja-claro); }
+.hero-nav .btn { min-height: 48px; padding: 0 22px; font-size: 16px; }
+.hero-texto { grid-column: 1 / 10; align-self: end; position: relative; z-index: 2; padding: 0 0 clamp(36px, 6vh, 64px) 28px; }
+.hero h1 { font-size: clamp(52px, 7.2vw, 116px); max-width: none; white-space: nowrap; }
+.hero-texto > p { margin-top: 22px; font-size: 20px; line-height: 1.45; max-width: 40ch; }
+.hero-acao { display: flex; align-items: center; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
+.hero-acao .btn { min-height: 66px; padding: 0 34px; font-size: 19px; }
+.hero-acao p { font: 700 var(--s-small)/1.4 var(--titulo); max-width: 24ch; }
+.hero-acao p b { display: block; font-size: 22px; color: var(--laranja-claro); }
+.hero-fone { position: absolute; z-index: 2; right: 6%; bottom: -16%; width: min(24vw, 360px); transform: rotate(-6deg); }
 
 /* ---------- INTRO: escada ---------- */
 .intro { background: var(--grafite); color: var(--creme); min-height: 100svh; display: grid; align-items: center; position: relative; padding-block: 120px; }
@@ -168,6 +166,26 @@ header, main, footer, section { overflow-x: clip; }
 .legenda p { margin-top: 6px; max-width: 34ch; }
 .l1 { grid-column: 1 / 4; } .l2 { grid-column: 4 / 8; } .l3 { grid-column: 8 / 13; }
 
+/* ---------- POR DENTRO DO APP: faixa de telas ---------- */
+.dentro-app { background: var(--grafite); color: var(--creme); padding-block: clamp(96px, 11vw, 160px); }
+.dentro-topo { display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-inline: var(--margem); }
+.dentro-topo h2 { font-size: var(--s-h2); }
+.dentro-topo p { margin-top: 16px; max-width: 46ch; }
+.setas { display: flex; gap: 10px; }
+.setas button { width: 56px; height: 56px; border-radius: 50%; border: 0; background: var(--laranja); color: var(--grafite); cursor: pointer; display: grid; place-items: center; transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease; }
+.setas button:hover { background: var(--laranja-claro); }
+.setas button:active { transform: scale(0.92); }
+.setas svg { width: 24px; height: 24px; }
+.trilho { display: flex; gap: clamp(20px, 3vw, 48px); overflow-x: auto; scroll-snap-type: x mandatory; padding: 56px var(--margem) 8px; scrollbar-width: none; }
+.trilho::-webkit-scrollbar { display: none; }
+.trilho figure { flex: none; width: clamp(230px, 22vw, 320px); scroll-snap-align: start; }
+.trilho figure:nth-child(even) { margin-top: 64px; }
+.trilho img { width: 100%; height: auto; transition: transform 260ms var(--ease-out); }
+.trilho figure:hover img { transform: translateY(-8px); }
+.trilho figcaption { margin-top: 20px; }
+.trilho figcaption b { display: block; font: 800 22px/1.15 var(--titulo); letter-spacing: -0.02em; color: var(--laranja-claro); }
+.trilho figcaption span { display: block; margin-top: 6px; max-width: 30ch; }
+
 /* ---------- TUDO QUE VEM: título preso ---------- */
 .vem { background: var(--verde); color: var(--creme); padding-block: clamp(96px, 12vw, 180px); }
 .vem .grade { align-items: start; }
@@ -210,7 +228,7 @@ header, main, footer, section { overflow-x: clip; }
 .ing-canhoto { padding: 40px 28px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .ing-canhoto .de { font-size: var(--s-small); }
 .ing-canhoto .de s { opacity: 0.8; }
-.ing-canhoto .valor { font: 800 clamp(48px, 6vw, 92px)/0.95 var(--titulo); letter-spacing: -0.04em; margin-top: 6px; }
+.ing-canhoto .valor { font: 800 clamp(44px, 4.6vw, 72px)/0.95 var(--titulo); letter-spacing: -0.04em; margin-top: 6px; }
 .ing-canhoto .valor small { font-size: 0.4em; vertical-align: 0.9em; margin-right: 4px; }
 .ing-canhoto .vez { font: 700 var(--s-small)/1.3 var(--titulo); margin: 8px 0 24px; color: var(--laranja-claro); }
 .ing-canhoto .btn { width: 100%; padding: 0 16px; }
@@ -251,43 +269,39 @@ details[open] summary::after { transform: rotate(0); }
 details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
 
 /* ---------- RODAPÉ ---------- */
-.rodape { background: var(--creme); padding: 10px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px; }
-.t { border-radius: var(--raio); padding: 24px; min-height: 220px; display: flex; flex-direction: column; }
-.t-frase { grid-column: 1 / 5; background: var(--laranja-fundo); }
-.t-frase p { font: 700 24px/1.25 var(--titulo); letter-spacing: -0.01em; }
-.t-frase small { margin-top: auto; font-size: 13px; }
-.t-nav { grid-column: 5 / 8; background: var(--verde-claro); }
-.t-nav ul { list-style: none; padding: 0; display: grid; gap: 8px; }
-.t-nav a { text-decoration: none; } .t-nav a:hover { text-decoration: underline; }
-.t-gar { grid-column: 8 / 10; background: var(--verde); color: var(--creme); font: 700 20px/1.25 var(--titulo); }
-.t-gar span { margin-top: auto; font: 500 var(--s-small)/1.4 var(--texto); }
-.t-mail { grid-column: 10 / 13; background: var(--laranja-fundo); }
-.t-mail a { margin-top: auto; font: 700 20px/1.3 var(--titulo); word-break: break-word; }
-.t-marca { grid-column: 1 / 9; background: var(--grafite); min-height: 320px; align-items: center; justify-content: center; }
-.t-marca img { width: auto; height: 190px; max-width: 90%; }
-.t-convite { grid-column: 9 / 13; background: var(--laranja); color: var(--grafite); min-height: 320px; text-decoration: none; transition: background-color var(--t-hover) ease; }
-.t-convite:hover { background: var(--laranja-claro); }
-.t-convite b { font: 800 28px/1.15 var(--titulo); letter-spacing: -0.02em; max-width: 12ch; }
-.t-convite svg { margin-top: auto; align-self: flex-end; width: 56px; height: 56px; transition: transform var(--t-hover) var(--ease-out); }
-.t-convite:hover svg { transform: translate(6px, -6px); }
+.rodape { background: var(--grafite); color: var(--creme); padding-block: 56px 40px; font-size: var(--s-small); }
+.rod-topo { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.rod-topo > img { height: 40px; width: auto; margin-right: auto; }
+.rod-topo nav { display: flex; gap: 24px; flex-wrap: wrap; }
+.rod-topo nav a { text-decoration: none; font-weight: 600; }
+.rod-topo nav a:hover { color: var(--laranja-claro); }
+.rod-topo .btn { min-height: 48px; padding: 0 22px; font-size: 16px; }
+.rod-base { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 40px; }
+.rod-base a { font-weight: 700; color: var(--laranja-claro); }
 
 /* barra de compra no celular */
 .barra { display: none; }
 
 /* ---------- celular ---------- */
 @media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; padding: 8px; gap: 0; min-height: 0; }
-  .hero-foto { grid-column: 1; min-height: 76svh; border-radius: var(--raio) var(--raio) 0 0; }
-  .hero-topo { padding: 18px; }
-  .hero-topo img { height: 36px; }
-  .hero h1 { font-size: 10.4vw; margin-top: 3vh; max-width: none; padding-inline: 14px; }
-  .hero-baixo { grid-template-columns: 1fr; justify-items: center; padding: 0 18px 24px; gap: 14px; text-align: center; }
-  .hero-baixo p { font-size: 16px; order: 2; }
-  .hero-baixo .garantia-mini { display: none; }
-  .hero-baixo .btn { width: 100%; white-space: nowrap; font-size: 17px; padding: 0 18px; }
-  .amostras { grid-column: 1; grid-template-rows: none; border-radius: 0 0 var(--raio) var(--raio); }
-  .amostras a { padding: 15px 18px; font-size: 15px; min-height: 52px; }
-  .amostras a span { display: none; }
+  .hero { padding: 8px; }
+  .hero-foto { min-height: 88svh; grid-template-columns: 1fr; }
+  .hero-nav { padding: 16px 18px; gap: 12px; }
+  .hero-nav > img { height: 34px; }
+  .hero-nav a.link { display: none; }
+  .hero-nav .btn { min-height: 44px; padding: 0 16px; font-size: 15px; }
+  .hero-texto { grid-column: 1; padding: 0 18px 28px; }
+  .hero h1 { font-size: 11.2vw; max-width: none; white-space: normal; }
+  .hero-texto > p { font-size: 17px; margin-top: 14px; }
+  .hero-acao { margin-top: 22px; gap: 14px; }
+  .hero-acao .btn { width: 100%; white-space: nowrap; font-size: 17px; padding: 0 18px; }
+  .hero-fone { width: 27vw; right: 5%; top: 78px; bottom: auto; transform: rotate(6deg); }
+  .hero-foto { min-height: 92svh; }
+  .dentro-topo h2 { font-size: 11vw; }
+  .setas { display: none; }
+  .trilho { padding-top: 40px; }
+  .trilho figure { width: 62vw; }
+  .trilho figure:nth-child(even) { margin-top: 0; }
 
   .intro { min-height: 0; padding-block: 88px; }
   .escada { grid-column: 1 / -1; font-size: clamp(22px, 4.1vw, 32px); }
@@ -332,7 +346,7 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   .ing-principal h3 { font-size: 9vw; }
   .ing-lista { grid-template-columns: 1fr; }
   .ing-canhoto { padding: 104px 24px 32px; min-height: 380px; }
-  .ing-canhoto .valor { font-size: 18vw; }
+  .ing-canhoto .valor { font-size: 15vw; }
   .pro { width: calc(100% - 20px); padding: 24px; }
 
   .selo { grid-column: 1 / -1; max-width: 220px; margin-bottom: 28px; }
@@ -348,15 +362,9 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   summary { font-size: 18px; min-height: 64px; padding: 20px 56px 20px 20px; }
   details p { padding: 0 20px 20px; font-size: 16px; }
 
-  .rodape { grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px 8px 96px; }
-  .t { min-height: 0; padding: 20px; }
-  .t-marca { grid-column: 1 / -1; order: -2; min-height: 160px; }
-  .t-marca img { height: 110px; }
-  .t-convite { grid-column: 1 / -1; order: -1; min-height: 160px; }
-  .t-nav { grid-column: 1; } .t-mail { grid-column: 2; }
-  .t-gar { grid-column: 1; } .t-frase { grid-column: 2; }
-  .t-frase p { font-size: 18px; }
-  .t-mail a { font-size: 15px; }
+  .rodape { padding-bottom: 104px; }
+  .rod-topo nav { width: 100%; order: 3; gap: 16px; }
+  .rod-base { flex-direction: column; margin-top: 28px; }
 
   .barra {
     display: flex; position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); z-index: 20;
@@ -373,7 +381,7 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
 /* ---------- movimento ---------- */
 @keyframes aproximar { from { transform: scale(1.12); } to { transform: scale(1); } }
 @keyframes respirar { from { transform: scale(1); } to { transform: scale(1.06); } }
-.hero-foto > img { animation: aproximar 1600ms var(--ease-soft) both, respirar 14s 1600ms ease-in-out infinite alternate; }
+.hero-foto > img:first-child { animation: aproximar 1600ms var(--ease-soft) both, respirar 14s 1600ms ease-in-out infinite alternate; }
 .js .sobe { opacity: 0; transform: translateY(26px); transition: opacity var(--t-reveal) var(--ease-out), transform var(--t-reveal) var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
 .js .sobe.dentro { opacity: 1; transform: none; }
 .js .foto-impressa.sobe { transform: translateY(60px) rotate(0); }
@@ -383,7 +391,7 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   .js .foto-impressa.sobe.dentro.p1 { transform: rotate(-6deg); } .js .foto-impressa.sobe.dentro.p2 { transform: rotate(5deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-foto > img { animation: none; }
+  .hero-foto > img:first-child { animation: none; }
   .js .sobe { transform: none; transition: opacity 300ms ease; }
   .js .foto-impressa.sobe { transform: none; }
   html { scroll-behavior: auto; }
@@ -396,25 +404,24 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
 <header class="hero" id="topo">
   <div class="hero-foto">
     <img src="img/frango-empanado-airfryer-g.webp" width="1200" height="900" alt="Tiras de frango empanado douradas com molho e limão, feitas na airfryer">
-    <div class="hero-topo">
+    <nav class="hero-nav" aria-label="Principal">
       <img src="img/qchef-logo-horizontal-branca.svg" width="200" height="99" alt="QChef">
-      <div class="preco-topo">Pagamento único<b>R$ 37</b></div>
-    </div>
-    <h1>Sua geladeira vira receita.</h1>
-    <div class="hero-baixo">
+      <a class="link" href="#teste">Teste agora</a>
+      <a class="link" href="#app">Ver o app</a>
+      <a class="link" href="#preco">Preço</a>
+      <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Comprar</a>
+    </nav>
+    <div class="hero-texto">
+      <h1>Sua geladeira<br>vira receita.</h1>
       <p>Diga o que tem em casa e o QChef cria a receita na hora, para airfryer, micro-ondas, fogão ou forno, com passo a passo e cronômetro.</p>
-      <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Quero o QChef por R$ 37
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-      <div class="garantia-mini">7 dias de garantia. Não gostou, devolvemos tudo.</div>
+      <div class="hero-acao">
+        <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Quero o QChef por R$ 37,00
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p><b>Pagamento único</b>7 dias de garantia. Não gostou, devolvemos tudo.</p>
+      </div>
     </div>
+    <img class="hero-fone" src="img/tela-1.webp" width="614" height="1296" alt="Tela inicial do QChef perguntando o que tem na sua geladeira hoje">
   </div>
-  <nav class="amostras" aria-label="Seções">
-    <a href="#como" style="background:var(--laranja-fundo);color:var(--grafite)">Como funciona<span>Três toques e pronto</span></a>
-    <a href="#teste" style="background:var(--laranja);color:var(--grafite)">Teste agora<span>Com o que você tem aí</span></a>
-    <a href="#receitas" style="background:var(--vermelho);color:var(--creme)">67 receitas<span>Livro incluso</span></a>
-    <a href="#vem" style="background:var(--verde);color:var(--creme)">Tudo que vem<span>5 jeitos de cozinhar</span></a>
-    <a href="#preco" style="background:var(--grafite);color:var(--creme)">Preço<span>R$ 37, uma vez só</span></a>
-  </nav>
 </header>
 
 <main>
@@ -495,6 +502,28 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   </div>
 </section>
 
+<!-- ============ POR DENTRO DO APP ============ -->
+<section class="dentro-app" id="app" aria-labelledby="app-t">
+  <div class="dentro-topo">
+    <div>
+      <h2 id="app-t" class="sobe">Veja o app por dentro</h2>
+      <p class="sobe" style="--i:1">Telas reais do QChef. Arraste para o lado e veja tudo que você vai usar na cozinha.</p>
+    </div>
+    <div class="setas sobe" style="--i:2">
+      <button type="button" data-dir="-1" aria-label="Tela anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18 9 12l6-6"/></svg></button>
+      <button type="button" data-dir="1" aria-label="Próxima tela"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+  </div>
+  <div class="trilho" id="trilho" tabindex="0" aria-label="Telas do aplicativo">
+    <figure class="sobe" style="--i:1"><img src="img/tela-1.webp" width="614" height="1296" loading="lazy" alt="Tela inicial: o que tem na sua geladeira hoje, com ingredientes e onde vai preparar"><figcaption><b>Início</b><span>Digite ou fale o que tem e escolha onde vai preparar.</span></figcaption></figure>
+    <figure class="sobe" style="--i:2"><img src="img/tela-exclusiva.webp" width="615" height="1297" loading="lazy" alt="Receita exclusiva criada para o micro-ondas: bolinho de banana com aveia na caneca"><figcaption><b>Receita exclusiva</b><span>Criada para o seu aparelho, com tempo e porções certos.</span></figcaption></figure>
+    <figure class="sobe" style="--i:3"><img src="img/tela-4.webp" width="615" height="1296" loading="lazy" alt="Modo cozinhando com o passo 3 de 5 e cronômetro de 5 minutos e 40 segundos"><figcaption><b>Modo cozinhando</b><span>Um passo por vez, com cronômetro e aviso na hora de mexer.</span></figcaption></figure>
+    <figure class="sobe" style="--i:4"><img src="img/tela-cozinha.webp" width="615" height="1296" loading="lazy" alt="Minha cozinha: alergias, restrições e aparelhos que você tem"><figcaption><b>Minha cozinha</b><span>Marque alergias e dieta. A IA nunca sugere o que você não pode comer.</span></figcaption></figure>
+    <figure class="sobe" style="--i:5"><img src="img/tela-favoritas.webp" width="615" height="1296" loading="lazy" alt="Favoritas: receitas salvas com foto, aparelho e tempo"><figcaption><b>Favoritas</b><span>As que deram certo ficam salvas, até sem internet.</span></figcaption></figure>
+    <figure class="sobe" style="--i:6"><img src="img/tela-historico.webp" width="615" height="1297" loading="lazy" alt="Minhas receitas: histórico com receitas feitas e favoritas"><figcaption><b>Minhas receitas</b><span>O histórico de tudo que você já cozinhou.</span></figcaption></figure>
+  </div>
+</section>
+
 <!-- ============ TUDO QUE VEM ============ -->
 <section class="vem campo" id="vem" aria-labelledby="vem-t">
   <div class="grade">
@@ -545,7 +574,7 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
 <!-- ============ PREÇO ============ -->
 <section class="preco" id="preco" aria-labelledby="preco-t">
   <h2 id="preco-t" class="sobe">Menos que um delivery</h2>
-  <p class="ancora sobe" style="--i:1">Um pedido de delivery para dois passa fácil de R$ 37 e acaba no mesmo dia. O QChef custa isso uma vez e cozinha com você todo mês.</p>
+  <p class="ancora sobe" style="--i:1">Um pedido de delivery para dois passa fácil de R$ 37,00 e acaba no mesmo dia. O QChef custa isso uma vez e cozinha com você todo mês.</p>
   <div class="ingresso sobe" style="--i:2">
     <div class="picote" aria-hidden="true"></div>
     <div class="ing-principal">
@@ -560,7 +589,7 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
       </ul>
     </div>
     <div class="ing-canhoto">
-      <p class="valor"><small>R$</small>37</p>
+      <p class="valor"><small>R$</small>37,00</p>
       <p class="vez">pagamento único, sem mensalidade</p>
       <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Comprar agora</a>
       <p class="seguro">Pix ou cartão · 7 dias de garantia</p>
@@ -595,7 +624,7 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   <span class="frase">Toque para ir ao pagamento seguro da Kiwify. O acesso chega no seu e-mail em minutos.</span>
   <svg class="seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg>
   <span class="palavra" aria-hidden="true">Comprar</span>
-  <span class="sr">Comprar o QChef por R$ 37</span>
+  <span class="sr">Comprar o QChef por R$ 37,00</span>
 </a>
 
 <!-- ============ FAQ ============ -->
@@ -603,7 +632,7 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   <div class="grade">
     <h2 id="faq-t">Ainda com dúvida?</h2>
     <div class="perguntas">
-      <details name="faq" open><summary>É assinatura? Vou pagar todo mês?</summary><p>Não. O QChef custa R$ 37 uma vez só e o acesso é seu para sempre, com 20 receitas novas por mês. Só o QChef Pro, que é opcional, é mensal.</p></details>
+      <details name="faq" open><summary>É assinatura? Vou pagar todo mês?</summary><p>Não. O QChef custa R$ 37,00 uma vez só e o acesso é seu para sempre, com 20 receitas novas por mês. Só o QChef Pro, que é opcional, é mensal.</p></details>
       <details name="faq"><summary>Preciso saber cozinhar?</summary><p>Não. O app mostra um passo por vez, com cronômetro, fogo e temperatura. Ele avisa quando é hora de virar, mexer ou chacoalhar o cesto da airfryer.</p></details>
       <details name="faq"><summary>Funciona no meu celular?</summary><p>Sim, no Android e no iPhone. Você abre pelo navegador e instala na tela inicial como um aplicativo, sem ocupar espaço de loja.</p></details>
       <details name="faq"><summary>Como recebo o acesso?</summary><p>Logo depois do pagamento, a Kiwify confirma a compra e o acesso é liberado para o e-mail que você usou. É só entrar no app com esse mesmo e-mail, pelo Google ou por um link que chega na sua caixa de entrada.</p></details>
@@ -617,18 +646,20 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
 </main>
 
 <!-- ============ RODAPÉ ============ -->
-<footer class="rodape">
-  <div class="t t-frase"><p>Cozinhar com o que tem em casa, sem desperdício e sem delivery.</p><small>© 2026 QChef · Hub BioGuia. Pagamento processado pela Kiwify.</small></div>
-  <nav class="t t-nav" aria-label="Rodapé"><ul><li><a href="#teste">Teste agora</a></li><li><a href="#como">Como funciona</a></li><li><a href="#vem">Tudo que vem</a></li><li><a href="#preco">Preço</a></li><li><a href="#faq">Dúvidas</a></li></ul></nav>
-  <div class="t t-gar">7 dias de garantia<span>Não gostou, devolvemos 100% do valor.</span></div>
-  <div class="t t-mail">Dúvidas e suporte<a href="mailto:contato@hubbioguia.com.br?subject=D%C3%BAvida%20sobre%20o%20QChef">contato@hubbioguia.com.br</a></div>
-  <div class="t t-marca"><img src="img/qchef-logo-horizontal-branca.svg" width="760" height="376" loading="lazy" alt="QChef"></div>
-  <a class="t t-convite" href="https://pay.kiwify.com.br/CHp2orm" data-checkout><b>Garanta o seu por R$ 37</b>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg></a>
+<footer class="rodape campo">
+  <div class="rod-topo">
+    <img src="img/qchef-logo-horizontal-branca.svg" width="160" height="79" loading="lazy" alt="QChef">
+    <nav aria-label="Rodapé"><a href="#teste">Teste agora</a><a href="#app">Ver o app</a><a href="#vem">Tudo que vem</a><a href="#preco">Preço</a><a href="#faq">Dúvidas</a></nav>
+    <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Comprar por R$ 37,00</a>
+  </div>
+  <div class="rod-base">
+    <p>© 2026 QChef · Hub BioGuia · Pagamento processado pela Kiwify · 7 dias de garantia</p>
+    <p>Suporte: <a href="mailto:contato@hubbioguia.com.br?subject=D%C3%BAvida%20sobre%20o%20QChef">contato@hubbioguia.com.br</a></p>
+  </div>
 </footer>
 
-<a class="barra" href="https://pay.kiwify.com.br/CHp2orm" data-checkout aria-label="Comprar o QChef por R$ 37">
-  <span>QChef para sempre<b>R$ 37</b></span><span class="btn">Comprar</span>
+<a class="barra" href="https://pay.kiwify.com.br/CHp2orm" data-checkout aria-label="Comprar o QChef por R$ 37,00">
+  <span>QChef para sempre<b>R$ 37,00</b></span><span class="btn">Comprar</span>
 </a>
 
 <script>
@@ -661,6 +692,17 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
     barra.classList.toggle('ver', !visivel.topo && !visivel.preco)
   })
   io.observe(topo); io.observe(preco)
+})()
+
+// Faixa de telas do app: setas
+;(function () {
+  var t = document.getElementById('trilho')
+  document.querySelectorAll('.setas button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var passo = t.querySelector('figure').getBoundingClientRect().width + 40
+      t.scrollBy({ left: passo * Number(b.dataset.dir), behavior: 'smooth' })
+    })
+  })
 })()
 
 // Teste ao vivo: casa os ingredientes marcados com o livro de receitas do QChef
