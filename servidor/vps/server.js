@@ -3,7 +3,7 @@
 //   POST /api/qchef/receita  cria a receita (exige login + acesso ativo; conta no limite do mês)
 //   GET  /api/qchef/uso      quantas receitas a pessoa já criou no mês
 //   POST /api/qchef/kiwify   webhook da Kiwify (Apps › Webhooks): libera ou bloqueia o acesso do e-mail da compra
-// Variáveis (.env, fora do git): QCHEF_GEMINI_KEY, KIWIFY_TOKEN, KIWIFY_PRODUTO_PRO (opcional), QCHEF_IA (opcional).
+// Variáveis (.env, fora do git): QCHEF_GEMINI_KEY, KIWIFY_TOKEN (um ou mais, separados por vírgula), KIWIFY_PRODUTO_PRO (opcional), QCHEF_IA (opcional).
 // Credencial: service-account.json (fora do git).
 import http from 'node:http'
 import crypto from 'node:crypto'
@@ -15,7 +15,8 @@ import { criarReceita, IA, MODELO } from './receita.js'
 
 const PORTA = Number(process.env.PORT || 3000)
 const BASE = '/api/qchef'
-const KIWIFY_TOKEN = process.env.KIWIFY_TOKEN
+// Um token por webhook da Kiwify (QChef e QChef Pro), separados por vírgula
+const KIWIFY_TOKENS = String(process.env.KIWIFY_TOKEN || '').split(',').map(t => t.trim()).filter(Boolean)
 const PRODUTO_PRO = process.env.KIWIFY_PRODUTO_PRO || ''
 const LIMITE = { normal: 20, pro: 150 }
 
@@ -70,9 +71,11 @@ const LIBERA = ['paid', 'approved', 'order_approved', 'compra_aprovada', 'subscr
 const BLOQUEIA = ['refunded', 'chargedback', 'chargeback', 'order_refunded', 'compra_reembolsada', 'subscription_canceled', 'canceled', 'subscription_late', 'assinatura_atrasada', 'assinatura_cancelada']
 
 function assinaturaValida(raw, sig) {
-  if (!sig || !KIWIFY_TOKEN) return false
-  const calc = crypto.createHmac('sha1', KIWIFY_TOKEN).update(raw).digest('hex')
-  try { return crypto.timingSafeEqual(Buffer.from(calc), Buffer.from(sig)) } catch { return false }
+  if (!sig) return false
+  return KIWIFY_TOKENS.some(token => {
+    const calc = crypto.createHmac('sha1', token).update(raw).digest('hex')
+    try { return crypto.timingSafeEqual(Buffer.from(calc), Buffer.from(sig)) } catch { return false }
+  })
 }
 
 async function kiwify(b) {
