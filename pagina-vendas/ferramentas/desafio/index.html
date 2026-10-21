@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Desafio 7 dias mais leves — QChef</title>
+<meta name="description" content="Um gesto pequeno por dia, durante 7 dias. Marque o que fez e acompanhe o seu progresso. Grátis.">
+<meta property="og:title" content="Desafio 7 dias mais leves">
+<meta property="og:description" content="Um gesto pequeno por dia, durante 7 dias. Marque o que fez e acompanhe o seu progresso.">
+<meta property="og:image" content="https://appnovidades.com.br/qchef-oferta/img/salada-caprese-g.webp">
+<meta name="theme-color" content="#1F2328">
+<link rel="icon" href="favicon-48.png">
+<style>
+@font-face { font-family: Montserrat; src: url(/qchef-oferta/fontes/Montserrat-SemiBold.woff2) format('woff2'); font-weight: 500 600; font-display: swap; }
+@font-face { font-family: Montserrat; src: url(/qchef-oferta/fontes/Montserrat-Bold.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: Montserrat; src: url(/qchef-oferta/fontes/Montserrat-ExtraBold.woff2) format('woff2'); font-weight: 800 900; font-display: swap; }
+@font-face { font-family: Nunito; src: url(/qchef-oferta/fontes/NunitoSans.woff2) format('woff2'); font-weight: 200 1000; font-display: swap; }
+:root {
+  --laranja: #F47A1F; --laranja-claro: #FF9A2E; --laranja-fundo: #FFF0E2; --laranja-texto: #C2440A;
+  --grafite: #1F2328; --grafite-2: #2C3137; --creme: #FFF8F1; --verde: #2F5A12; --verde-claro: #E9F3DC;
+  --titulo: Montserrat, system-ui, sans-serif; --texto: Nunito, system-ui, sans-serif;
+  --margem: clamp(18px, 4vw, 48px); --raio: 14px; --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--creme); color: var(--grafite); font: 18px/1.5 var(--texto); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ol { margin: 0; }
+h1, h2, h3 { font-family: var(--titulo); font-weight: 800; letter-spacing: -0.03em; line-height: 1.04; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--laranja-claro); outline-offset: 3px; }
+.topo { background: var(--grafite); color: var(--creme); padding: 16px var(--margem); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.topo img { height: 40px; width: auto; display: block; }
+.topo span { font: 600 14px/1.3 var(--titulo); }
+.abre { background: var(--verde); color: var(--creme); padding: clamp(40px, 6vw, 80px) var(--margem); }
+.in { max-width: 920px; margin: 0 auto; }
+.abre h1 { font-size: clamp(38px, 6vw, 72px); max-width: 13ch; }
+.abre h1 span { color: var(--laranja-claro); }
+.abre p { margin-top: 14px; max-width: 50ch; }
+.progresso { margin-top: 28px; }
+.barra { height: 16px; border-radius: 999px; background: rgba(255, 248, 241, 0.2); overflow: hidden; }
+.barra i { display: block; height: 100%; width: 0; background: var(--laranja-claro); border-radius: 999px; transition: width 500ms var(--ease); }
+.progresso p { margin-top: 10px; font: 800 20px/1.2 var(--titulo); }
+.dias { max-width: 920px; margin: 0 auto; padding: clamp(32px, 5vw, 64px) var(--margem); list-style: none; display: grid; gap: 12px; }
+.dia { background: #fff; border-radius: var(--raio); padding: 20px 22px; display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; transition: background-color 200ms ease; }
+.dia.hoje { background: var(--laranja-fundo); }
+.dia.feito { background: var(--verde-claro); }
+.num { width: 56px; height: 56px; border-radius: 50%; background: var(--laranja); color: var(--grafite); display: grid; place-items: center; font: 800 15px/1.05 var(--titulo); text-align: center; }
+.dia.feito .num { background: var(--verde); color: #fff; }
+.dia h2 { font-size: 21px; letter-spacing: -0.02em; }
+.dia p { margin-top: 4px; font-size: 16px; }
+.dia .hj { display: inline-block; margin-left: 8px; font: 800 13px/1 var(--titulo); background: var(--grafite); color: var(--creme); padding: 5px 9px; border-radius: 999px; vertical-align: 3px; }
+.dia a.dica { font-weight: 700; color: var(--laranja-texto); }
+.marcar { border: 0; cursor: pointer; min-height: 48px; padding: 0 18px; border-radius: 999px; background: var(--grafite); color: var(--creme); font: 800 15px/1 var(--titulo); transition: transform 140ms var(--ease), background-color 180ms ease; white-space: nowrap; }
+.marcar:active { transform: scale(0.95); }
+.dia.feito .marcar { background: var(--verde); }
+.fim { max-width: 920px; margin: 0 auto; padding: 0 var(--margem) clamp(40px, 6vw, 72px); display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 26px; border: 0; border-radius: 999px; background: var(--laranja); color: var(--grafite); font: 800 17px/1 var(--titulo); text-decoration: none; cursor: pointer; }
+.btn.linha { background: transparent; text-decoration: underline; text-underline-offset: 4px; padding: 0 8px; }
+.parabens { background: var(--laranja); border-radius: var(--raio); padding: 24px; margin: 0 auto; max-width: calc(920px - 2 * var(--margem)); }
+.parabens[hidden] { display: none; }
+.parabens h2 { font-size: 30px; }
+.parabens p { margin-top: 8px; }
+.qchef { background: var(--grafite); color: var(--creme); padding: clamp(48px, 7vw, 96px) var(--margem); }
+.qchef .in { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+.qchef h2 { font-size: clamp(28px, 4vw, 50px); max-width: 17ch; }
+.qchef h2 span { color: var(--laranja-claro); }
+.qchef p { margin-top: 12px; max-width: 50ch; }
+.rodape { background: var(--grafite); color: var(--creme); padding: 28px var(--margem) 40px; }
+.rodape .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+.rodape img { width: 240px; height: auto; display: block; }
+.nota { max-width: 920px; margin: 0 auto; padding: 0 var(--margem) 32px; font-size: 14px; color: #6E645B; }
+@media (max-width: 640px) {
+  .dia { grid-template-columns: auto 1fr; }
+  .marcar { grid-column: 1 / -1; width: 100%; }
+}
+</style>
+</head>
+<body>
+<header class="topo">
+  <a href="/qchef-oferta/?utm_source=ferramenta&utm_medium=desafio" aria-label="QChef"><img src="qchef-logo-horizontal-branca.svg" width="160" height="79" alt="QChef"></a>
+  <span>Grátis · Hub BioGuia</span>
+</header>
+<main>
+<section class="abre">
+  <div class="in">
+    <h1>Desafio 7 dias <span>mais leves</span></h1>
+    <p>Um gesto pequeno por dia, somando com o anterior. Nada radical. Marque cada dia que você fizer: o progresso fica salvo neste celular.</p>
+    <div class="progresso"><div class="barra" aria-hidden="true"><i id="barra"></i></div><p id="contagem">0 de 7 dias</p></div>
+  </div>
+</section>
+
+<ol class="dias" id="dias"></ol>
+
+<div class="parabens" id="parabens" hidden role="status">
+  <h2>Você completou os 7 dias!</h2>
+  <p>Agora é manter o que ficou fácil. Que tal recomeçar e tentar juntar todos os gestos na mesma semana?</p>
+</div>
+
+<div class="fim">
+  <button class="btn" type="button" id="compartilhar">Chamar alguém para o desafio</button>
+  <button class="btn linha" type="button" id="recomecar">Recomeçar</button>
+</div>
+<p class="nota">Conteúdo educativo: não substitui a orientação de profissionais de saúde.</p>
+
+<section class="qchef">
+  <div class="in">
+    <div>
+      <h2>Para o dia 2 ficar fácil: <span>receitas com o que você tem</span></h2>
+      <p>Marque os ingredientes da sua geladeira e receba uma receita completa, com passo a passo e cronômetro.</p>
+    </div>
+    <a class="btn" href="/qchef-receita/?utm_source=ferramenta&utm_medium=desafio&utm_campaign=engajamento">Montar minha receita</a>
+  </div>
+</section>
+</main>
+<footer class="rodape">
+  <div class="in">
+    <img src="hub-assinatura.png" width="760" height="171" alt="Hub BioGuia — Saúde integrada">
+    <p>© 2026 QChef · Hub BioGuia · <a href="mailto:contato@hubbioguia.com.br" style="color:var(--laranja-claro)">contato@hubbioguia.com.br</a></p>
+  </div>
+</footer>
+<script>
+;(function () {
+  var DIAS = [
+    ['Um copo de água logo ao acordar', 'Deixe o copo ao lado da cama na noite anterior.'],
+    ['Uma cor a mais no prato do almoço', 'Tomate, cenoura, folhas, milho: vale qualquer cor. <a class="dica" href="/qchef-receita/?ing=tomate,cenoura&utm_source=ferramenta&utm_medium=desafio">Veja uma receita</a>.'],
+    ['Uma refeição sem tela', 'Celular longe e atenção no prato, pelo menos uma vez hoje.'],
+    ['10 minutos de caminhada ou alongamento', 'Pode ser em casa, no intervalo ou depois do jantar.'],
+    ['Uma fruta no lanche da tarde', 'Deixe a fruta à vista para lembrar.'],
+    ['Jantar um pouco mais cedo', 'Uns 30 minutos antes do costume já contam.'],
+    ['Deitar 15 minutos antes do costume', 'Desligue as telas e prepare o quarto com calma.'],
+  ]
+  var CHAVE = 'qchef-desafio-7'
+  var ler = function () { try { return JSON.parse(localStorage.getItem(CHAVE)) || null } catch (e) { return null } }
+  var gravar = function (v) { try { localStorage.setItem(CHAVE, JSON.stringify(v)) } catch (e) {} }
+  var hoje = function () { var d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() }
+  var est = ler() || { inicio: hoje(), feitos: [] }
+  if (!ler()) gravar(est)
+
+  function diaDeHoje() { return Math.min(7, Math.floor((hoje() - est.inicio) / 86400000) + 1) }
+  function desenhar() {
+    var lista = document.getElementById('dias'), h = diaDeHoje()
+    lista.innerHTML = ''
+    DIAS.forEach(function (d, i) {
+      var n = i + 1, feito = est.feitos.indexOf(n) >= 0
+      var li = document.createElement('li')
+      li.className = 'dia' + (feito ? ' feito' : '') + (n === h && !feito ? ' hoje' : '')
+      li.innerHTML = '<div class="num">Dia<br>' + n + '</div><div><h2></h2><p>' + d[1] + '</p></div>'
+      li.querySelector('h2').textContent = d[0]
+      if (n === h) { var t = document.createElement('span'); t.className = 'hj'; t.textContent = 'hoje'; li.querySelector('h2').appendChild(t) }
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'marcar'
+      b.textContent = feito ? 'Feito ✓' : 'Marcar como feito'; b.setAttribute('aria-pressed', String(feito))
+      b.onclick = function () {
+        est.feitos = feito ? est.feitos.filter(function (x) { return x !== n }) : est.feitos.concat(n)
+        gravar(est); desenhar()
+      }
+      li.appendChild(b); lista.appendChild(li)
+    })
+    var c = est.feitos.length
+    document.getElementById('barra').style.width = (c / 7 * 100) + '%'
+    document.getElementById('contagem').textContent = c + ' de 7 dias' + (c ? '' : ' · hoje é o dia ' + h)
+    document.getElementById('parabens').hidden = c < 7
+  }
+  document.getElementById('recomecar').onclick = function () { est = { inicio: hoje(), feitos: [] }; gravar(est); desenhar(); scrollTo({ top: 0, behavior: 'smooth' }) }
+  document.getElementById('compartilhar').onclick = function () {
+    var url = location.origin + location.pathname, txt = 'Topa fazer comigo o desafio de 7 dias mais leves? Um gesto pequeno por dia: '
+    if (navigator.share) navigator.share({ title: 'Desafio 7 dias mais leves', text: txt, url: url }).catch(function () {})
+    else location.href = 'https://wa.me/?text=' + encodeURIComponent(txt + url)
+  }
+  desenhar()
+})()
+</script>
+</body>
+</html>

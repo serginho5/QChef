@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sua receita com o que tem — QChef</title>
+<meta name="description" content="Marque o que tem na geladeira, escolha onde vai preparar e receba uma receita completa, com passo a passo e cronômetro. Grátis, do livro de receitas do QChef.">
+<meta property="og:title" content="Sua receita com o que tem — QChef">
+<meta property="og:description" content="Marque os ingredientes e receba a receita completa, com passo a passo e cronômetro.">
+<meta property="og:image" content="https://appnovidades.com.br/qchef-oferta/img/frango-empanado-airfryer-g.webp">
+<meta name="theme-color" content="#1F2328">
+<link rel="icon" href="favicon-48.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face { font-family: Montserrat; src: url(/qchef-oferta/fontes/Montserrat-SemiBold.woff2) format('woff2'); font-weight: 500 600; font-display: swap; }
+@font-face { font-family: Montserrat; src: url(/qchef-oferta/fontes/Montserrat-Bold.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: Montserrat; src: url(/qchef-oferta/fontes/Montserrat-ExtraBold.woff2) format('woff2'); font-weight: 800 900; font-display: swap; }
+@font-face { font-family: Nunito; src: url(/qchef-oferta/fontes/NunitoSans.woff2) format('woff2'); font-weight: 200 1000; font-display: swap; }
+
+:root {
+  --laranja: #F47A1F; --laranja-claro: #FF9A2E; --laranja-fundo: #FFF0E2; --laranja-texto: #C2440A;
+  --grafite: #1F2328; --grafite-2: #2C3137; --creme: #FFF8F1; --verde: #2F5A12; --verde-claro: #E9F3DC;
+  --titulo: Montserrat, system-ui, sans-serif; --texto: Nunito, system-ui, sans-serif;
+  --margem: clamp(18px, 4vw, 48px); --raio: 14px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--creme); color: var(--grafite); font: 18px/1.5 var(--texto); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ol, ul { margin: 0; }
+h1, h2, h3 { font-family: var(--titulo); font-weight: 800; letter-spacing: -0.03em; line-height: 1.02; }
+img { display: block; max-width: 100%; height: auto; }
+button { font: inherit; }
+:focus-visible { outline: 3px solid var(--laranja-claro); outline-offset: 3px; }
+
+.topo { background: var(--grafite); color: var(--creme); padding: 16px var(--margem); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.topo img { height: 40px; width: auto; }
+.topo span { font: 600 14px/1.3 var(--titulo); }
+
+.monte { background: var(--laranja); padding: clamp(40px, 6vw, 80px) var(--margem) clamp(40px, 5vw, 64px); }
+.monte-in { max-width: 1040px; margin: 0 auto; }
+.monte h1 { font-size: clamp(38px, 6.2vw, 76px); max-width: 14ch; }
+.monte > div > p { margin-top: 14px; max-width: 48ch; font-weight: 600; }
+.passo { font: 800 20px/1.2 var(--titulo); margin: 30px 0 12px; }
+.campo { display: flex; gap: 10px; flex-wrap: wrap; }
+.campo input { flex: 1 1 240px; min-height: 56px; border: 0; border-radius: 999px; padding: 0 22px; font: 600 18px var(--texto); background: var(--creme); color: var(--grafite); }
+.campo input::placeholder { color: #6E645B; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chips + .chips { margin-top: 10px; }
+.chip { min-height: 46px; padding: 0 18px; border: 0; border-radius: 999px; cursor: pointer; background: var(--laranja-fundo); color: var(--grafite); font: 700 16px/1 var(--titulo); transition: transform 140ms var(--ease), background-color 180ms ease; }
+.chip:hover { background: #fff; }
+.chip:active { transform: scale(0.95); }
+.chip[aria-pressed="true"] { background: var(--grafite); color: var(--creme); }
+.chip.meu { background: var(--grafite); color: var(--creme); }
+.chip.meu::after { content: " ×"; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 60px; padding: 0 30px; border: 0; border-radius: 999px; background: var(--grafite); color: var(--creme); font: 800 18px/1 var(--titulo); cursor: pointer; text-decoration: none; transition: transform 140ms var(--ease), background-color 180ms ease; }
+.btn:hover { background: var(--grafite-2); }
+.btn:active { transform: scale(0.97); }
+.btn.claro { background: var(--laranja); color: var(--grafite); }
+.btn.claro:hover { background: var(--laranja-claro); }
+.btn.linha { background: transparent; color: var(--grafite); text-decoration: underline; text-underline-offset: 4px; padding: 0 8px; }
+.acoes-monte { margin-top: 30px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.erro { margin-top: 14px; font-weight: 700; min-height: 1.5em; }
+
+.resultado { max-width: 1040px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) var(--margem); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.resultado[hidden] { display: none; }
+.foto { border-radius: var(--raio); overflow: hidden; aspect-ratio: 4 / 3; background: var(--laranja-fundo); position: sticky; top: 20px; }
+.foto img { width: 100%; height: 100%; object-fit: cover; }
+.cab h2 { font-size: clamp(30px, 3.8vw, 48px); }
+.meta { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+.meta span { background: var(--laranja-fundo); border-radius: 999px; padding: 8px 14px; font: 700 15px/1 var(--titulo); }
+.desc { margin-top: 16px; }
+.aviso { margin-top: 14px; background: var(--verde-claro); color: var(--verde); border-radius: var(--raio); padding: 14px 18px; font-weight: 700; font-size: 16px; }
+.aviso:empty { display: none; }
+.bloco { margin-top: 30px; }
+.bloco h3 { font-size: 24px; }
+.ings { list-style: none; padding: 0; margin-top: 14px; display: grid; gap: 10px; }
+.ings li { display: flex; justify-content: space-between; gap: 14px; background: #fff; border-radius: 12px; padding: 12px 16px; }
+.ings li b { font-family: var(--titulo); font-weight: 700; }
+.ings li small { display: block; font-size: 14px; color: #6E645B; }
+.ings li .tag { flex: none; align-self: center; font: 700 13px/1 var(--titulo); padding: 7px 10px; border-radius: 999px; }
+.tag.tem { background: var(--verde-claro); color: var(--verde); }
+.tag.falta { background: var(--laranja-fundo); color: var(--laranja-texto); }
+.tag.desp { background: #F1ECE6; color: #6E645B; }
+.passos { list-style: none; padding: 0; margin-top: 14px; display: grid; gap: 12px; counter-reset: p; }
+.passos li { background: #fff; border-radius: 12px; padding: 16px 18px 16px 64px; position: relative; counter-increment: p; }
+.passos li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 34px; height: 34px; border-radius: 50%; background: var(--laranja); color: var(--grafite); font: 800 17px/34px var(--titulo); text-align: center; }
+.passos .info { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font: 700 14px/1 var(--titulo); color: var(--laranja-texto); }
+.timer { border: 0; cursor: pointer; border-radius: 999px; padding: 10px 16px; background: var(--grafite); color: var(--creme); font: 800 15px/1 var(--titulo); transition: background-color 180ms ease, transform 140ms var(--ease); }
+.timer:active { transform: scale(0.96); }
+.timer.rodando { background: var(--laranja); color: var(--grafite); }
+.timer.fim { background: var(--verde); color: #fff; }
+.meio { font-size: 14px; color: var(--verde); font-weight: 700; }
+.acoes-res { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+.qchef { background: var(--grafite); color: var(--creme); padding: clamp(48px, 7vw, 96px) var(--margem); }
+.qchef-in { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+.qchef h2 { font-size: clamp(30px, 4.4vw, 56px); max-width: 16ch; }
+.qchef h2 span { color: var(--laranja-claro); }
+.qchef p { margin-top: 14px; max-width: 50ch; }
+.rodape { background: var(--grafite); color: var(--creme); padding: 28px var(--margem) 40px; }
+.rodape-in { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+.rodape img { width: 240px; height: auto; }
+
+@media (max-width: 820px) {
+  .resultado { grid-template-columns: 1fr; }
+  .foto { position: static; }
+  .btn { width: 100%; }
+  .acoes-monte .btn.linha, .acoes-res .btn.linha { width: auto; }
+}
+.js .entra { animation: entra 600ms var(--ease) both; }
+@keyframes entra { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .js .entra { animation: none; } }
+</style>
+</head>
+<body>
+<header class="topo">
+  <a href="/qchef-oferta/?utm_source=ferramenta&utm_medium=receita" aria-label="QChef"><img src="qchef-logo-horizontal-branca.svg" width="160" height="79" alt="QChef"></a>
+  <span>Grátis, do livro de receitas do QChef</span>
+</header>
+
+<main>
+<section class="monte" aria-labelledby="t">
+  <div class="monte-in">
+    <h1 id="t">Sua receita com o que tem</h1>
+    <p>Marque ou digite o que está na sua geladeira, escolha onde vai preparar e receba a receita completa, com passo a passo e cronômetro.</p>
+
+    <p class="passo">O que você tem?</p>
+    <form class="campo" id="form-ing" autocomplete="off">
+      <input id="digitar" type="text" placeholder="Digite um ingrediente e aperte Enter" aria-label="Digite um ingrediente">
+      <button class="btn" type="submit">Adicionar</button>
+    </form>
+    <div class="chips" id="meus" aria-live="polite" style="margin-top:12px"></div>
+    <div class="chips" id="sugestoes" role="group" aria-label="Ingredientes comuns" style="margin-top:12px">
+      <button class="chip" type="button">Frango</button><button class="chip" type="button">Ovo</button>
+      <button class="chip" type="button">Arroz</button><button class="chip" type="button">Batata</button>
+      <button class="chip" type="button">Queijo</button><button class="chip" type="button">Tomate</button>
+      <button class="chip" type="button">Carne moída</button><button class="chip" type="button">Macarrão</button>
+      <button class="chip" type="button">Pão</button><button class="chip" type="button">Cebola</button>
+      <button class="chip" type="button">Cenoura</button><button class="chip" type="button">Abobrinha</button>
+      <button class="chip" type="button">Peixe</button><button class="chip" type="button">Leite</button>
+      <button class="chip" type="button">Banana</button><button class="chip" type="button">Milho</button>
+    </div>
+
+    <p class="passo">Onde vai preparar?</p>
+    <div class="chips" id="lugares" role="radiogroup" aria-label="Onde vai preparar">
+      <button class="chip" type="button" data-a="tantofaz" aria-pressed="true">Tanto faz</button>
+      <button class="chip" type="button" data-a="airfryer" aria-pressed="false">Airfryer</button>
+      <button class="chip" type="button" data-a="microondas" aria-pressed="false">Micro-ondas</button>
+      <button class="chip" type="button" data-a="fogao" aria-pressed="false">Fogão</button>
+      <button class="chip" type="button" data-a="forno" aria-pressed="false">Forno</button>
+      <button class="chip" type="button" data-a="frio" aria-pressed="false">Prato frio</button>
+    </div>
+
+    <div class="acoes-monte">
+      <button class="btn" type="button" id="ver">Ver minha receita</button>
+    </div>
+    <p class="erro" id="erro" role="status"></p>
+  </div>
+</section>
+
+<section class="resultado" id="resultado" hidden aria-live="polite">
+  <div class="foto"><img id="r-foto" src="" alt="" width="800" height="600"></div>
+  <div>
+    <div class="cab">
+      <h2 id="r-nome"></h2>
+      <div class="meta" id="r-meta"></div>
+      <p class="desc" id="r-desc"></p>
+      <p class="aviso" id="r-aviso"></p>
+    </div>
+    <div class="bloco"><h3>Ingredientes</h3><ul class="ings" id="r-ings"></ul></div>
+    <div class="bloco"><h3>Modo de preparo</h3><ol class="passos" id="r-passos"></ol></div>
+    <div class="acoes-res">
+      <button class="btn claro" type="button" id="outra">Ver outra receita</button>
+      <button class="btn linha" type="button" id="compartilhar">Mandar para alguém</button>
+    </div>
+  </div>
+</section>
+
+<section class="qchef" aria-labelledby="q">
+  <div class="qchef-in">
+    <div>
+      <h2 id="q">Quer uma receita <span>nova, só para você</span>, todo dia?</h2>
+      <p>Esta página usa as 67 receitas do nosso livro. No app QChef, a inteligência artificial cria uma receita do zero para exatamente o que você tem, com modo cozinhando e cronômetro em cada passo.</p>
+    </div>
+    <a class="btn claro" href="/qchef-oferta/?utm_source=ferramenta&utm_medium=receita&utm_campaign=engajamento">Conhecer o QChef</a>
+  </div>
+</section>
+</main>
+
+<footer class="rodape">
+  <div class="rodape-in">
+    <img src="hub-assinatura.png" width="760" height="171" alt="Hub BioGuia — Saúde integrada">
+    <p>© 2026 QChef · Hub BioGuia · <a href="mailto:contato@hubbioguia.com.br" style="color:var(--laranja-claro)">contato@hubbioguia.com.br</a></p>
+  </div>
+</footer>
+
+<script>
+;(function () {
+  var NOMES = { airfryer: 'Airfryer', microondas: 'Micro-ondas', fogao: 'Fogão', forno: 'Forno', frio: 'Prato frio' }
+  var ONDE = { fogao: 'no fogão', forno: 'no forno', airfryer: 'na airfryer', microondas: 'no micro-ondas', frio: 'sem fogo' }
+  var FOGO = { baixo: 'fogo baixo', medio: 'fogo médio', alto: 'fogo alto' }
+  var LIVRO = [], tenho = [], ranking = [], pos = 0, atual = null
+  var $ = function (id) { return document.getElementById(id) }
+  var norm = function (s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/-/g, ' ').trim() }
+  var singular = function (s) { return s.replace(/(oes|aes)$/, 'ao').replace(/s$/, '') }
+  var chaves = function (i) { return i.d ? [] : i.k.split('/').map(norm) }
+  var casa = function (cs, item) { return cs.some(function (c) { return item.indexOf(c) >= 0 || singular(item) === singular(c) }) }
+
+  // ---------- ingredientes ----------
+  function desenharMeus() {
+    $('meus').innerHTML = ''
+    var sugeridos = [].map.call(document.querySelectorAll('#sugestoes .chip'), function (b) { return b.textContent })
+    tenho.filter(function (t) { return sugeridos.indexOf(t) < 0 }).forEach(function (t) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'chip meu'; b.textContent = t; b.setAttribute('aria-label', 'Remover ' + t)
+      b.onclick = function () { tirar(t) }
+      $('meus').appendChild(b)
+    })
+    document.querySelectorAll('#sugestoes .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(tenho.indexOf(b.textContent) >= 0)) })
+  }
+  function por(t) { t = t.trim(); if (!t) return; t = t.charAt(0).toUpperCase() + t.slice(1); if (tenho.some(function (x) { return norm(x) === norm(t) })) return; tenho.push(t); desenharMeus() }
+  function tirar(t) { tenho = tenho.filter(function (x) { return x !== t }); desenharMeus() }
+  $('form-ing').addEventListener('submit', function (e) {
+    e.preventDefault(); $('digitar').value.split(/[,;]+/).forEach(por); $('digitar').value = ''; $('digitar').focus()
+  })
+  $('sugestoes').addEventListener('click', function (e) {
+    var b = e.target.closest('.chip'); if (!b) return
+    tenho.indexOf(b.textContent) >= 0 ? tirar(b.textContent) : por(b.textContent)
+  })
+  $('lugares').addEventListener('click', function (e) {
+    var b = e.target.closest('.chip'); if (!b) return
+    document.querySelectorAll('#lugares .chip').forEach(function (x) { x.setAttribute('aria-pressed', 'false') })
+    b.setAttribute('aria-pressed', 'true')
+  })
+  function lugar() { return document.querySelector('#lugares .chip[aria-pressed="true"]').dataset.a }
+
+  // ---------- escolha (mesma regra do app QChef sem IA) ----------
+  function calcular() {
+    var ts = tenho.map(function (t) { return singular(norm(t)) }), amb = lugar()
+    ranking = LIVRO.map(function (r) {
+      var usados = {}, acertos = 0, faltam = 0
+      r.ing.forEach(function (i) {
+        if (i.d) return
+        var achou = ts.filter(function (t) { return casa(chaves(i), t) })
+        achou.forEach(function (t) { usados[t] = 1 })
+        if (achou.length) acertos += i.o ? 1 : 3
+        else if (!i.o) faltam++
+      })
+      var pontos = acertos - faltam * 1.5 - (ts.length - Object.keys(usados).length)
+      if (amb !== 'tantofaz' && r.amb !== amb) pontos -= 6
+      return { r: r, pontos: pontos, acertos: acertos }
+    }).filter(function (c) { return c.acertos > 0 }).sort(function (a, b) { return b.pontos - a.pontos })
+    pos = 0
+  }
+
+  // ---------- receita ----------
+  function mostrar(r) {
+    atual = r
+    var ts = tenho.map(function (t) { return singular(norm(t)) }), amb = lugar()
+    $('r-foto').src = '/qchef-oferta/img/pratos/' + r.id + '.webp'; $('r-foto').alt = r.nome
+    $('r-nome').textContent = r.nome
+    $('r-meta').innerHTML = ['<span>' + r.min + ' min</span>', '<span>' + NOMES[r.amb] + '</span>', '<span>' + r.porcoes + ' porções</span>', '<span>' + r.dif + '</span>'].join('')
+    $('r-desc').textContent = r.desc
+    var avisos = []
+    if (amb !== 'tantofaz' && r.amb !== amb && ts.length) avisos.push('Com esses ingredientes, o melhor prato do nosso livro é feito ' + ONDE[r.amb] + '.')
+    $('r-aviso').textContent = avisos.join(' ')
+    $('r-ings').innerHTML = ''
+    r.ing.forEach(function (i) {
+      var tem = ts.some(function (t) { return casa(chaves(i), t) })
+      var li = document.createElement('li')
+      var tag = i.d ? '<span class="tag desp">Despensa</span>' : tem ? '<span class="tag tem">Você tem</span>' : ts.length ? '<span class="tag falta">' + (i.o ? 'Opcional' : 'Precisa') + '</span>' : ''
+      li.innerHTML = '<div><b></b><small></small></div>' + tag
+      li.querySelector('b').textContent = i.n; li.querySelector('small').textContent = i.q
+      $('r-ings').appendChild(li)
+    })
+    $('r-passos').innerHTML = ''
+    r.passos.forEach(function (p) {
+      var li = document.createElement('li'), info = []
+      li.appendChild(document.createTextNode(p.t))
+      if (p.x.f) info.push(FOGO[p.x.f] || p.x.f)
+      if (p.x.c) info.push(p.x.c + ' °C')
+      if (p.x.w) info.push('potência ' + p.x.w + '%')
+      if (p.s || info.length) {
+        var d = document.createElement('div'); d.className = 'info'
+        if (info.length) { var s = document.createElement('span'); s.textContent = info.join(' · '); d.appendChild(s) }
+        if (p.s) d.appendChild(cronometro(p.s, p.x.m))
+        li.appendChild(d)
+      }
+      $('r-passos').appendChild(li)
+    })
+    $('resultado').hidden = false
+    $('resultado').classList.remove('entra'); void $('resultado').offsetWidth; $('resultado').classList.add('entra')
+  }
+
+  // ---------- cronômetro por passo ----------
+  var fmt = function (s) { return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') }
+  function bip() {
+    try { var c = new (window.AudioContext || window.webkitAudioContext)(); [0, 0.35, 0.7].forEach(function (t) { var o = c.createOscillator(), g = c.createGain(); o.frequency.value = 880; o.connect(g); g.connect(c.destination); g.gain.setValueAtTime(0.25, c.currentTime + t); o.start(c.currentTime + t); o.stop(c.currentTime + t + 0.2) }) } catch (e) {}
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200])
+  }
+  function cronometro(seg, meio) {
+    var wrap = document.createElement('span'); wrap.style.display = 'contents'
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'timer'; b.textContent = 'Iniciar ' + fmt(seg)
+    var aviso = document.createElement('span'); aviso.className = 'meio'
+    var resto = seg, id = null
+    b.onclick = function () {
+      if (id) { clearInterval(id); id = null; b.classList.remove('rodando'); b.textContent = 'Continuar ' + fmt(resto); return }
+      if (resto <= 0) { resto = seg; b.classList.remove('fim'); aviso.textContent = '' }
+      b.classList.add('rodando')
+      id = setInterval(function () {
+        resto--; b.textContent = 'Pausar ' + fmt(resto)
+        if (meio && resto === Math.floor(seg / 2)) { aviso.textContent = meio + '!'; bip() }
+        if (resto <= 0) { clearInterval(id); id = null; b.classList.remove('rodando'); b.classList.add('fim'); b.textContent = 'Pronto! Repetir'; bip() }
+      }, 1000)
+    }
+    wrap.appendChild(b); wrap.appendChild(aviso); return wrap
+  }
+
+  // ---------- ações ----------
+  $('ver').addEventListener('click', function () {
+    if (!tenho.length) { $('erro').textContent = 'Marque ou digite pelo menos um ingrediente.'; return }
+    calcular()
+    if (!ranking.length) { $('erro').textContent = 'Não achamos um prato com esses ingredientes no livro. Tente juntar mais um ou dois.'; return }
+    $('erro').textContent = ''
+    mostrar(ranking[0].r)
+    $('resultado').scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
+  $('outra').addEventListener('click', function () {
+    if (!ranking.length) calcular()
+    var lista = ranking.length ? ranking.map(function (c) { return c.r }) : LIVRO
+    pos = (pos + 1) % lista.length
+    if (lista[pos] === atual) pos = (pos + 1) % lista.length
+    mostrar(lista[pos]); $('resultado').scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
+  $('compartilhar').addEventListener('click', function () {
+    if (!atual) return
+    var url = location.origin + location.pathname + '?r=' + atual.id
+    var txt = atual.nome + ' (' + atual.min + ' min) — receita do QChef: '
+    if (navigator.share) navigator.share({ title: atual.nome, text: txt, url: url }).catch(function () {})
+    else location.href = 'https://wa.me/?text=' + encodeURIComponent(txt + url)
+  })
+
+  // ---------- dados e links prontos (?r=receita  ou  ?ing=ovo,queijo&amb=fogao) ----------
+  fetch('livro.json').then(function (r) { return r.json() }).then(function (d) {
+    LIVRO = d
+    var q = new URLSearchParams(location.search)
+    if (q.get('amb')) { var b = document.querySelector('#lugares .chip[data-a="' + q.get('amb') + '"]'); if (b) b.click() }
+    if (q.get('ing')) q.get('ing').split(',').forEach(por)
+    var r = q.get('r') && LIVRO.find(function (x) { return x.id === q.get('r') })
+    if (r) { mostrar(r); setTimeout(function () { $('resultado').scrollIntoView({ block: 'start' }) }, 50) }
+    else if (tenho.length) $('ver').click()
+  }).catch(function () { $('erro').textContent = 'Não foi possível carregar as receitas. Recarregue a página.' })
+})()
+</script>
+</body>
+</html>
