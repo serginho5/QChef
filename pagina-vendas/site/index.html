@@ -106,20 +106,20 @@ header, main, footer, section { overflow-x: clip; }
 .hero-acao .btn { min-height: 66px; padding: 0 34px; font-size: 19px; }
 .hero-acao p { font: 700 var(--s-small)/1.4 var(--titulo); max-width: 24ch; }
 .hero-acao p b { display: block; font-size: 22px; color: var(--laranja-claro); }
-.hero-fone { position: absolute; z-index: 2; right: 6%; bottom: -16%; width: min(24vw, 360px); transform: rotate(-6deg); }
+.hero-fone { position: absolute; z-index: 2; right: 5%; bottom: -24%; width: min(16vw, 250px); transform: rotate(-6deg); }
 
 /* ---------- INTRO: escada ---------- */
-.intro { background: var(--grafite); color: var(--creme); min-height: 100svh; display: grid; align-items: center; position: relative; padding-block: 120px; }
-.intro .grade { align-items: start; }
-.escada { grid-column: 1 / 9; font: 800 clamp(24px, 2.5vw, 36px)/1.12 var(--titulo); letter-spacing: -0.02em; }
+.intro { background: var(--grafite); color: var(--creme); position: relative; padding-block: clamp(96px, 10vw, 150px); }
+.intro .grade { align-items: start; grid-template-rows: auto 1fr; }
+.escada { grid-column: 1 / 9; grid-row: 1; font: 800 clamp(24px, 2.5vw, 36px)/1.12 var(--titulo); letter-spacing: -0.02em; }
 .escada span { display: block; }
 .escada span:nth-child(2) { padding-left: 6vw; }
 .escada span:nth-child(3) { padding-left: 12vw; color: var(--laranja-claro); }
 .escada span:nth-child(4) { padding-left: 18vw; }
 .escada span:nth-child(5) { padding-left: 24vw; color: var(--laranja-claro); }
-.intro-fotos { grid-column: 9 / 13; display: grid; gap: 16px; }
+.intro-fotos { grid-column: 9 / 13; grid-row: 1 / 3; display: grid; gap: 16px; }
 .intro-fotos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--raio); }
-.intro-nota { grid-column: 1 / 7; margin-top: 72px; font-size: var(--s-body); max-width: 46ch; }
+.intro-nota { grid-column: 1 / 8; grid-row: 2; align-self: end; margin-top: 40px; font-size: var(--s-body); max-width: 46ch; }
 .intro-nota b { color: var(--laranja-claro); }
 
 /* ---------- SHOWCASE: teste ao vivo ---------- */
@@ -239,15 +239,15 @@ header, main, footer, section { overflow-x: clip; }
 .pro a { font: 800 17px/1.2 var(--titulo); color: var(--laranja-texto); text-underline-offset: 4px; }
 
 /* ---------- GARANTIA (selo) ---------- */
-.garantia { background: var(--verde-claro); color: var(--verde); padding-block: clamp(80px, 10vw, 140px); }
+.garantia { background: var(--verde-claro); color: var(--verde); padding-block: clamp(56px, 6vw, 88px); }
 .garantia .grade { align-items: center; }
-.selo { grid-column: 1 / 5; width: 100%; max-width: 360px; color: var(--verde); }
-.garantia-txt { grid-column: 6 / 13; }
+.selo { grid-column: 1 / 4; width: 100%; max-width: 230px; color: var(--verde); }
+.garantia-txt { grid-column: 4 / 13; }
 .garantia-txt h2 { font-size: clamp(40px, 5.2vw, 84px); max-width: 12ch; }
 .garantia-txt p { margin-top: 22px; max-width: 50ch; color: var(--grafite); }
 
 /* ---------- CTA: a palavra é o botão ---------- */
-.cta { display: block; position: relative; background: var(--laranja); color: var(--grafite); min-height: 60svh; text-decoration: none; overflow: hidden; transition: background-color 0ms, color 0ms; }
+.cta { display: block; position: relative; background: var(--laranja); color: var(--grafite); min-height: clamp(300px, 40svh, 440px); text-decoration: none; overflow: hidden; transition: background-color 0ms, color 0ms; }
 .cta:hover, .cta:focus-visible { background: var(--grafite); color: var(--laranja); }
 .cta .frase { position: absolute; left: var(--margem); top: 28px; font: 700 20px/1.35 var(--titulo); max-width: 30ch; }
 .cta .seta { position: absolute; right: var(--margem); top: 28px; width: 48px; height: 48px; transition: transform var(--t-hover) var(--ease-out); }
@@ -289,14 +289,14 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   .hero-nav { padding: 16px 18px; gap: 12px; }
   .hero-nav > img { height: 34px; }
   .hero-nav a.link { display: none; }
-  .hero-nav .btn { min-height: 44px; padding: 0 16px; font-size: 15px; }
+  .hero-nav .btn { min-height: 44px; padding: 0 16px; font-size: 14px; white-space: nowrap; }
   .hero-texto { grid-column: 1; padding: 0 18px 28px; }
   .hero h1 { font-size: 11.2vw; max-width: none; white-space: normal; }
-  .hero-texto > p { font-size: 17px; margin-top: 14px; }
-  .hero-acao { margin-top: 22px; gap: 14px; }
+  .hero-texto > p { font-size: 16px; margin-top: 12px; }
+  .hero-acao { margin-top: 18px; gap: 12px; }
   .hero-acao .btn { width: 100%; white-space: nowrap; font-size: 17px; padding: 0 18px; }
-  .hero-fone { width: 27vw; right: 5%; top: 78px; bottom: auto; transform: rotate(6deg); }
-  .hero-foto { min-height: 92svh; }
+  .hero-fone { display: none; }
+  .hero-foto { min-height: 0; height: calc(100svh - 16px); max-height: 720px; }
   .dentro-topo h2 { font-size: 11vw; }
   .setas { display: none; }
   .trilho { padding-top: 40px; }
@@ -307,8 +307,10 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   .escada { grid-column: 1 / -1; font-size: clamp(22px, 4.1vw, 32px); }
   .escada span:nth-child(2) { padding-left: 5vw; } .escada span:nth-child(3) { padding-left: 10vw; }
   .escada span:nth-child(4) { padding-left: 15vw; } .escada span:nth-child(5) { padding-left: 20vw; }
+  .intro .grade { grid-template-rows: none; }
+  .escada, .intro-fotos, .intro-nota { grid-row: auto; }
   .intro-fotos { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; margin-top: 40px; }
-  .intro-nota { grid-column: 1 / -1; margin-top: 32px; }
+  .intro-nota { grid-column: 1 / -1; margin-top: 28px; }
 
   .teste { grid-template-columns: 1fr; }
   .teste-esq { padding-block: 64px 40px; }
@@ -330,12 +332,13 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   .item-linha, .item:nth-child(even) .item-linha { flex-direction: column; }
   .item-linha img { width: 100%; aspect-ratio: 4 / 3; }
 
-  .receitas { min-height: 86svh; }
-  .receitas { place-items: start center; padding-top: 96px; }
+  .receitas { min-height: 0; display: flex; flex-direction: column; align-items: center; padding-block: 64px 48px; }
   .receitas h2 { font-size: 17vw; }
-  .foto-impressa { width: 40vw; }
-  .p1 { left: 6%; top: auto; bottom: 120px; transform: rotate(-6deg); } .p2 { left: auto; right: 6%; top: auto; bottom: 90px; transform: rotate(5deg); }
-  .receitas-nota { bottom: 20px; width: calc(100% - 36px); }
+  .foto-impressa { position: relative; width: 42vw; }
+  .p1, .p2 { left: auto; right: auto; top: auto; bottom: auto; }
+  .p1 { align-self: flex-start; margin: 28px 0 0 2vw; transform: rotate(-6deg); }
+  .p2 { align-self: flex-end; margin: -46vw 2vw 0 0; transform: rotate(5deg); }
+  .receitas-nota { position: static; transform: none; margin-top: 28px; width: auto; }
   .p3, .p4 { display: none; }
 
   .ingresso { width: calc(100% - 20px); grid-template-columns: 1fr; margin-top: 44px; }
@@ -349,10 +352,10 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   .ing-canhoto .valor { font-size: 15vw; }
   .pro { width: calc(100% - 20px); padding: 24px; }
 
-  .selo { grid-column: 1 / -1; max-width: 220px; margin-bottom: 28px; }
+  .selo { grid-column: 1 / -1; max-width: 150px; margin-bottom: 20px; }
   .garantia-txt { grid-column: 1 / -1; }
 
-  .cta { min-height: 46svh; }
+  .cta { min-height: 230px; }
   .cta .frase { font-size: 17px; max-width: 24ch; }
   .cta .seta { width: 32px; height: 32px; }
   .cta .palavra { font-size: 22vw; }
@@ -409,7 +412,7 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
       <a class="link" href="#teste">Teste agora</a>
       <a class="link" href="#app">Ver o app</a>
       <a class="link" href="#preco">Preço</a>
-      <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Comprar</a>
+      <a class="btn" href="https://pay.kiwify.com.br/CHp2orm" data-checkout>Comprar por R$ 37,00</a>
     </nav>
     <div class="hero-texto">
       <h1>Sua geladeira<br>vira receita.</h1>
@@ -683,15 +686,14 @@ details p { padding: 0 24px 24px; max-width: 58ch; font-size: 17px; }
   els.forEach(function (e) { io.observe(e) })
 })()
 
-// Barra de compra no celular: aparece depois do topo
+// Barra de compra no celular: aparece depois do botão de compra do topo e fica fixa até o fim
 ;(function () {
-  var barra = document.querySelector('.barra'), topo = document.getElementById('topo'), preco = document.getElementById('preco')
-  var visivel = { topo: true, preco: false }
+  var barra = document.querySelector('.barra'), botao = document.querySelector('.hero-acao .btn')
   var io = new IntersectionObserver(function (es) {
-    es.forEach(function (e) { visivel[e.target === topo ? 'topo' : 'preco'] = e.isIntersecting })
-    barra.classList.toggle('ver', !visivel.topo && !visivel.preco)
+    var e = es[0]
+    barra.classList.toggle('ver', !e.isIntersecting && e.boundingClientRect.top < 0)
   })
-  io.observe(topo); io.observe(preco)
+  io.observe(botao)
 })()
 
 // Faixa de telas do app: setas
