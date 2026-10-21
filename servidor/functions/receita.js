@@ -110,13 +110,21 @@ async function perguntarClaude(texto) {
 // Velocidade: o Gemini 3 pensa em nível alto por padrão (receitas de 40 s a 2 min); em "low" sai em ~7 s
 // com a mesma qualidade. Cada tentativa tem tempo máximo; se estourar, sobrecarregar (503) ou bater
 // no limite (429), passa para o modelo reserva. Modelos "lite" aceitam pensar no mínimo.
-const RESERVAS_GEMINI = ['gemini-3.7-flash', 'gemini-3.5-flash-lite']
-const TEMPO_TENTATIVA = [22000, 15000, 15000]
+// Quando a cota de um modelo acaba (429), ele fica de fora por 15 min em vez de gastar uma tentativa a cada receita.
+// O total de tentativas cabe em 50 s, abaixo dos 55 s que o app espera antes de usar o livro de receitas.
+// Cada modelo tem a própria cota gratuita: a fila vai do melhor para o mais leve.
+const RESERVAS_GEMINI = ['gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite']
+const TEMPO_TENTATIVA = 22000
+const PRAZO_TOTAL = 50000
+const SEM_COTA_ATE = {}
 async function perguntarGemini(texto) {
   gemini ??= new GoogleGenAI({ apiKey: CHAVE_GEMINI })
   let r, ultimoErro
+  const prazo = Date.now() + PRAZO_TOTAL
   const modelos = [MODELO, ...RESERVAS_GEMINI.filter((m) => m !== MODELO)]
-  for (const [n, model] of modelos.entries()) {
+  for (const model of modelos) {
+    const resta = prazo - Date.now()
+    if ((SEM_COTA_ATE[model] || 0) > Date.now() || resta < 3000) continue
     try {
       r = await gemini.models.generateContent({
         model,
@@ -126,7 +134,7 @@ async function perguntarGemini(texto) {
           responseMimeType: 'application/json',
           responseJsonSchema: z.toJSONSchema(Receita),
           thinkingConfig: { thinkingLevel: model.includes('lite') ? 'minimal' : 'low' },
-          abortSignal: AbortSignal.timeout(TEMPO_TENTATIVA[n] ?? 15000),
+          abortSignal: AbortSignal.timeout(Math.min(TEMPO_TENTATIVA, resta)),
         },
       })
       r.modelo = model
@@ -134,6 +142,7 @@ async function perguntarGemini(texto) {
     } catch (e) {
       const demorou = e.name === 'TimeoutError' || e.name === 'AbortError'
       if (!demorou && ![429, 500, 503].includes(e.status)) throw e
+      if (e.status === 429) SEM_COTA_ATE[model] = Date.now() + 15 * 60000
       console.warn(`gemini ${model}: ${demorou ? 'demorou demais' : e.status}, tentando o próximo`)
       ultimoErro = e
     }
