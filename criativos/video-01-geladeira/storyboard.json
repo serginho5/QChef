@@ -1,0 +1,12 @@
+{
+  "titulo": "Nome do produto · vídeo 01",
+  "subtitulo": "Vertical 1080×1920 · 30 fps · quadros reais tirados de renderAt(t), um no fim de cada frase da narração.",
+  "visual": {
+    "c1": "Descreva o que aparece na cena 1 e em qual palavra cada coisa acontece.",
+    "c2": "Descreva a cena 2."
+  },
+  "notas": {
+    "c1": "",
+    "c2": "Use para avisos: promessas que o produto não cumpre, regras da Meta, contas de preço."
+  }
+}

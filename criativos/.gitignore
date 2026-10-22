@@ -1,0 +1,9 @@
+# Gerados pelo motor de vídeo (refeitos com voz-neural.py / tempos.mjs / storyboard.mjs)
+narracao/
+storyboard/
+amostras-voz/
+# Versões intermediárias; ficam só os vídeos finais (organico e anuncio)
+*-v1.mp4
+*-v2.mp4
+# Chaves (ex.: azure-voz.env)
+*.env

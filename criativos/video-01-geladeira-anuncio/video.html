@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>QChef · vídeo 01 · anúncio</title>
+<link rel="stylesheet" href="lib/celular.css">
+<style>
+@font-face { font-family: Montserrat; src: url(fontes/Montserrat-SemiBold.woff2) format('woff2'); font-weight: 500 600; }
+@font-face { font-family: Montserrat; src: url(fontes/Montserrat-Bold.woff2) format('woff2'); font-weight: 700; }
+@font-face { font-family: Montserrat; src: url(fontes/Montserrat-ExtraBold.woff2) format('woff2'); font-weight: 800 900; }
+@font-face { font-family: Nunito; src: url(fontes/NunitoSans.woff2) format('woff2'); font-weight: 200 1000; }
+/* Palco vertical 1080×1920. Área segura do Reels: texto importante entre y≈200 e y≈1550. */
+:root { --laranja: #F47A1F; --laranja-claro: #FF9A2E; --laranja-fundo: #FFF0E2; --grafite: #1F2328; --grafite-2: #2C3137; --creme: #FFF8F1; --verde: #2F5A12; }
+* { margin: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--grafite); }
+#palco { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Nunito, sans-serif; color: var(--grafite); }
+.cena { position: absolute; inset: 0; overflow: hidden; display: none; }
+#manchete { position: absolute; left: 60px; right: 60px; top: 280px; text-align: center; font: 800 76px/1.02 Montserrat, sans-serif; letter-spacing: -0.035em; z-index: 40; }
+#manchete span { display: inline-block; }
+#fala { position: absolute; left: 70px; right: 70px; top: 1150px; text-align: center; font: 700 48px/1.32 Nunito, sans-serif; z-index: 40; }
+#fala .caixa { display: inline; padding: 6px 18px; border-radius: 16px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+#fala .w { opacity: .42; }
+#fala .w.on { opacity: 1; }
+.abs { position: absolute; }
+/* Anúncio: o conteúdo de cada cena (desenhado para y 430–1410) encolhe para caber entre o título e a legenda */
+.enq { position: absolute; inset: 0; transform: translateY(30px) scale(.68); transform-origin: 540px 430px; }
+.titulo { font-family: Montserrat, sans-serif; font-weight: 800; letter-spacing: -0.03em; }
+.pers { position: absolute; overflow: visible; }
+.rotulo { position: absolute; font: 800 40px/1 Montserrat, sans-serif; color: var(--grafite); background: var(--laranja-claro); padding: 12px 24px; border-radius: 999px; white-space: nowrap; transform-origin: 50% 100%; }
+
+/* ---------- cena 1: geladeira ---------- */
+#c1 { background: radial-gradient(120% 70% at 50% 60%, #2C3137 0%, #1F2328 70%); }
+#cam1 { position: absolute; inset: 0; transform-origin: 50% 55%; }
+#gel { position: absolute; left: 190px; top: 450px; width: 700px; height: 960px; border-radius: 44px; background: linear-gradient(90deg, #C9D2D9, #E4EAEE 30%, #CBD4DB); box-shadow: 0 40px 80px rgba(0,0,0,.45); perspective: 1800px; }
+#gel-in { position: absolute; inset: 24px; border-radius: 28px; overflow: hidden; background: linear-gradient(180deg, #EAF2F7, #D3E0E8); }
+#luz { position: absolute; inset: 0; background: radial-gradient(70% 45% at 50% 8%, rgba(255,250,225,.95), rgba(255,250,225,0) 70%); }
+.prat { position: absolute; left: 0; right: 0; height: 14px; background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(170,195,210,.8)); box-shadow: 0 6px 10px rgba(80,110,130,.25); }
+#porta { position: absolute; inset: 0; border-radius: 44px; background: linear-gradient(90deg, #EEF2F5, #FFFFFF 40%, #E3E9ED); transform-origin: 0 50%; backface-visibility: hidden; box-shadow: inset -6px 0 0 rgba(0,0,0,.06); }
+#porta::before { content: ''; position: absolute; left: 0; right: 0; top: 300px; height: 6px; background: #CBD4DB; }
+#porta::after { content: ''; position: absolute; right: 50px; top: 360px; width: 26px; height: 260px; border-radius: 14px; background: linear-gradient(90deg, #B8C2CA, #DCE3E8); }
+#porta .ima { position: absolute; left: 120px; top: 120px; width: 120px; height: 90px; border-radius: 16px; background: var(--laranja); transform: rotate(-8deg); }
+#falta { position: absolute; left: 50%; top: 1150px; transform-origin: 50% 50%; font: 800 64px/1 Montserrat, sans-serif; color: #fff; background: #D9381E; padding: 18px 34px; border-radius: 20px; white-space: nowrap; }
+#risco { position: absolute; left: 14px; top: 50%; height: 12px; margin-top: -6px; border-radius: 9px; background: var(--grafite); }
+
+/* ---------- cena 2: jogo ---------- */
+#c2 { background: var(--laranja); }
+#prato-a, #prato-b, #prato-c { position: absolute; width: 270px; height: 70px; border-radius: 50%; background: #fff; box-shadow: 0 14px 0 rgba(0,0,0,.08), inset 0 -10px 0 #F1E5D9; }
+#interr { position: absolute; margin-top: 70px; font: 900 300px/1 Montserrat, sans-serif; color: var(--grafite); }
+#palpite { position: absolute; left: 50%; top: 1210px; font: 800 52px/1 Montserrat, sans-serif; color: var(--creme); background: var(--grafite); padding: 22px 40px; border-radius: 999px; white-space: nowrap; }
+#conta { position: absolute; left: 0; right: 0; top: 420px; text-align: center; font: 900 640px/1 Montserrat, sans-serif; color: var(--creme); text-shadow: 0 24px 0 rgba(31,35,40,.25); }
+#flash { position: absolute; inset: 0; background: var(--creme); }
+
+/* ---------- cena 3: revelação ---------- */
+#c3 { background: var(--creme); }
+.rev { position: absolute; left: 70px; top: 420px; width: 940px; }
+.rev .foto { position: relative; width: 940px; height: 660px; border-radius: 40px; overflow: hidden; box-shadow: 0 30px 60px rgba(31,35,40,.22); }
+.rev .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rev .num { position: absolute; left: -16px; top: -26px; width: 150px; height: 150px; border-radius: 50%; background: var(--laranja); color: var(--grafite); display: grid; place-items: center; font: 900 54px/1 Montserrat, sans-serif; transform: rotate(-10deg); box-shadow: 0 10px 20px rgba(0,0,0,.18); z-index: 2; }
+.rev h2 { margin-top: 34px; font: 800 64px/1.02 Montserrat, sans-serif; letter-spacing: -0.035em; }
+.rev .chips { display: flex; gap: 14px; margin-top: 18px; align-items: center; }
+.rev .chip { font: 800 34px/1 Montserrat, sans-serif; background: var(--grafite); color: var(--creme); padding: 14px 24px; border-radius: 999px; }
+.rev .chip.cl { background: var(--laranja-fundo); color: #C2440A; }
+.rev .obs { font: 700 30px/1 Nunito, sans-serif; color: #6E645B; }
+#selo3 { position: absolute; left: 700px; top: 400px; width: 330px; height: 330px; z-index: 5; }
+.brilho { position: absolute; width: 70px; height: 70px; z-index: 6; }
+
+/* ---------- cena 4: app ---------- */
+#c4 { background: radial-gradient(80% 50% at 50% 55%, #4A2A12 0%, #1F2328 70%); }
+#c4 .fone { background: #111417; }
+#c4 .fone::before { background: #111417; }
+#c4 .vidro, #c4 .tela { background: #FFF8F1; font-family: Nunito, sans-serif; color: #1F2328; }
+#c4 .dedo { background: rgba(31,35,40,.32); }
+#c4 .onda { border-color: rgba(244,122,31,.95); }
+#c4 .tela.ap-or { background: linear-gradient(160deg, #FF9A2E, #F06A12); }
+.ap-or { background: linear-gradient(160deg, #FF9A2E, #F06A12); }
+.ap-head { position: absolute; left: 0; right: 0; top: 0; height: 236px; border-radius: 0 0 28px 28px; padding: 46px 16px 0; color: #fff; }
+.ap-head b { display: block; font: 800 17px/1.1 Montserrat, sans-serif; }
+.ap-head small { font-size: 11.5px; opacity: .92; }
+.ap-busca { margin-top: 12px; background: #fff; border-radius: 18px; padding: 11px; color: #1F2328; box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+.ap-busca b { font: 800 12.5px/1.2 Montserrat, sans-serif; }
+.ap-campo { margin-top: 8px; background: #FFF4EA; border-radius: 12px; height: 30px; padding: 0 10px; display: flex; align-items: center; color: #9A8E84; font-size: 11px; }
+.ap-sel { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; min-height: 24px; }
+.ap-sel span { background: var(--laranja); color: #fff; font: 700 11px/1 Montserrat, sans-serif; padding: 6px 10px; border-radius: 99px; }
+.ap-corpo { position: absolute; left: 16px; right: 16px; top: 252px; }
+.ap-corpo h4 { font: 800 13.5px/1 Montserrat, sans-serif; margin: 4px 0 9px; }
+.ap-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.ap-chip { border: 1.5px solid #E7D9CC; background: #fff; border-radius: 99px; padding: 6px 10px; font: 700 11.5px/1 Nunito, sans-serif; }
+.ap-chip.on { border-color: var(--laranja); color: #C2440A; background: #FFF0E2; }
+.ap-grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.ap-amb { background: #fff; border: 1.5px solid #EFE3D8; border-radius: 14px; height: 54px; display: grid; place-items: center; text-align: center; font: 700 10.5px/1.1 Nunito, sans-serif; padding-top: 4px; }
+.ap-amb i { display: block; width: 18px; height: 14px; border: 2px solid currentColor; border-radius: 4px; margin: 0 auto 4px; opacity: .6; }
+.ap-amb.on { background: #1F2328; color: #fff; border-color: #1F2328; }
+.ap-btn { position: absolute; left: 16px; right: 16px; bottom: 22px; height: 46px; border-radius: 16px; display: grid; place-items: center; color: #fff; font: 800 14px/1 Montserrat, sans-serif; box-shadow: 0 10px 18px rgba(244,122,31,.35); }
+.ap-cria { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding: 120px 22px 0; color: #fff; text-align: center; }
+.ap-cria b { font: 800 19px/1.15 Montserrat, sans-serif; margin-top: 22px; }
+.ap-cria .lin { width: 100%; margin-top: 10px; background: rgba(255,255,255,.18); border-radius: 12px; height: 38px; display: flex; align-items: center; gap: 9px; padding: 0 12px; font: 700 11.5px/1 Nunito, sans-serif; text-align: left; }
+.ap-cria .lin i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #fff; display: grid; place-items: center; font-style: normal; font-size: 10px; }
+.ap-rec-img { position: absolute; left: 14px; right: 14px; top: 44px; height: 190px; border-radius: 20px; overflow: hidden; }
+.ap-rec-img img { width: 100%; height: 100%; object-fit: cover; }
+.ap-rec { position: absolute; left: 16px; right: 16px; top: 246px; }
+.ap-tags { display: flex; gap: 5px; }
+.ap-tags span { font: 700 10.5px/1 Nunito, sans-serif; padding: 6px 9px; border-radius: 99px; border: 1.5px solid #EFE3D8; background: #fff; }
+.ap-tags span:first-child { background: #1F2328; color: #fff; border-color: #1F2328; }
+.ap-rec h3 { font: 800 19px/1.08 Montserrat, sans-serif; letter-spacing: -0.02em; margin: 10px 0 6px; }
+.ap-rec p { font-size: 11px; color: #6E645B; }
+.ap-ing { margin-top: 10px; background: #fff; border-radius: 14px; padding: 4px 10px; }
+.ap-ing div { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #EFE3D8; font-size: 11px; }
+.ap-ing div:last-child { border: 0; }
+.ap-ing b { color: #C2440A; }
+.ap-coz { position: absolute; inset: 0; background: #1F2328; color: #fff; padding: 50px 18px 0; }
+.ap-coz .bar { display: flex; gap: 4px; }
+.ap-coz .bar i { flex: 1; height: 4px; border-radius: 4px; background: #3A4048; }
+.ap-coz .bar i.on { background: var(--laranja); }
+.ap-coz small { display: block; margin-top: 18px; color: var(--laranja-claro); font: 800 10.5px/1 Montserrat, sans-serif; letter-spacing: .12em; }
+.ap-coz h3 { font: 800 19px/1.15 Montserrat, sans-serif; margin-top: 8px; }
+.ap-relogio { position: relative; width: 170px; height: 170px; margin: 26px auto 0; }
+.ap-relogio svg { position: absolute; inset: 0; }
+.ap-relogio b { position: absolute; inset: 0; display: grid; place-items: center; font: 800 36px/1 Montserrat, sans-serif; }
+.ap-relogio span { position: absolute; left: 0; right: 0; top: 112px; text-align: center; font-size: 10px; opacity: .7; }
+.ap-prox { position: absolute; right: 16px; bottom: 22px; width: 150px; height: 44px; border-radius: 14px; display: grid; place-items: center; font: 800 13px/1 Montserrat, sans-serif; }
+.ap-ant { position: absolute; left: 16px; bottom: 22px; width: 96px; height: 44px; border-radius: 14px; background: #2C3137; display: grid; place-items: center; font: 800 13px/1 Montserrat, sans-serif; }
+
+/* ---------- cena 5 (anúncio): botão abaixo + preço ---------- */
+#c5 { background: var(--creme); }
+#preco { position: absolute; left: 150px; right: 150px; top: 520px; height: 600px; border-radius: 48px; background: var(--grafite); color: var(--creme); text-align: center; padding-top: 60px; box-shadow: 0 30px 70px rgba(31,35,40,.3); }
+#preco img.logo { width: 330px; display: block; margin: 0 auto; }
+#preco .app { margin-top: 36px; font: 800 38px/1 Montserrat, sans-serif; color: #E9DFD5; }
+#preco .valor { margin-top: 14px; font: 900 190px/1 Montserrat, sans-serif; letter-spacing: -0.05em; color: var(--laranja-claro); }
+#preco .valor small { font-size: 80px; vertical-align: 70px; margin-right: 8px; }
+#preco .linha { margin-top: 20px; font: 700 38px/1.35 Nunito, sans-serif; }
+#preco .linha b { color: var(--laranja-claro); }
+#vez { position: absolute; left: 600px; top: 1070px; width: 400px; padding: 26px 0; border-radius: 26px; background: var(--laranja); color: var(--grafite); text-align: center; font: 900 54px/1 Montserrat, sans-serif; z-index: 9; border: 6px solid var(--grafite); }
+#garantia { position: absolute; left: 50px; top: 420px; width: 280px; height: 280px; z-index: 9; }
+#toque { position: absolute; left: 0; right: 0; top: 1225px; display: flex; justify-content: center; align-items: center; gap: 28px; }
+#toque .seta { width: 150px; height: 150px; border-radius: 50%; background: var(--laranja); display: grid; place-items: center; box-shadow: 0 16px 30px rgba(244,122,31,.4); }
+#toque .seta svg { width: 84px; height: 84px; }
+#toque .txt { font: 800 58px/1 Montserrat, sans-serif; color: var(--grafite); }
+</style>
+</head>
+<body>
+<div id="palco">
+  <div id="manchete"></div>
+  <div id="fala"></div>
+
+  <!-- CENA 1: a geladeira abre; ovo, tomate e queijo tristes; "falta de comida" é riscado -->
+  <div class="cena" id="c1"><div class="enq"><div id="cam1">
+    <div id="gel">
+      <div id="gel-in">
+        <div id="luz"></div>
+        <div class="prat" style="top:230px"></div>
+        <div class="prat" style="top:560px"></div>
+        <div class="prat" style="top:770px"></div>
+        <svg class="pers" id="p1-ovo" viewBox="0 0 200 200" style="left:30px;top:350px;width:210px;height:210px"></svg>
+        <svg class="pers" id="p1-tom" viewBox="0 0 200 200" style="left:222px;top:350px;width:210px;height:210px"></svg>
+        <svg class="pers" id="p1-que" viewBox="0 0 200 200" style="left:414px;top:350px;width:210px;height:210px"></svg>
+      </div>
+      <div id="porta"><div class="ima"></div></div>
+    </div>
+    <div class="rotulo" id="r-ovo">ovo</div>
+    <div class="rotulo" id="r-tom">tomate</div>
+    <div class="rotulo" id="r-que">queijo</div>
+    <div id="falta">falta de comida?<i id="risco"></i></div>
+  </div></div></div>
+
+  <!-- CENA 2: são 3 jantares; adivinha; contagem 3-2-1 -->
+  <div class="cena" id="c2"><div class="enq">
+    <div id="prato-a"></div><div id="prato-b"></div><div id="prato-c"></div>
+    <svg class="pers" id="p2-ovo" viewBox="0 0 200 200" style="width:290px;height:290px"></svg>
+    <svg class="pers" id="p2-tom" viewBox="0 0 200 200" style="width:290px;height:290px"></svg>
+    <svg class="pers" id="p2-que" viewBox="0 0 200 200" style="width:290px;height:290px"></svg>
+    <div id="interr">?</div>
+    <div id="conta">3</div>
+    </div><div id="flash"></div>
+  </div>
+
+  <!-- CENA 3: as três receitas, cada uma com uma transição -->
+  <div class="cena" id="c3"><div class="enq">
+    <div class="rev" id="rv1"><div class="num">1/3</div><div class="foto"><img src="img/omelete-queijo-tomate-g.webp" alt=""></div>
+      <h2>Omelete de queijo e tomate</h2><div class="chips"><span class="chip">10 min</span><span class="chip cl">fogão</span></div></div>
+    <div class="rev" id="rv2"><div class="num">2/3</div><div class="foto"><img src="img/ovos-mexidos-tomate-g.webp" alt=""></div>
+      <h2>Ovos mexidos cremosos</h2><div class="chips"><span class="chip">10 min</span><span class="chip cl">fogão</span></div></div>
+    <div class="rev" id="rv3"><div class="num">3/3</div><div class="foto"><img src="img/shakshuka-g.webp" alt=""></div>
+      <h2>Ovos no molho de tomate</h2><div class="chips"><span class="chip">20 min</span><span class="chip cl">fogão</span><span class="obs">+ básicos da despensa</span></div></div>
+    <svg id="selo3" viewBox="0 0 200 200"><defs><path id="arco3" d="M100 100 m-72 0 a72 72 0 1 1 144 0 a72 72 0 1 1 -144 0"/></defs>
+      <circle cx="100" cy="100" r="94" fill="#1F2328"/><circle cx="100" cy="100" r="84" fill="none" stroke="#FF9A2E" stroke-width="2" stroke-dasharray="4 5"/>
+      <text font-family="Montserrat" font-size="15" font-weight="800" fill="#FF9A2E" letter-spacing="2"><textPath href="#arco3" textLength="440" lengthAdjust="spacing">CARA DE RESTAURANTE ★ FEITO EM CASA ★</textPath></text>
+      <text x="100" y="96" text-anchor="middle" font-family="Montserrat" font-size="30" font-weight="900" fill="#FFF8F1">NÍVEL</text>
+      <text x="100" y="128" text-anchor="middle" font-family="Montserrat" font-size="24" font-weight="900" fill="#FFF8F1">CHEF</text></svg>
+    <svg class="brilho" id="b1" viewBox="0 0 40 40"><path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16Z" fill="#F47A1F"/></svg>
+    <svg class="brilho" id="b2" viewBox="0 0 40 40"><path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16Z" fill="#FF9A2E"/></svg>
+    <svg class="brilho" id="b3" viewBox="0 0 40 40"><path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16Z" fill="#1F2328"/></svg>
+  </div></div>
+
+  <!-- CENA 4: gravação de tela simulada do QChef -->
+  <div class="cena" id="c4"><div class="enq">
+    <div class="fone" id="fone"><div class="vidro" id="vidro">
+      <div class="tela ap-or" id="s-splash"><img src="img/qchef-logo-horizontal-branca.svg" alt="" style="position:absolute;left:50%;top:44%;width:190px;margin:-47px 0 0 -95px"></div>
+      <div class="tela" id="s-inicio">
+        <div class="ap-head ap-or"><b>Oi! Bora cozinhar?</b><small>Vamos cozinhar com o que você tem?</small>
+          <div class="ap-busca"><b>O que tem na sua geladeira hoje?</b><div class="ap-campo">Digite ou fale os ingredientes</div>
+            <div class="ap-sel"><span id="sel-ovo">Ovo ×</span><span id="sel-tom">Tomate ×</span><span id="sel-que">Queijo ×</span></div></div></div>
+        <div class="ap-corpo">
+          <h4>Toque para adicionar</h4>
+          <div class="ap-chips"><span class="ap-chip">+ Arroz</span><span class="ap-chip" id="ch-ovo">+ Ovo</span><span class="ap-chip" id="ch-tom">+ Tomate</span><span class="ap-chip" id="ch-que">+ Queijo</span><span class="ap-chip">+ Pão</span><span class="ap-chip">+ Frango</span></div>
+          <h4>Onde vai preparar?</h4>
+          <div class="ap-grade"><div class="ap-amb"><span><i></i>Prato frio</span></div><div class="ap-amb" id="amb-fogao"><span><i></i>Fogão</span></div><div class="ap-amb"><span><i></i>Forno</span></div>
+            <div class="ap-amb"><span><i></i>Airfryer</span></div><div class="ap-amb"><span><i></i>Micro-ondas</span></div><div class="ap-amb"><span><i></i>Tanto faz</span></div></div>
+        </div>
+        <div class="ap-btn ap-or" id="btn-criar">Criar minha receita</div>
+      </div>
+      <div class="tela ap-or" id="s-criando"><div class="ap-cria">
+        <img src="img/qchef-logo-horizontal-branca.svg" alt="" style="width:150px">
+        <b>Criando uma receita só sua…</b>
+        <div class="lin" id="l1"><i>✓</i>Combinando os ingredientes</div>
+        <div class="lin" id="l2"><i>✓</i>Ajustando tempo e fogo</div>
+        <div class="lin" id="l3"><i>✓</i>Escrevendo o passo a passo</div>
+      </div></div>
+      <div class="tela" id="s-receita">
+        <div class="ap-rec-img"><img src="img/omelete-queijo-tomate-g.webp" alt=""></div>
+        <div class="ap-rec"><div class="ap-tags"><span>Fogão</span><span>10 min</span><span>2 porções</span></div>
+          <h3>Omelete de queijo e tomate</h3><p>Macia, com queijo derretido e tomate fresquinho.</p>
+          <div class="ap-ing"><div>Ovos<b>3 un</b></div><div>Queijo muçarela<b>2 fatias</b></div><div>Tomate<b>1 un</b></div></div></div>
+        <div class="ap-btn ap-or" id="btn-comecar">▶  Começar a cozinhar</div>
+      </div>
+      <div class="tela" id="s-coz"><div class="ap-coz">
+        <div class="bar"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+        <small>PASSO 2 DE 4</small>
+        <h3>Despeje os ovos batidos na frigideira e tampe.</h3>
+        <div class="ap-relogio"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="74" fill="none" stroke="#3A4048" stroke-width="10"/><circle id="arco-rel" cx="85" cy="85" r="74" fill="none" stroke="#F47A1F" stroke-width="10" stroke-linecap="round" stroke-dasharray="465" stroke-dashoffset="0" transform="rotate(-90 85 85)"/></svg><b id="rel">03:00</b><span>fogo baixo</span></div>
+        <div class="ap-ant">‹ Voltar</div><div class="ap-prox ap-or">Próximo passo ›</div>
+      </div></div>
+      <div class="onda" id="onda"></div><div class="dedo" id="dedo"></div>
+    </div></div>
+  </div></div>
+
+  <!-- CENA 5: toque no botão abaixo → preço → uma vez só → garantia -->
+  <div class="cena" id="c5"><div class="enq">
+    <svg class="pers" id="p3-ovo" viewBox="0 0 200 200" style="width:290px;height:290px"></svg>
+    <svg class="pers" id="p3-tom" viewBox="0 0 200 200" style="width:290px;height:290px"></svg>
+    <svg class="pers" id="p3-que" viewBox="0 0 200 200" style="width:290px;height:290px"></svg>
+    <div id="preco"><img class="logo" src="img/qchef-logo-horizontal-branca.svg" alt="">
+      <div class="app">O app completo</div>
+      <div class="valor"><small>R$</small>37</div>
+      <div class="linha"><b>pagamento único</b></div></div>
+    <div id="vez">UMA VEZ SÓ</div>
+    <svg id="garantia" viewBox="0 0 200 200"><defs><path id="arco5" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0"/></defs>
+      <circle cx="100" cy="100" r="96" fill="#2F5A12"/><circle cx="100" cy="100" r="86" fill="none" stroke="#FFF8F1" stroke-width="2"/>
+      <text font-family="Montserrat" font-size="14" font-weight="800" fill="#FFF8F1" letter-spacing="2"><textPath href="#arco5" textLength="452" lengthAdjust="spacing">GARANTIA ★ SEU DINHEIRO DE VOLTA ★</textPath></text>
+      <text x="100" y="104" text-anchor="middle" font-family="Montserrat" font-size="62" font-weight="900" fill="#FFF8F1">7</text>
+      <text x="100" y="128" text-anchor="middle" font-family="Montserrat" font-size="17" font-weight="800" fill="#FFF8F1" letter-spacing="3">DIAS</text></svg>
+    <div id="toque"><span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="#1F2328" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg></span><span class="txt">Toque no botão abaixo</span></div>
+  </div></div>
+</div>
+
+<script src="tempos.js"></script>
+<script src="lib/base.js"></script>
+<script src="lib/celular.js"></script>
+<script>
+// ---------- personagens: ovo, tomate e queijo com carinha ----------
+const CORPOS = {
+  ovo: '<ellipse cx="100" cy="112" rx="64" ry="80" fill="#FFFDF7" stroke="#E6D8C3" stroke-width="5"/><ellipse cx="78" cy="70" rx="14" ry="22" fill="#fff" opacity=".9"/>',
+  tom: '<circle cx="100" cy="118" r="76" fill="#E8402E"/><path d="M100 46 l14-18 4 20 22-4-14 14 12 10-22 0-16 14-4-18-20 2 14-12-10-14z" fill="#3E8E2B"/><ellipse cx="70" cy="90" rx="16" ry="10" fill="#fff" opacity=".35" transform="rotate(-30 70 90)"/>',
+  que: '<path d="M18 170 L182 170 L182 74 Z" fill="#F7C948"/><path d="M18 170 L182 74 L182 60 L18 156Z" fill="#FFE07A"/><circle cx="150" cy="140" r="12" fill="#E3A92B"/><circle cx="120" cy="156" r="7" fill="#E3A92B"/><circle cx="168" cy="104" r="8" fill="#E3A92B"/>',
+}
+const ROSTO = { ovo: [100, 122], tom: [100, 128], que: [128, 136] }
+function personagem (id, tipo) {
+  const [x, y] = ROSTO[tipo]
+  $(id).innerHTML = CORPOS[tipo] + `<g transform="translate(${x} ${y})">
+    <g id="${id}-sob" stroke="#1F2328" stroke-width="5" stroke-linecap="round"><path id="${id}-se"/><path id="${id}-sd"/></g>
+    <g id="${id}-olhos"><circle cx="-20" cy="-8" r="9" fill="#1F2328"/><circle cx="20" cy="-8" r="9" fill="#1F2328"/><circle cx="-17" cy="-11" r="3" fill="#fff"/><circle cx="23" cy="-11" r="3" fill="#fff"/></g>
+    <path id="${id}-boca" fill="none" stroke="#1F2328" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="-34" cy="12" r="8" fill="#FF7F7F" opacity=".45"/><circle cx="34" cy="12" r="8" fill="#FF7F7F" opacity=".45"/></g>`
+}
+const BOCAS = {
+  triste: ['M-14 24 Q0 12 14 24', 'none'],
+  feliz: ['M-20 10 Q0 40 20 10 Z', '#7A1F12'],
+  surpresa: ['M-8 18 a8 10 0 1 0 16 0 a8 10 0 1 0 -16 0', '#7A1F12'],
+}
+// humor: 'triste' | 'feliz' | 'surpresa'; fase desloca o piscar entre personagens
+function carinha (id, t, humor, fase = 0) {
+  const [d, fill] = BOCAS[humor]
+  const b = $(id + '-boca'); b.setAttribute('d', d); b.setAttribute('fill', fill)
+  const pisca = ((t + fase) % 3.1) < 0.12 ? 0.1 : 1
+  $(id + '-olhos').setAttribute('transform', `scale(1 ${pisca})`)
+  const tri = humor === 'triste'
+  $(id + '-se').setAttribute('d', tri ? 'M-34 -28 L-12 -34' : humor === 'surpresa' ? 'M-32 -32 Q-20 -42 -8 -32' : 'M-32 -26 Q-20 -32 -8 -26')
+  $(id + '-sd').setAttribute('d', tri ? 'M12 -34 L34 -28' : humor === 'surpresa' ? 'M8 -32 Q20 -42 32 -32' : 'M8 -26 Q20 -32 32 -26')
+}
+for (const p of ['p1', 'p2']) { personagem(p + '-ovo', 'ovo'); personagem(p + '-tom', 'tom'); personagem(p + '-que', 'que') }
+const tremor = (t, ini, dur, amp) => { const k = 1 - prog(t, ini, dur); return k > 0 && k < 1 ? Math.sin(t * 90) * amp * k : 0 }
+
+// ---------- cena 1 ----------
+function cena1 (t) {
+  const tAbre = W('c1', 'geladeira') + 0.25
+  const ab = outCubic(prog(t, tAbre, 0.55))
+  css('porta', { transform: `rotateY(${-112 * ab}deg)`, opacity: ab > 0.92 ? 0 : 1 })
+  css('luz', { opacity: ab * (0.85 + Math.sin(t * 7) * 0.05) })
+  const zoom = lerp(1, 1.07, inOutCubic(prog(t, tAbre, 5.5)))
+  const sx = tremor(t, tAbre + 0.4, 0.35, 10) + tremor(t, W('c1', 'não'), 0.4, 12)
+  css('cam1', { transform: `translateX(${sx}px) scale(${zoom})` })
+  const tFalta = W('c1', 'falta'), surpresa = t >= W('c1', 'comida') + 0.35
+  const nomes = [['ovo', W('c1', 'ovo'), 349], ['tom', W('c1', 'tomate'), 541], ['que', W('c1', 'queijo'), 733]]
+  nomes.forEach(([k, tk, x], i) => {
+    const pulo = pulso(t, tk, 0.45)
+    css('p1-' + k, { transform: `translateY(${-pulo * 60 + Math.sin(t * 2 + i) * 4}px) rotate(${Math.sin(t * 1.6 + i) * 3}deg)` })
+    carinha('p1-' + k, t, surpresa ? 'surpresa' : 'triste', i * 0.8)
+    const p = entra(t, tk + 0.05, 0.4), sai = prog(t, tFalta - 0.2, 0.25)
+    css('r-' + k, { left: x + 'px', top: '740px', opacity: limitar(p * 2) * (1 - sai), transform: `translateX(-50%) scale(${limitar(p, 0, 1.15)}) rotate(${(i - 1) * 5}deg)` })
+  })
+  const pf = entra(t, tFalta, 0.45)
+  css('falta', { opacity: limitar(pf * 2), transform: `translateX(-50%) scale(${limitar(pf, 0, 1.2)}) rotate(-4deg)` })
+  css('risco', { width: (outCubic(prog(t, W('c1', 'comida') + 0.25, 0.35)) * 96) + '%' })
+}
+
+// ---------- cena 2 ----------
+function cena2 (t) {
+  const c = CENA.c2
+  const tCont = [W('c2', 'três', 1), W('c2', 'dois'), W('c2', 'um')]
+  const desce = inOutCubic(prog(t, tCont[0] - 0.35, 0.4))
+  const xs = [130, 395, 660]
+  const humor = t >= W('c2', 'tenta') && t < tCont[0] ? 'surpresa' : 'feliz'
+  ;['ovo', 'tom', 'que'].forEach((k, i) => {
+    const e = entra(t, c.ini + 0.15 + i * 0.12, 0.5)
+    const pulo = Math.abs(Math.sin(t * 5 + i * 1.1)) * 34 * (1 - desce * 0.6)
+    const y = lerp(560, 1010, desce) - pulo
+    css('p2-' + k, { left: xs[i] + 'px', top: y + 'px', opacity: limitar(e * 2), transform: `scale(${limitar(e, 0, 1.15) * lerp(1, 0.8, desce)}) rotate(${Math.sin(t * 3 + i) * 5}deg)` })
+    carinha('p2-' + k, t, humor, i * 0.7)
+    const pp = entra(t, W('c2', 'jantares') + i * 0.12, 0.45)
+    css(['prato-a', 'prato-b', 'prato-c'][i], { left: (xs[i] + 10) + 'px', top: (lerp(820, 1265, desce)) + 'px', opacity: limitar(pp * 2) * (1 - desce * 0.4), transform: `scale(${limitar(pp, 0, 1.1)})` })
+  })
+  const pi = entra(t, W('c2', 'tenta'), 0.5), si = prog(t, tCont[0] - 0.3, 0.3)
+  css('interr', { left: '760px', top: '330px', opacity: limitar(pi * 2) * (1 - si), transform: `scale(${limitar(pi, 0, 1.2)}) rotate(${12 + Math.sin(t * 4) * 6}deg)` })
+  // contagem: número bate e a tela treme
+  let k = -1; tCont.forEach((tc, i) => { if (t >= tc - 0.05) k = i })
+  if (k >= 0) {
+    const tc = tCont[k] - 0.05, b = prog(t, tc, 0.28)
+    $('conta').textContent = ['3', '2', '1'][k]
+    css('conta', { opacity: 1, transform: `scale(${lerp(1.8, 1, outCubic(b))}) rotate(${(k - 1) * -6}deg)` })
+  } else css('conta', { opacity: 0 })
+  const sh = tCont.reduce((s, tc) => s + tremor(t, tc, 0.3, 16), 0)
+  css('c2', { left: sh + 'px', top: (sh * 0.6) + 'px' })
+  css('flash', { opacity: prog(t, tCont[2] + 0.45, 0.25) })
+}
+
+// ---------- cena 3 ----------
+function cena3 (t) {
+  const t1 = TR('c3', 0) - 0.1, t2 = TR('c3', 1) - 0.1, t3 = TR('c3', 2) - 0.1
+  // 1: zoom com tranco
+  const z = outBack(prog(t, t1, 0.5))
+  const sai1 = inOutCubic(prog(t, t2, 0.32))
+  css('rv1', { display: t < t2 + 0.35 ? 'block' : 'none', opacity: limitar(prog(t, t1, 0.15)), transform: `translateX(${-1400 * sai1}px) scale(${lerp(0.25, 1, z)}) rotate(${lerp(-10, -1.5, z)}deg)`, filter: `blur(${pulso(t, t2, 0.32) * 18}px)` })
+  // 2: chicote lateral com desfoque
+  const ch = inOutCubic(prog(t, t2, 0.32))
+  css('rv2', { display: t >= t2 && t < t3 + 0.6 ? 'block' : 'none', transform: `translateX(${lerp(1400, 0, ch)}px) rotate(1.5deg)`, filter: `blur(${pulso(t, t2, 0.32) * 18}px)` })
+  // 3: wipe circular
+  const wp = inOutCubic(prog(t, t3, 0.55))
+  css('rv3', { display: t >= t3 ? 'block' : 'none', zIndex: 3, clipPath: `circle(${wp * 150}% at 50% 35%)`, transform: `scale(${lerp(1.08, 1, wp)})` })
+  // "com cara de restaurante": selo e brilhos
+  const tr = W('c3', 'restaurante') - 0.1, s = entra(t, tr, 0.5)
+  css('selo3', { opacity: limitar(s * 2), transform: `scale(${limitar(s, 0, 1.2)}) rotate(${lerp(-40, 8, limitar(s)) + (t - tr) * 6}deg)` })
+  ;[[110, 470, 0], [560, 380, 0.12], [930, 960, 0.24]].forEach(([x, y, d], i) => {
+    const p = pulso(t, tr + d, 0.7)
+    css('b' + (i + 1), { left: x + 'px', top: y + 'px', opacity: p, transform: `scale(${p * 1.4}) rotate(${t * 90}deg)` })
+  })
+}
+
+// ---------- cena 4 ----------
+function posEm (el, raiz) { let x = el.offsetWidth / 2, y = el.offsetHeight / 2; while (el && el !== raiz) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent } return { x, y } }
+function medirAlvos (ids) {
+  const telas = ['s-splash', 's-inicio', 's-criando', 's-receita', 's-coz']
+  telas.forEach((s) => mostrar(s, true))
+  const r = Object.fromEntries(ids.map((id) => [id, posEm($(id), $('vidro'))]))
+  return r
+}
+function cena4 (t) {
+  const c = CENA.c4
+  const sobe = outCubic(prog(t, c.ini + 0.05, 0.7))
+  css('fone', { left: '384px', top: '400px', transform: `translateY(${lerp(1300, 0, sobe)}px) scale(1.55)` })
+  const A = medirAlvos(['ch-ovo', 'ch-tom', 'ch-que', 'amb-fogao', 'btn-criar', 'btn-comecar'])
+  const tm = W('c4', 'marca')
+  const toques = [
+    { t: tm + 0.2, ...A['ch-ovo'] }, { t: tm + 0.55, ...A['ch-tom'] }, { t: tm + 0.9, ...A['ch-que'] },
+    { t: W('c4', 'escolhe') + 0.45, ...A['amb-fogao'] }, { t: W('c4', 'preparar') + 0.45, ...A['btn-criar'] },
+    { t: W('c4', 'passo', 1) + 0.3, ...A['btn-comecar'] },
+  ]
+  const tInicio = W('c4', 'qchef') + 0.55
+  const atual = navegar(t, [
+    { t: -1, tela: 's-splash' }, { t: tInicio, tela: 's-inicio', modo: 'some' },
+    { t: toques[4].t + 0.12, tela: 's-criando', modo: 'some' }, { t: W('c4', 'dá') + 0.25, tela: 's-receita', modo: 'some' },
+    { t: toques[5].t + 0.12, tela: 's-coz' },
+  ])
+  ;[['ovo', 0], ['tom', 1], ['que', 2]].forEach(([k, i]) => {
+    const on = t >= toques[i].t
+    $('ch-' + k).classList.toggle('on', on)
+    $('ch-' + k).textContent = (on ? '✓ ' : '+ ') + { ovo: 'Ovo', tom: 'Tomate', que: 'Queijo' }[k]
+    const p = entra(t, toques[i].t, 0.35)
+    css('sel-' + k, { display: on ? 'inline-block' : 'none', transform: `scale(${limitar(p, 0, 1.1)})` })
+  })
+  $('amb-fogao').classList.toggle('on', t >= toques[3].t)
+  const tc = toques[4].t + 0.12
+  ;['l1', 'l2', 'l3'].forEach((id, i) => css(id, { opacity: t >= tc + 0.15 + i * 0.22 ? 1 : 0.35 }))
+  const tRel = toques[5].t + 0.4, seg = Math.max(0, 180 - Math.floor(Math.max(0, t - tRel) * 6))
+  $('rel').textContent = `0${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, '0')}`
+  $('arco-rel').setAttribute('stroke-dashoffset', String(465 * (1 - seg / 180)))
+  dedo(t, 'dedo', 'onda', toques, tm - 0.4, c.fim)
+}
+
+// ---------- cena 5 (anúncio) ----------
+personagem('p3-ovo', 'ovo'); personagem('p3-tom', 'tom'); personagem('p3-que', 'que')
+function cena5 (t) {
+  const c = CENA.c5
+  const tBotao = TR('c5', 0), tPreco = TR('c5', 1) - 0.15
+  // os três comemoram e saem pelos lados quando o preço entra
+  const xs = [130, 395, 660], sai = inOutCubic(prog(t, tPreco, 0.45))
+  ;['ovo', 'tom', 'que'].forEach((k, i) => {
+    const e = entra(t, c.ini + 0.1 + i * 0.1, 0.5)
+    const pulo = Math.abs(Math.sin(t * 5 + i * 1.1)) * 40
+    css('p3-' + k, { left: (xs[i] + (i - 1) * sai * 700) + 'px', top: (640 - pulo) + 'px', opacity: limitar(e * 2) * (1 - sai), transform: `scale(${limitar(e, 0, 1.15)}) rotate(${Math.sin(t * 3 + i) * 6}deg)` })
+    carinha('p3-' + k, t, 'feliz', i * 0.7)
+  })
+  // seta para o botão do anúncio, quicando
+  const pt = entra(t, tBotao, 0.5)
+  css('toque', { opacity: limitar(pt * 2), transform: `scale(${limitar(pt, 0, 1.1)})` })
+  css(document.querySelector('#toque .seta'), { transform: `translateY(${Math.abs(Math.sin(t * 6)) * 26}px)` })
+  // preço
+  const pp = outBack(prog(t, tPreco, 0.55))
+  css('preco', { opacity: limitar(prog(t, tPreco, 0.2)), transform: `translateY(${lerp(900, 0, limitar(pp, 0, 1.2))}px) rotate(${lerp(6, -1.5, limitar(pp))}deg)` })
+  const pv = entra(t, W('c5', 'uma') - 0.05, 0.45)
+  css('vez', { opacity: limitar(pv * 2), transform: `scale(${lerp(2.2, 1, limitar(pv, 0, 1))}) rotate(-9deg)` })
+  const pg = entra(t, W('c5', 'garantia') - 0.3, 0.5)
+  css('garantia', { opacity: limitar(pg * 2), transform: `scale(${limitar(pg, 0, 1.15)}) rotate(${lerp(-90, -8, limitar(pg))}deg)` })
+}
+
+montarVideo({
+  cenas: { c1: cena1, c2: cena2, c3: cena3, c4: cena4, c5: cena5 },
+  cores: { c1: '#FFF8F1', c2: '#1F2328', c3: '#1F2328', c4: '#FFF8F1', c5: '#1F2328' },
+  falaClara: ['c1', 'c4'],
+})
+</script>
+</body>
+</html>

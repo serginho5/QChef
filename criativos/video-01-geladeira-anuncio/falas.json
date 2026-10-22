@@ -1,0 +1,41 @@
+{
+  "vozNeural": "pt-BR-FranciscaNeural",
+  "taxaNeural": "+12%",
+  "vozKokoro": "pf_dora:0.65+if_sara:0.35",
+  "velocidade": 1.15,
+  "pronuncia": {
+    "QChef": "Quê Chéf",
+    "RECEITA": "receita",
+    "app ": "aplicativo "
+  },
+  "respiroInicio": 0.2,
+  "respiroFim": 0.3,
+  "respiroFinal": 1.6,
+  "cenas": [
+    {
+      "id": "c1",
+      "manchete": "Abre a geladeira agora.",
+      "fala": "Abre a sua geladeira agora. Ovo, tomate e um pedaço de queijo? Isso não é falta de comida."
+    },
+    {
+      "id": "c2",
+      "manchete": "Isso são 3 jantares.",
+      "fala": "Isso são três jantares diferentes. Tenta adivinhar o primeiro. Três, dois, um!"
+    },
+    {
+      "id": "c3",
+      "manchete": "Mesma geladeira, 3 pratos",
+      "fala": "Omelete de queijo e tomate. Ovos mexidos cremosos. E ovos no molho de tomate, com cara de restaurante."
+    },
+    {
+      "id": "c4",
+      "manchete": "Quem montou? O QChef.",
+      "fala": "Quem montou foi o QChef. Você marca o que tem, escolhe onde vai preparar, e ele te dá o passo a passo com cronômetro."
+    },
+    {
+      "id": "c5",
+      "manchete": "Sua geladeira vira receita.",
+      "fala": "Toca no botão aqui embaixo. O QChef sai por trinta e sete reais, uma vez só, com sete dias de garantia."
+    }
+  ]
+}
